@@ -1,12 +1,19 @@
 package control;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import entity.NhanVien;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,12 +25,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ControllerDangNhap{
+public class ControllerDangNhap implements Initializable{
 	
 
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	private MediaPlayer mediaPlayer; // Khai báo ở đây
     // Khai báo các thành phần giao diện từ FXML
     @FXML
     private TextField txtTaiKhoan; // Ô nhập tài khoản
@@ -75,6 +83,10 @@ public class ControllerDangNhap{
                 chinhController.setNhanVien(nhanVienTimThay);
 
                 // Hiển thị màn hình chính
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.dispose(); // giải phóng tài nguyên media
+                }
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
@@ -85,7 +97,6 @@ public class ControllerDangNhap{
                 e.printStackTrace();
             }
         } else {
-            // ❌ Đăng nhập thất bại
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Lỗi Đăng nhập");
             alert.setHeaderText(null);
@@ -93,5 +104,19 @@ public class ControllerDangNhap{
             alert.showAndWait();
         }
     }
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		try {
+            String musicFile = "src/music/music.mp3";
+            Media media = new Media(new File(musicFile).toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            System.err.println("Lỗi: Không tìm thấy file nhạc hoặc không thể phát.");
+            e.printStackTrace();
+        }
+		
+	}
     
 }
