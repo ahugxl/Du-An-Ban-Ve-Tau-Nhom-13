@@ -87,8 +87,10 @@ public class ControllerDangNhap implements Initializable{
                     mediaPlayer.stop();
                     mediaPlayer.dispose(); // giải phóng tài nguyên media
                 }
+                String css=this.getClass().getResource("/gui/GD_Chinh.css").toExternalForm();
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
+                scene.getStylesheets().add(css);
                 stage.setScene(scene);
                 stage.setMaximized(true);
                 stage.show();

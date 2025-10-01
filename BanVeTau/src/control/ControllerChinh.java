@@ -1,7 +1,9 @@
 package control;
 
 import java.io.IOException;
+import java.util.List;
 
+import entity.ChuyenTau;
 import entity.NhanVien;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,24 +74,51 @@ public class ControllerChinh {
 	        // 4. Tạo và hiển thị Stage như bình thường
 	        Stage newStage = new Stage();
 	        newStage.setTitle("Tra tìm vé");
-	        newStage.setScene(new Scene(root));
+	        Scene scene = new Scene(root);
+	        String css=this.getClass().getResource("/gui/GD_TimVeThuong.css").toExternalForm();
+			scene.getStylesheets().add(css);
+	        newStage.setScene(scene);
 	        newStage.show();
 
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
-	public void showTicketResultsView() {
-	     try {
-	         // Tải FXML chứa kết quả (file SellTicketView.fxml mà bạn đã tạo)
-	         Parent ticketResultsView = FXMLLoader.load(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
-	         
-	         // Đặt nó vào trung tâm của BorderPane chính
-	         mainBorderPane.setCenter(ticketResultsView);
-	         
-	     } catch (IOException e) {
-	         System.err.println("Không thể tải file SellTicketView.fxml");
-	         e.printStackTrace();
-	     }
-	 }
+//	public void showTicketResultsView() {
+//	     try {
+//	         // Tải FXML chứa kết quả (file SellTicketView.fxml mà bạn đã tạo)
+//	         Parent ticketResultsView = FXMLLoader.load(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
+//	         String css=this.getClass().getResource("/gui/GD_DanhSachToaNgoi.css").toExternalForm();
+//	         ticketResultsView.getStylesheets().add(css);
+//	         // Đặt nó vào trung tâm của BorderPane chính
+//	         mainBorderPane.setCenter(ticketResultsView);
+//	         
+//	     } catch (IOException e) {
+//	         System.err.println("Không thể tải file SellTicketView.fxml");
+//	         e.printStackTrace();
+//	     }
+//	 }
+	public void showTicketResultsView(List<ChuyenTau> tripResults) { // Thêm tham số List<ChuyenTau>
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
+	        Parent view = loader.load();
+	        
+	        // Lấy controller của view kết quả
+	        ControllerDanhSachToaNgoi controller = loader.getController();
+	        
+	        // TRUYỀN DỮ LIỆU: Gọi phương thức trong controller đó để hiển thị kết quả
+	        controller.displayTrips(tripResults); 
+	        
+	        // (Tùy chọn) Truyền tham chiếu của ControllerChinh qua
+	        controller.setMainController(this);
+
+	        String css = getClass().getResource("/gui/GD_DanhSachToaNgoi.css").toExternalForm();
+	        view.getStylesheets().add(css);
+	        
+	        mainBorderPane.setCenter(view);
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
