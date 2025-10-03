@@ -59,10 +59,11 @@
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Thống kê">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
+				    <items>
+				        <MenuItem mnemonicParsing="false" onAction="#chuyenSangGDThongKe" text="Doanh số bán vé" />
+				    </items>
+				</Menu>
+
               </menus>
             </MenuBar>
             <Label fx:id="lblTieuDeChinh" text="Chứ bạn làm việc một ngày tốt lành">

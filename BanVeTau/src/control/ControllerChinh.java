@@ -92,4 +92,19 @@ public class ControllerChinh {
 	         e.printStackTrace();
 	     }
 	 }
+	@FXML
+	public void chuyenSangGDThongKe(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_ThongKe.fxml"));
+	        Parent thongKeUI = loader.load();
+
+	        ControllerThongKe thongKeController = loader.getController();
+	        thongKeController.setMainController(this);
+
+	        mainBorderPane.setCenter(thongKeUI);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 }
