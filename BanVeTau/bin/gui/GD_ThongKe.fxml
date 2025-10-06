@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="control.ControllerThongKe"
+      alignment="TOP_CENTER" spacing="20" prefWidth="400" prefHeight="300"
+      style="-fx-background-color: #f9f9f9;">
+    
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <!-- Tiêu đề -->
+    <Label text="Thống kê theo doanh số bán vé">
+        <font>
+            <Font size="18"/>
+        </font>
+    </Label>
+
+    <!-- Các nút chọn loại thống kê -->
+    <Button text="Theo ngày" prefWidth="200" onAction="#thongKeNgay"/>
+    <Button text="Theo tháng" prefWidth="200" onAction="#thongKeThang"/>
+    <Button text="Theo năm" prefWidth="200" onAction="#thongKeNam"/>
+
+    <!-- Nút thoát -->
+    <Button text="Thoát" prefWidth="200" onAction="#thoat"/>
+
+</VBox>

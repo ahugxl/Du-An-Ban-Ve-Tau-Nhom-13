@@ -1,0 +1,118 @@
+/* === CÀI ĐẶT CHUNG === */
+.root {
+    /* Dùng gradient để tạo chiều sâu, chuyển từ xanh đậm sang xanh tím than */
+    -fx-background-color: linear-gradient(to bottom right, rgb(10, 20, 50), rgb(25, 35, 80));
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+
+/* === KIỂU CHỮ (LABEL) === */
+.label {
+    -fx-text-fill: rgb(230, 230, 240); /* Dùng màu trắng ngà cho dễ chịu */
+}
+
+#lblTieuDeTimVeThuong {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-padding: 10px;
+}
+
+
+/* === Ô NHẬP LIỆU (TEXTFIELD) === */
+.text-field {
+    /* Nền sáng để tăng độ tương phản và dễ đọc */
+    -fx-background-color: rgb(240, 240, 245);
+    -fx-background-radius: 8px;
+    -fx-border-width: 0px; /* Bỏ viền mặc định */
+    -fx-font-size: 14px;
+    -fx-text-fill: rgb(10, 20, 50); /* Chữ nhập vào màu tối */
+    -fx-prompt-text-fill: rgb(150, 150, 160); /* Chữ gợi ý màu xám */
+}
+
+.text-field:focused {
+    /* Viền phát sáng màu cam tạo điểm nhấn */
+    -fx-border-color: rgb(255, 128, 64);
+    -fx-border-width: 2px;
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+
+/* === BỘ CHỌN NGÀY (DATEPICKER) === */
+/* Áp dụng kiểu dáng tương tự TextField cho DatePicker */
+.date-picker .text-field {
+    -fx-background-color: rgb(240, 240, 245);
+    -fx-background-radius: 8px 0 0 8px; /* Bo góc trái */
+}
+
+.date-picker:focused .text-field, .date-picker .text-field:focused {
+     -fx-border-color: rgb(255, 128, 64);
+    -fx-border-width: 2px 0 2px 2px; /* Không kẻ viền phải */
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+/* Nút mũi tên của DatePicker */
+.date-picker .arrow-button {
+    -fx-background-color: rgb(240, 240, 245);
+    -fx-background-radius: 0 8px 8px 0; /* Bo góc phải */
+}
+.date-picker .arrow {
+    -fx-background-color: rgb(10, 20, 50);
+}
+
+/* Khung lịch hiện ra khi click */
+.date-picker-popup {
+    -fx-background-color: rgb(35, 45, 90);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: rgb(25, 35, 80);
+}
+
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/* Kiểu cho các ô ngày */
+.date-picker-popup .day-cell {
+    -fx-text-fill: rgb(230, 230, 240);
+}
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: rgba(0, 70, 255, 0.5);
+}
+.date-picker-popup .day-cell.selected {
+    -fx-background-color: rgb(0, 70, 255);
+    -fx-text-fill: rgb(255, 255, 255);
+}
+.date-picker-popup .day-cell.today {
+    /* Đánh dấu ngày hôm nay bằng viền màu cam */
+    -fx-border-color: rgb(255, 128, 64);
+}
+
+
+/* === NÚT BẤM (BUTTON) === */
+/* Nút chính "Tra tìm" */
+#btnTraTim {
+    /* Nền màu cam-san hô làm điểm nhấn chính */
+    -fx-background-color: rgb(255, 128, 64);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+#btnTraTim:hover {
+    -fx-background-color: rgb(255, 148, 94);
+}
+
+/* Nút phụ "Thoát" */
+#btnThoat {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgb(0, 70, 255);
+    -fx-border-color: rgb(0, 70, 255);
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+}
+#btnThoat:hover {
+    -fx-background-color: rgba(0, 70, 255, 0.2);
+}

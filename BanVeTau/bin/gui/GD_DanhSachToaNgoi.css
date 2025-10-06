@@ -1,0 +1,158 @@
+/* === CÀI ĐẶT CHUNG === */
+.root {
+    -fx-background-color: rgb(0, 0, 0);
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -fx-padding: 10px;
+}
+
+.label {
+    -fx-text-fill: rgb(230, 230, 240);
+}
+
+/* === THẺ CHỌN CHUYẾN TÀU (DÙNG ID) === */
+/* Style chung cho cả 5 thẻ */
+#btChuyen1, #btChuyen2, #btChuyen3, #btChuyen4, #btChuyen5 {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+#btChuyen1:hover, #btChuyen2:hover, #btChuyen3:hover, #btChuyen4:hover, #btChuyen5:hover {
+    -fx-border-color: rgb(0, 70, 255);
+}
+
+/* Class ".selected" VẪN CẦN THIẾT để thể hiện trạng thái được chọn trong Controller */
+.trip-card-selected {
+    -fx-background-color: rgba(0, 70, 255, 0.3);
+    -fx-border-color: rgb(0, 70, 255);
+    -fx-border-width: 2px;
+}
+
+
+/* === BẢNG GIỎ VÉ (DÙNG ID) === */
+#tbGioVe {
+    -fx-background-color: transparent;
+}
+#tbGioVe .column-header-background {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+#tbGioVe .column-header .label {
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight: bold;
+}
+#tbGioVe .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+#tbGioVe .table-row-cell .text {
+    -fx-fill: rgb(230, 230, 240) ;
+}
+#tbGioVe .table-row-cell:hover {
+    -fx-background-color: rgba(0, 70, 255, 0.2);
+}
+#tbGioVe .table-row-cell:selected {
+    -fx-background-color: rgb(0, 70, 255);
+}
+#tbGioVe .scroll-bar .thumb {
+    -fx-background-color: rgb(80, 90, 140);
+    -fx-background-radius: 5px;
+}
+
+
+/* === NÚT CHỌN TOA TÀU (DÙNG ID) === */
+#btToaVT1, #btToaVT2, #btToaVT3, #btToaVT4, #btToaVT5, #btToaVT6, #btToaVT7, #btToaVTDau {
+    -fx-background-color: rgb(50, 60, 110);
+    -fx-text-fill: rgb(230, 230, 240);
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
+}
+#btToaVT1:hover, #btToaVT2:hover, #btToaVT3:hover, #btToaVT4:hover, #btToaVT5:hover, #btToaVT6:hover, #btToaVT7:hover, #btToaVTDau:hover {
+    -fx-background-color: rgb(80, 90, 140);
+}
+
+/* Class ".selected" VẪN CẦN THIẾT để thể hiện trạng thái được chọn */
+.coach-button-selected {
+    -fx-background-color: rgb(0, 70, 255);
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+
+/* === c === */
+/*
+ Vì các ghế có nhiều trạng thái (trống, đang chọn, đã bán),
+ cách duy nhất để quản lý hiệu quả là dùng Style Class.
+ /* === SƠ ĐỒ CHỖ NGỒI === */
+
+ /* Kiểu dáng cơ bản cho TẤT CẢ các nút ghế */
+ .seat-button {
+     -fx-pref-width: 40px;
+     -fx-pref-height: 40px;
+     -fx-background-radius: 4px;
+     -fx-cursor: hand;
+ }
+
+ /* TRẠNG THÁI: Có sẵn */
+ .seat-available {
+     -fx-background-color: transparent;
+     -fx-border-color: rgb(0, 70, 255);
+     -fx-text-fill: rgb(0, 70, 255);
+ }
+ .seat-available:hover {
+     -fx-background-color: rgba(0, 70, 255, 0.2);
+ }
+
+ /* TRẠNG THÁI: Đang được chọn */
+ .seat-selected {
+     -fx-background-color: rgb(0, 70, 255);
+     -fx-text-fill: white;
+ }
+
+ /* TRẠNG THÁI: Đã bị chiếm/đã bán */
+ .seat-occupied {
+     -fx-background-color: rgb(80, 80, 90);
+     -fx-text-fill: rgb(150, 150, 160);
+     -fx-opacity: 0.6;
+     -fx-cursor: default; /* Con trỏ bình thường, không phải hình bàn tay */
+ }
+
+.seat-button {
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+.seat-available {
+    -fx-background-color: transparent;
+    -fx-border-color: rgb(0, 70, 255);
+    -fx-text-fill: rgb(0, 70, 255);
+}
+.seat-available:hover {
+    -fx-background-color: rgba(0, 70, 255, 0.2);
+}
+.seat-selected {
+    -fx-background-color: rgb(0, 70, 255);
+    -fx-text-fill: white;
+}
+.seat-occupied {
+    -fx-background-color: rgb(80, 80, 90);
+    -fx-text-fill: rgb(150, 150, 160);
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+
+/* === NÚT HÀNH ĐỘNG CHÍNH (DÙNG ID) === */
+#btTiepTuc {
+    -fx-background-color: rgb(255, 128, 64);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 20px;
+    -fx-cursor: hand;
+}
+#btTiepTuc:hover {
+    -fx-background-color: rgb(255, 148, 94);
+}
