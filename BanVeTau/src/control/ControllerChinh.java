@@ -84,20 +84,7 @@ public class ControllerChinh {
 	        e.printStackTrace();
 	    }
 	}
-//	public void showTicketResultsView() {
-//	     try {
-//	         // Tải FXML chứa kết quả (file SellTicketView.fxml mà bạn đã tạo)
-//	         Parent ticketResultsView = FXMLLoader.load(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
-//	         String css=this.getClass().getResource("/gui/GD_DanhSachToaNgoi.css").toExternalForm();
-//	         ticketResultsView.getStylesheets().add(css);
-//	         // Đặt nó vào trung tâm của BorderPane chính
-//	         mainBorderPane.setCenter(ticketResultsView);
-//	         
-//	     } catch (IOException e) {
-//	         System.err.println("Không thể tải file SellTicketView.fxml");
-//	         e.printStackTrace();
-//	     }
-//	 }
+
 	public void showTicketResultsView(List<ChuyenTau> tripResults) { // Thêm tham số List<ChuyenTau>
 	    try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
@@ -121,4 +108,34 @@ public class ControllerChinh {
 	        e.printStackTrace();
 	    }
 	}
+
+	public void showTicketResultsView() {
+	     try {
+	         // Tải FXML chứa kết quả (file SellTicketView.fxml mà bạn đã tạo)
+	         Parent ticketResultsView = FXMLLoader.load(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
+	         
+	         // Đặt nó vào trung tâm của BorderPane chính
+	         mainBorderPane.setCenter(ticketResultsView);
+	         
+	     } catch (IOException e) {
+	         System.err.println("Không thể tải file SellTicketView.fxml");
+	         e.printStackTrace();
+	     }
+	 }
+	@FXML
+	public void chuyenSangGDThongKe(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_ThongKe.fxml"));
+	        Parent thongKeUI = loader.load();
+
+	        ControllerThongKe thongKeController = loader.getController();
+	        thongKeController.setMainController(this);
+
+	        mainBorderPane.setCenter(thongKeUI);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 }
