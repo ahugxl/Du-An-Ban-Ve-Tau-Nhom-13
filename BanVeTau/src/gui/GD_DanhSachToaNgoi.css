@@ -116,7 +116,7 @@
      -fx-opacity: 0.6;
      -fx-cursor: default; /* Con trỏ bình thường, không phải hình bàn tay */
  }
-*/
+
 .seat-button {
     -fx-pref-width: 40px;
     -fx-pref-height: 40px;

@@ -1,5 +1,7 @@
-/gui/
-<<<<<<< HEAD
-=======
+/application/
 /control/
->>>>>>> branch 'master' of https://github.com/ahugxl/Du-An-Ban-Ve-Tau-Nhom-13.git
+/entity/
+/gui/
+/image/
+/module-info.class
+/music/
