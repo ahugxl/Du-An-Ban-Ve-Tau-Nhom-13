@@ -1,5 +1,5 @@
 package entity;
 
-public class UH {
+public class KK {
 
 }
