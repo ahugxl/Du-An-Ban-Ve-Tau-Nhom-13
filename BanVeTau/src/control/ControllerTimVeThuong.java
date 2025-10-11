@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import entity.ChuyenTau;
-import entity.DatabaseService;
 
 public class ControllerTimVeThuong implements Initializable {
 
@@ -24,14 +23,14 @@ public class ControllerTimVeThuong implements Initializable {
     @FXML private Button btnThoat;
 
     private ControllerChinh mainController;
-    private DatabaseService dbService; // Dùng để truy vấn dữ liệu
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        dbService = new DatabaseService(); // Khởi tạo service
-        // Đặt giá trị mặc định cho ngày đi là hôm nay cho tiện
-        dtmNgayDiTimVeThuong.setValue(LocalDate.now()); 
-    }
+//    private DatabaseService dbService; // Dùng để truy vấn dữ liệu
+//
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        dbService = new DatabaseService(); // Khởi tạo service
+//        // Đặt giá trị mặc định cho ngày đi là hôm nay cho tiện
+//        dtmNgayDiTimVeThuong.setValue(LocalDate.now()); 
+//    }
 
     // Phương thức này được ControllerChinh gọi để truyền chính nó qua
     public void setMainController(ControllerChinh mainController) {
@@ -51,12 +50,12 @@ public class ControllerTimVeThuong implements Initializable {
             ngayDi != null) 
         {
             // 3. Gọi service để tìm kiếm
-            List<ChuyenTau> ketQuaTimKiem = dbService.findAvailableTrips(gaDi, gaDen, ngayDi);
+//            List<ChuyenTau> ketQuaTimKiem = dbService.findAvailableTrips(gaDi, gaDen, ngayDi);
 
             // 4. Kiểm tra xem tham chiếu có tồn tại không và gửi kết quả đi
             if (mainController != null) {
                 // Gọi phương thức của ControllerChinh và truyền danh sách kết quả qua
-                mainController.showTicketResultsView(ketQuaTimKiem);
+//                mainController.showTicketResultsView(ketQuaTimKiem);
             } else {
                 System.err.println("Lỗi: Không có tham chiếu đến Main Controller.");
             }
@@ -74,4 +73,10 @@ public class ControllerTimVeThuong implements Initializable {
             // mainController.showDefaultView();
         }
     }
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }

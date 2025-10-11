@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import entity.ChuyenTau;
 import entity.ToaTau;
-import entity.DatabaseService;
 
 public class ControllerDanhSachToaNgoi implements Initializable {
 
@@ -44,7 +43,7 @@ public class ControllerDanhSachToaNgoi implements Initializable {
 
     // --- Biến thành viên ---
     private ControllerChinh mainController;
-    private final DatabaseService dbService = new DatabaseService();
+//    private final DatabaseService dbService = new DatabaseService();
 
     private List<Button> dsNutChuyen;
     private List<Button> dsNutToa;
@@ -99,11 +98,11 @@ public class ControllerDanhSachToaNgoi implements Initializable {
                 ChuyenTau trip = trips.get(i);
                 Label[] labels = tripLabels[i];
 
-                labels[0].setText(trip.getTenTau());
-                labels[1].setText(trip.getThoiGianDi().format(timeFormatter));
-                labels[2].setText(trip.getThoiGianDen().format(timeFormatter));
-                labels[3].setText(String.valueOf(trip.getSoLuongDatCho()));
-                labels[4].setText(String.valueOf(trip.getSoLuongChoTrong()));
+//                labels[0].setText(trip.getTenTau());
+//                labels[1].setText(trip.getThoiGianDi().format(timeFormatter));
+//                labels[2].setText(trip.getThoiGianDen().format(timeFormatter));
+//                labels[3].setText(String.valueOf(trip.getSoLuongDatCho()));
+//                labels[4].setText(String.valueOf(trip.getSoLuongChoTrong()));
                 
                 card.setVisible(true);
             }
@@ -153,7 +152,7 @@ public class ControllerDanhSachToaNgoi implements Initializable {
             this.chuyenTauDaChon = danhSachChuyenTau.get(index);
             
             // Tải danh sách toa cho chuyến tàu này
-            this.danhSachToa = dbService.getCoachesForTrain(chuyenTauDaChon.getMaTau());
+//            this.danhSachToa = dbService.getCoachesForTrain(chuyenTauDaChon.getMaTau());
             
             // Cập nhật giao diện các nút chọn toa
             updateCoachButtonsView();
@@ -199,8 +198,8 @@ public class ControllerDanhSachToaNgoi implements Initializable {
         }
         
         if (!maToa.isEmpty()) {
-            boolean[] seatStatus = dbService.getSeatStatusForCoach(maToa);
-            updateSeatView(seatStatus);
+//            boolean[] seatStatus = dbService.getSeatStatusForCoach(maToa);
+//            updateSeatView(seatStatus);
         }
     }
 
