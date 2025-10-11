@@ -3,13 +3,18 @@ package control;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import connectDB.ConnectDB;
+import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +37,7 @@ public class ControllerDangNhap implements Initializable{
 	private Scene scene;
 	private Parent root;
 	private MediaPlayer mediaPlayer; // Khai báo ở đây
+	private TaiKhoan_DAO tk_dao;
     // Khai báo các thành phần giao diện từ FXML
     @FXML
     private TextField txtTaiKhoan; // Ô nhập tài khoản
@@ -45,31 +51,38 @@ public class ControllerDangNhap implements Initializable{
     /**
      * Phương thức này được gọi khi người dùng nhấn nút "Đăng nhập".
      * Tên phương thức "loginAction" phải khớp với onAction trong FXML.
+     * @throws SQLException 
      */
  // control/LoginController.java
     @FXML
-    void kiemTraDangNhap(ActionEvent event) {
+    void kiemTraDangNhap(ActionEvent event) throws SQLException {
+    	try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		tk_dao = new TaiKhoan_DAO();
         // B1: Lấy thông tin người dùng nhập từ giao diện
         String username = txtTaiKhoan.getText();
         String password = txtMatKhau.getText();
 
         // B2: Tạo danh sách nhân viên mẫu (thực tế phần này sẽ được lấy từ database)
-        ArrayList<NhanVien> dsNhanVien = new ArrayList<>();
-        dsNhanVien.add(new NhanVien("Nguyễn Văn A", "user", "123", false));
-        dsNhanVien.add(new NhanVien("Trần Thị B (Quản lý)", "admin", "admin123", true));
+        ArrayList<TaiKhoan> dsTaiKhoan = new ArrayList<>();
+        dsTaiKhoan = tk_dao.getalltbPhongBan();
 
         // B3: Tìm kiếm nhân viên trong danh sách
-        NhanVien nhanVienTimThay = null;
-        for (NhanVien nv : dsNhanVien) {
-            if (nv.getTaiKhoan().equals(username) && 
-                nv.getMatKhau().equals(password)) {
-                nhanVienTimThay = nv; // Đã tìm thấy nhân viên phù hợp
+        TaiKhoan taiKhoanTimThay = null;
+        for (TaiKhoan tk : dsTaiKhoan) {
+            if (tk.getTenTaiKhoan().equals(username) && 
+                tk.getMatKhau().equals(password)) {
+            	taiKhoanTimThay = tk; // Đã tìm thấy nhân viên phù hợp
                 break; // Thoát khỏi vòng lặp
             }
         }
 
         // B4: Xử lý kết quả đăng nhập
-        if (nhanVienTimThay != null) {
+        if (taiKhoanTimThay != null) {
             // ✅ Đăng nhập thành công, chuyển màn hình và truyền dữ liệu
             try {
                 // Tạo một đối tượng FXMLLoader để tải file FXML
@@ -80,7 +93,7 @@ public class ControllerDangNhap implements Initializable{
                 ControllerChinh chinhController = loader.getController();
 
                 // Gọi phương thức để truyền đối tượng NhanVien qua
-                chinhController.setNhanVien(nhanVienTimThay);
+                chinhController.setTaiKhoan(taiKhoanTimThay);
 
                 // Hiển thị màn hình chính
                 if (mediaPlayer != null) {

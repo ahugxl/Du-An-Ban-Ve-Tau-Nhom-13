@@ -1,10 +1,16 @@
 package control;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import connectDB.ConnectDB;
+import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
+import entity.ChucVu;
 import entity.ChuyenTau;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,27 +30,44 @@ public class ControllerChinh {
     private Label lblChucVu; 
 
     private NhanVien nhanVien;
-    private boolean quyen; // Biến để lưu quyền (true = quản lý, false = nhân viên)
-
+    private TaiKhoan taiKhoan;
+    private boolean laQuanLy; // Biến để lưu quyền (true = quản lý, false = nhân viên)
+    private NhanVien_DAO nv_dao;
+	
     /**
      * Phương thức này nhận dữ liệu từ LoginController
+     * @throws SQLException 
      */
-    public void setNhanVien(NhanVien nv) {
-        this.nhanVien = nv;
+    public void setTaiKhoan(TaiKhoan tk) throws SQLException {
+    	this.taiKhoan = tk;
+    	try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		nv_dao= new NhanVien_DAO();
+		NhanVien nv =nv_dao.getNhanVienTheoTaiKhoan(taiKhoan.getTenTaiKhoan());
+		if(nv!=null) {
+			this.nhanVien=nv;
+		}
+		else {
+			System.out.println("Loi khong tim thay nhan vien phu hop voi ten tai khoan");
+		}
         
-        // 1. Lấy quyền quản lý từ đối tượng NhanVien
-        boolean isManager = nv.isQuanLy();
+		String chucVu = "";
+		if(nv.getCv()==ChucVu.NhanVienQuanLy) {
+			laQuanLy=true;
+			 chucVu = "Quản lý";
+		}
+		else{
+			laQuanLy=false;
+			chucVu = "Nhân viên ban ve";
+		}
+
         
-        // 2. Lưu quyền vào biến của Controller
-        this.quyen = isManager;
-        
-        // 3. Xác định chuỗi chức vụ dựa trên quyền
-        String chucVu = "";
-        if (isManager) {
-            chucVu = "Quản lý";
-        } else {
-            chucVu = "Nhân viên";
-        }
+    
+ 
         
         // 4. Cập nhật các Label trên giao diện
         lblTenNhanVien.setText("Xin chào, " + nhanVien.getTenNV());

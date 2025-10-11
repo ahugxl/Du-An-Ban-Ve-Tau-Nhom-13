@@ -9,6 +9,11 @@ public class TaiKhoan {
 	
 	public TaiKhoan() {
 	}
+	
+	public TaiKhoan(String tenTaiKhoan) {
+		super();
+		this.tenTaiKhoan = tenTaiKhoan;
+	}
 
 	public TaiKhoan(String tenTaiKhoan, String matKhau, String email) {
 		this.tenTaiKhoan = tenTaiKhoan;

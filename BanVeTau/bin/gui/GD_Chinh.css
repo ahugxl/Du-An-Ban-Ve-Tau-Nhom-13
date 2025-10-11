@@ -1,13 +1,10 @@
-/* === CÀI ĐẶT CHUNG === */
-.root {
-    /* Dùng gradient để tạo chiều sâu, chuyển từ xanh đậm sang xanh tím than */
-    -fx-background-color: linear-gradient(to bottom right, rgb(10, 20, 50), rgb(25, 35, 80));
+#top {
     -fx-font-family: "Segoe UI", system-ui, sans-serif;
+    -fx-background-color: rgb(25, 35, 80);
 }
 
-/* === KIỂU CHỮ (LABEL) MẶC ĐỊNH === */
 .label {
-    -fx-text-fill: rgb(230, 230, 240); /* Dùng màu trắng ngà cho dễ chịu */
+    -fx-text-fill: rgb(230, 230, 240);
 }
 
 #lblTieuDeChinh {
@@ -16,65 +13,52 @@
     -fx-text-fill: rgb(200, 200, 210);
 }
 
-/* === THANH MENU (MENUBAR) === */
-
-/* Toàn bộ thanh menu */
 .menu-bar {
-    -fx-background-color: rgba(0, 0, 0, 0.25); /* Nền đen mờ để nổi bật trên gradient */
+    -fx-background-color: rgba(0, 0, 0,0.2);
 }
 
-/* Các mục menu chính (Hệ thống, Danh mục...) */
 .menu-bar .label {
     -fx-text-fill: rgb(230, 230, 240);
     -fx-font-weight: bold;
 }
 
-/* Hiệu ứng khi di chuột qua hoặc mở một menu */
-.menu:hover, .menu:showing {
+.menu:hover {
     -fx-background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Khung menu con xổ xuống */
 .context-menu {
     -fx-background-color: rgb(35, 45, 90);
-    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-color: rgb(255, 255, 255);
     -fx-border-width: 1px;
 }
 
-/* Các mục menu con (Bán vé thường, Close...) */
+
 .menu-item .label {
     -fx-text-fill: rgb(230, 230, 240);
 }
 
-/* Hiệu ứng khi di chuột qua một mục menu con */
 .menu-item:focused {
-    -fx-background-color: rgba(0, 70, 255, 0.5); /* Nền xanh sáng mờ */
+    -fx-background-color: rgb(0, 70, 255); /* Nền xanh sáng mờ */
 }
 
-
-/* === THANH TRẠNG THÁI (STATUS BAR) Ở DƯỚI === */
-
-/* Toàn bộ thanh HBox dưới cùng */
-#chinh_duoi {
-    -fx-background-color: rgba(0, 0, 0, 0.3);
-    /* Chỉ kẻ viền phía trên để phân tách với phần thân */
-    -fx-border-color: rgba(255, 255, 255, 0.2) transparent transparent transparent;
+#bottom {
+    -fx-background-color: rgb(25, 35, 80);
+    -fx-border-color: rgb(0, 0, 0);
     -fx-border-width: 1px;
 }
 
-/* Chữ trong thanh trạng thái */
-#chinh_duoi .label {
+#bottom .label {
     -fx-font-size: 12px;
 }
 
 #lblTrangThai {
-    -fx-text-fill: rgb(60, 200, 150); /* Màu xanh lá cho trạng thái */
+    -fx-text-fill: rgb(60, 200, 150);
     -fx-font-weight: bold;
 }
 
 /* Nút "Đăng xuất" */
 #btnDangXuat {
-    -fx-background-color: rgb(80, 90, 140); /* Màu xanh-xám */
+    -fx-background-color: rgb(80, 90, 140);
     -fx-text-fill: rgb(230, 230, 240);
     -fx-background-radius: 4px;
     -fx-font-size: 11px;
@@ -82,14 +66,11 @@
 }
 
 #btnDangXuat:hover {
-    -fx-background-color: rgb(110, 120, 170); /* Sáng hơn khi di chuột qua */
+    -fx-background-color: rgb(110, 120, 170);
 }
 #centerPane {
-    /* Đường dẫn đến file ảnh của bạn */
     -fx-background-image: url("../image/anhNen.jpg");
-
-    /* Tùy chỉnh cách ảnh hiển thị */
-    -fx-background-size: cover; /* Phóng to ảnh để lấp đầy không gian mà không làm méo ảnh */
-    -fx-background-position: center center; /* Căn ảnh ra giữa */
-    -fx-background-repeat: no-repeat; /* Không lặp lại ảnh */
+    -fx-background-size: cover; 
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
 }
