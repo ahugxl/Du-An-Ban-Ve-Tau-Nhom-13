@@ -13,9 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ControllerTimVe {
+	@FXML
+	private TextField txtMaVe;
     @FXML
     private Button btnInLaiVe;
 
@@ -57,6 +60,9 @@ public class ControllerTimVe {
 
     @FXML
     private TableColumn<Ve, String> clTinhTrang;
+    
+    @FXML
+    private TableColumn<Ve, String> clTenKH;
 
     @FXML
     private Label lblCCCDKH;
@@ -95,7 +101,8 @@ public class ControllerTimVe {
         clLoaiHT.setCellValueFactory(new PropertyValueFactory<>("loaiHanhTrinhStr"));        // Ve.getLoaiHanhTrinhStr()
         clLoaiVe.setCellValueFactory(new PropertyValueFactory<>("loaiVeStr"));               // Ve.getLoaiVeStr()
         clTinhTrang.setCellValueFactory(new PropertyValueFactory<>("trangThaiVeStr"));       // Ve.getTrangThaiVeStr()
-        clPhongCho.setCellValueFactory(new PropertyValueFactory<>("coPhongChopVipStr"));     // Ve.getCoPhongChopVipStr()
+        clPhongCho.setCellValueFactory(new PropertyValueFactory<>("coPhongChoVipStr"));     // Ve.getCoPhongChopVipStr()
+        clTenKH.setCellValueFactory(new PropertyValueFactory<>("tenKhachHang"));
 
         
 
@@ -124,4 +131,18 @@ public class ControllerTimVe {
             ex.printStackTrace();
         }
     }
+    @FXML
+	private void timTheoMaVe() {
+	    String ma = txtMaVe.getText();
+	    if (ma == null || ma.isBlank()) {
+	        // load lại toàn bộ/hoặc thông báo
+	        hienTatCaVe();
+	        return;
+	    }
+	    Ve ve = ve_dao.timVeTheoMaVe(ma.trim());
+	    javafx.collections.ObservableList<Ve> data =
+	            javafx.collections.FXCollections.observableArrayList();
+	    if (ve != null) data.add(ve);
+	    tblTimVe.setItems(data);
+	}
 }

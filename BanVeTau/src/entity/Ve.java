@@ -5,6 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Ve {
+	// ===== Trường dẫn xuất chỉ dùng để hiển thị (TableView) =====
+	private String chuyen;   // tên chuyến / mã chuyến để hiển thị
+	private String ghe;      // vị trí ghế
+	private String tenGaDi;  // tên ga đi
+	private String tenGaDen; // tên ga đến
+	private String tenKhachHang; // tên ga đến
+	
 	private String maVe;
 	private String tenVe;
 	private ChuyenTau chuyenTau;
@@ -15,7 +22,7 @@ public class Ve {
 	private LoaiHanhTrinh loaiHanhTrinh;
 	private LoaiVe loaiVe;
 	private String trangThaiVe;
-	private boolean coPhongChopVip;
+	private boolean coPhongChoVip;
 	private Thue thueApDung;
 	private KhachHang khachHang; // Thêm thuộc tính KhachHang
 	private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -26,7 +33,7 @@ public class Ve {
 
 	public Ve(String maVe, String tenVe, ChuyenTau chuyenTau, GheNgoi gheNgoi, GaTau gaDi, GaTau gaDen,
 			LocalDateTime ngayInVe, LoaiHanhTrinh loaiHanhTrinh, LoaiVe loaiVe, String trangThaiVe,
-			boolean coPhongChopVip, Thue thueApDung, KhachHang khachHang) {
+			boolean coPhongChoVip, Thue thueApDung, KhachHang khachHang) {
 		super();
 		this.maVe = maVe;
 		this.tenVe = tenVe;
@@ -38,17 +45,23 @@ public class Ve {
 		this.loaiHanhTrinh = loaiHanhTrinh;
 		this.loaiVe = loaiVe;
 		this.trangThaiVe = trangThaiVe;
-		this.coPhongChopVip = coPhongChopVip;
+		this.coPhongChoVip = coPhongChoVip;
 		this.thueApDung = thueApDung;
 		this.khachHang = khachHang;
 	}
+	public void setChuyen(String chuyen) { this.chuyen = chuyen; }
+	public void setGhe(String ghe) { this.ghe = ghe; }
+	public void setTenGaDi(String tenGaDi) { this.tenGaDi = tenGaDi; }
+	public void setTenGaDen(String tenGaDen) { this.tenGaDen = tenGaDen; }
+	public void setTenKH(String tenKH) { this.tenKhachHang = tenKH; }
+
 	// ===== Getter dẫn xuất cho TableView =====
 	/** Tên chuyến tàu */
 	public String getChuyen() {
-	    if (chuyenTau == null) {
+	    if (chuyen == null) {
 	        return "";
 	    } else {
-	        String ten = chuyenTau.getMaChuyenTau();
+	        String ten = chuyen;
 	        if (ten == null) {
 	            return "";
 	        } else {
@@ -59,10 +72,10 @@ public class Ve {
 
 	/** Tên ghế */
 	public String getGhe() {
-	    if (gheNgoi == null) {
+	    if (ghe == null) {
 	        return "";
 	    } else {
-	        String ten =  Integer.toString(gheNgoi.getViTriGhe());
+	        String ten =  ghe;
 	        if (ten == null) {
 	            return "";
 	        } else {
@@ -73,10 +86,10 @@ public class Ve {
 
 	/** Tên ga đi */
 	public String getTenGaDi() {
-	    if (gaDi == null) {
+	    if (tenGaDi == null) {
 	        return "";
 	    } else {
-	        String ten = gaDi.getTenGaTau();
+	        String ten = tenGaDi;
 	        if (ten == null) {
 	            return "";
 	        } else {
@@ -87,10 +100,10 @@ public class Ve {
 
 	/** Tên ga đến */
 	public String getTenGaDen() {
-	    if (gaDen == null) {
+	    if (tenGaDen == null) {
 	        return "";
 	    } else {
-	        String ten = gaDen.getTenGaTau();
+	        String ten = tenGaDen;
 	        if (ten == null) {
 	            return "";
 	        } else {
@@ -113,7 +126,7 @@ public class Ve {
 	    if (loaiHanhTrinh == null) {
 	        return "";
 	    } else {
-	        return loaiVe.getDisplayName();
+	        return loaiHanhTrinh.getDisplayName();
 	    }
 	}
 
@@ -136,8 +149,8 @@ public class Ve {
 	}
 
 	/** Có phòng chờ VIP? → "Có"/"Không" */
-	public String getCoPhongChopVipStr() {
-	    if (coPhongChopVip) {
+	public String getCoPhongChoVipStr() {
+	    if (coPhongChoVip) {
 	        return "Có";
 	    } else {
 	        return "Không";
@@ -146,10 +159,10 @@ public class Ve {
 
 	/** Tên khách hàng (nếu có) */
 	public String getTenKhachHang() {
-	    if (khachHang == null) {
+	    if (tenKhachHang == null) {
 	        return "";
 	    } else {
-	        String ten = khachHang.getHoTenKhachHang();
+	        String ten = tenKhachHang;
 	        if (ten == null) {
 	            return "";
 	        } else {
@@ -204,8 +217,8 @@ public class Ve {
 		return trangThaiVe;
 	}
 
-	public boolean isCoPhongChopVip() {
-		return coPhongChopVip;
+	public boolean isCoPhongChoVip() {
+		return coPhongChoVip;
 	}
 
 	public Thue getThueApDung() {
@@ -252,8 +265,8 @@ public class Ve {
 		this.trangThaiVe = trangThaiVe;
 	}
 
-	public void setCoPhongChopVip(boolean coPhongChopVip) {
-		this.coPhongChopVip = coPhongChopVip;
+	public void setCoPhongChoVip(boolean coPhongChoVip) {
+		this.coPhongChoVip = coPhongChoVip;
 	}
 
 	public void setThueApDung(Thue thueApDung) {
@@ -281,7 +294,7 @@ public class Ve {
 	public String toString() {
 		return "Ve [maVe=" + maVe + ", tenVe=" + tenVe + ", chuyenTau=" + chuyenTau + ", gheNgoi=" + gheNgoi + ", gaDi="
 				+ gaDi + ", gaDen=" + gaDen + ", ngayInVe=" + ngayInVe + ", loaiHanhTrinh=" + loaiHanhTrinh
-				+ ", loaiVe=" + loaiVe + ", trangThaiVe=" + trangThaiVe + ", coPhongChopVip=" + coPhongChopVip
+				+ ", loaiVe=" + loaiVe + ", trangThaiVe=" + trangThaiVe + ", coPhongChoVip=" + coPhongChoVip
 				+ ", thueApDung=" + thueApDung + "]";
 	}
 
