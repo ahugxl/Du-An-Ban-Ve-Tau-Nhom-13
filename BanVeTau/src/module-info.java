@@ -5,7 +5,9 @@ module BanVeTau {
 	requires java.sql;
 	requires sqljdbc42;
 	requires javafx.base;
+	requires javafx.graphics;
 	opens control to javafx.fxml;
+	exports control;
 	opens entity to javafx.base;
 	opens application to javafx.graphics, javafx.fxml, javafx.media;
 }

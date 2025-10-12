@@ -1,5 +1,6 @@
 package control;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,17 +15,29 @@ import entity.TaiKhoan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import utils.BgUtils;
 
 public class ControllerChinh {
 
     @FXML
     private Label lblTenNhanVien;
-
+    @FXML
+    private Pane centerPane;
     // THÊM DÒNG NÀY: Khai báo Label cho chức vụ từ FXML
     @FXML
     private Label lblChucVu; 
@@ -33,11 +46,15 @@ public class ControllerChinh {
     private TaiKhoan taiKhoan;
     private boolean laQuanLy; // Biến để lưu quyền (true = quản lý, false = nhân viên)
     private NhanVien_DAO nv_dao;
-	
+    private Node centerBanDau;  
     /**
      * Phương thức này nhận dữ liệu từ LoginController
      * @throws SQLException 
      */
+    @FXML
+    private void initialize() {
+        centerBanDau = mainBorderPane.getCenter();
+    }
     public void setTaiKhoan(TaiKhoan tk) throws SQLException {
     	this.taiKhoan = tk;
     	try {
@@ -172,6 +189,39 @@ public class ControllerChinh {
 	        e.printStackTrace();
 	    }
 	}
+	@FXML
+	public void chuyenGDFUN(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_FunVideo.fxml"));
+	        Parent root = loader.load();
+	        Stage newStage = new Stage();
+	        newStage.setTitle("TikTok Video");
+	        Scene scene = new Scene(root);
+	        newStage.setScene(scene);
+	        newStage.show();
 
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	@FXML
+    private void doiNenTuFile() {
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Ảnh", "*.png","*.jpg","*.jpeg"));
+		File f = fc.showOpenDialog(centerPane.getScene().getWindow());
+		if (f != null) {
+		    String uri = f.toURI().toString(); // thành "file:/D:/.../hinh.png"
+		    centerPane.setStyle(
+		        "-fx-background-image: url('" + uri + "');" +
+		        "-fx-background-size: cover;" +
+		        "-fx-background-position: center;" +
+		        "-fx-background-repeat: no-repeat;"
+		    );
+		}
 
+    }
+	@FXML
+    private void hoanTac() {
+		 mainBorderPane.setCenter(centerBanDau);
+	}
 }
