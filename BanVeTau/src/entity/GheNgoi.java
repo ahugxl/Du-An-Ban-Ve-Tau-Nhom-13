@@ -10,6 +10,11 @@ public class GheNgoi {
 	public GheNgoi() {
 	}
 	
+	public GheNgoi(String maGheNgoi) {
+		super();
+		this.maGheNgoi = maGheNgoi;
+	}
+
 	public GheNgoi(String maGheNgoi, int viTriGhe, ToaTau toaTau) {
 		this.maGheNgoi = maGheNgoi;
 		this.viTriGhe = viTriGhe;

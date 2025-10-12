@@ -18,6 +18,11 @@ public class GaTau {
 		this.soDienThoaiGa = soDienThoaiGa;
 	}
 	
+	public GaTau(String maGaTau) {
+		super();
+		this.maGaTau = maGaTau;
+	}
+
 	public String getMaGaTau() {
 		return maGaTau;
 	}

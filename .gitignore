@@ -1,0 +1,22 @@
+/.metadata/
+# Build output (mọi cấp)
+**/bin/
+**/out/
+**/target/
+*.class
+*.log
+*.tmp
+
+# Eclipse (mọi cấp)
+**/.settings/
+**/.project
+**/.classpath
+
+# IntelliJ/VS Code (nếu có)
+**/.idea/
+**/*.iml
+**/.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

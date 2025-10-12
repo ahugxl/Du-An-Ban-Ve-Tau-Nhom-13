@@ -107,7 +107,7 @@ public class ControllerChinh {
 	        e.printStackTrace();
 	    }
 	}
-
+	
 	public void showTicketResultsView(List<ChuyenTau> tripResults) { // Thêm tham số List<ChuyenTau>
 	    try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhSachToaNgoi.fxml"));
@@ -145,6 +145,19 @@ public class ControllerChinh {
 	         e.printStackTrace();
 	     }
 	 }
+	public void hienGiaoDienTimVe() {
+		try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_TimVe.fxml"));
+	        Parent timVeUI = loader.load();
+	        
+	        String css=this.getClass().getResource("/gui/GD_TimVe.css").toExternalForm();
+	        timVeUI.getStylesheets().add(css);
+	        mainBorderPane.setCenter(timVeUI);
+	    } catch (IOException e) {
+	    	System.err.println("Không thể tải file GD_TimVe.fxml");
+	        e.printStackTrace();
+	    }
+	}
 	@FXML
 	public void chuyenSangGDThongKe(ActionEvent event) {
 	    try {

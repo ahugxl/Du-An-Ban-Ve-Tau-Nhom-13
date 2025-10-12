@@ -1,0 +1,33 @@
+#main {
+    -fx-background-color: rgb(25, 35, 80);
+}
+
+.label {
+    -fx-text-fill: rgb(192, 192, 192);
+    -fx-font-size: 15px;
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+}
+#tblTimVe {
+    -fx-background-color: rgb(255, 255, 255);
+}
+.table-view .column-header .label {
+  -fx-text-fill: rgb(0, 0, 128);
+}
+#btnTimTheoMaVe, #btnTimTheoThongTinKH, #btnInLaiVe {
+    -fx-background-color: rgb(255, 128, 0);
+    -fx-text-fill: rgb(230, 230, 240);
+    -fx-background-radius: 4px;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+}
+
+#lblTimTheoMaVe{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 255, 255);
+}
+#lblTimTheoTTKH{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 255, 255);
+}

@@ -11,13 +11,15 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_DangNhap.fxml"));
+//			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_DangNhap.fxml"));
+//			String css=this.getClass().getResource("/gui/GD_DangNhap.css").toExternalForm();
+			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_Chinh.fxml"));
+			String css=this.getClass().getResource("/gui/GD_Chinh.css").toExternalForm();
 			Scene scene = new Scene(root);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			String css=this.getClass().getResource("/gui/GD_DangNhap.css").toExternalForm();
-//			 String css=this.getClass().getResource("/gui/GD_Chinh.css").toExternalForm();
-			scene.getStylesheets().add(css);
+			scene.getStylesheets().add(css);	
 			primaryStage.setScene(scene);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

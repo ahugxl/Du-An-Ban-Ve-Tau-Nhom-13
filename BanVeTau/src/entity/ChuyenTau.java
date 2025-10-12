@@ -13,6 +13,11 @@ public class ChuyenTau {
 	
 	public ChuyenTau() {
 	}
+	
+	public ChuyenTau(String maChuyenTau) {
+		super();
+		this.maChuyenTau = maChuyenTau;
+	}
 
 	public ChuyenTau(String maChuyenTau, Tau tau, TuyenDuong tuyenDuong, LocalDateTime ngayGioKhoiHanh,
 			LocalDateTime ngayGioDen, double donGiaCoBan) {

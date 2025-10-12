@@ -14,6 +14,11 @@ public class KhachHang {
 	public KhachHang() {
 	}
 
+	public KhachHang(String maKhachHang) {
+		super();
+		this.maKhachHang = maKhachHang;
+	}
+
 	public KhachHang(String maKhachHang, String hoTenKhachHang, String soGiayTo, LocalDate ngaySinh, String soDienThoai,
 			boolean gioiTinh) {
 		this.maKhachHang = maKhachHang;

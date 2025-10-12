@@ -13,6 +13,11 @@ public class Thue {
 	public Thue() {
 	}
 	
+	public Thue(String maSoThue) {
+		super();
+		this.maSoThue = maSoThue;
+	}
+
 	public Thue(String maSoThue, String tenThue, double mucThue, String trangThai, LocalDate ngayBatDau) {
 		this.maSoThue = maSoThue;
 		this.tenThue = tenThue;
