@@ -1,0 +1,228 @@
+/* General Styling */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #f4f4f4;
+}
+
+/* Header Panel */
+.header-panel {
+    -fx-padding: 10px 20px;
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Chữ trắng */
+}
+
+/* ScrollPane trong header */
+.transparent-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.transparent-scrollpane .viewport {
+    -fx-background-color: transparent;
+}
+.transparent-scrollpane .scroll-bar:horizontal .track,
+.transparent-scrollpane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #cccccc; /* Màu thanh cuộn */
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+
+
+/* Train Card Styling */
+.train-card {
+    -fx-background-color: white;
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-font-size: 11px;
+    -fx-text-fill: #333;
+}
+
+.train-card:hover {
+    -fx-border-color: #0078D7;
+}
+
+.train-card-selected {
+    -fx-background-color: #e7f3fe; /* Màu xanh nhạt khi chọn */
+    -fx-border-color: #0078D7;
+    -fx-border-width: 2px;
+}
+
+.train-code {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffc000; /* Màu vàng */
+    -fx-padding: 2px 8px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #333;
+    -fx-margin-bottom: 5px; /* Khoảng cách với các label dưới */
+}
+
+/* Train Info Label (SE8 bên dưới các toa icons) */
+.train-info-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 5px 0 0 0;
+}
+
+/* Toa Icon Styling */
+.toa-icon-container {
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: transparent; /* Mặc định trong suốt */
+}
+.toa-icon-container:hover {
+    -fx-background-color: #e0e0e0; /* Màu nền xám nhạt khi hover */
+}
+.toa-icon-selected {
+    -fx-background-color: #add8e6; /* Màu xanh da trời nhạt khi chọn */
+    -fx-border-color: #0078D7;
+    -fx-border-width: 1px;
+}
+.toa-icon-container Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+
+/* Center Panel */
+.center-panel {
+    -fx-background-color: #f4f4f4;
+}
+
+.seat-map-container {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 3);
+}
+
+.panel-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding-bottom: 10px;
+}
+
+/* Seat Grid Styling */
+.grid-header {
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-alignment: center;
+    -fx-text-fill: #555;
+    -fx-min-width: 40px; /* Đảm bảo đủ rộng cho header */
+}
+
+.seat-available {
+    -fx-background-color: white;
+    -fx-border-color: #0078D7;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.seat-available:hover {
+    -fx-background-color: #e7f3fe;
+}
+
+.seat-selected {
+    -fx-background-color: #ffc000; /* Màu vàng cam */
+    -fx-border-color: #e0ac00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.seat-unavailable {
+    -fx-background-color: #a0a0a0; /* Màu xám */
+    -fx-border-color: #808080;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-opacity: 0.6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+/* Navigation Buttons (cho sơ đồ ghế) */
+.nav-button {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-background-radius: 50%; /* Nút tròn */
+    -fx-border-radius: 50%;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-cursor: hand;
+}
+.nav-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+
+/* Footer Panel */
+.footer-panel {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 15px;
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+}
+
+/* Bottom Buttons */
+.confirm-button {
+    -fx-background-color: #5cb85c; /* Xanh lá */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #4cae4c;
+}
+
+.cancel-button {
+    -fx-background-color: #d9534f; /* Đỏ */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c9302c;
+}
