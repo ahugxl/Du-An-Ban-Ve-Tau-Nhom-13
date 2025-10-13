@@ -51,7 +51,7 @@ public class ChuyenTau_DAO {
                 
                 // 2. Xây dựng các đối tượng GaTau
                 GaTau gaDi = new GaTau(rs.getString("gaKhoiHanh"), rs.getString("tenGaDi"));
-                GaTau gaDen = new GaTau(rs.getString("gaKetThuc"), rs.getString("tenGaDen"));
+                GaTau gaDen = new GaTau(rs.getString("gaKetThuc"), rs.getString("tenGaDen"));	
 
                 // 3. Xây dựng đối tượng TuyenDuong
                 TuyenDuong tuyenDuong = new TuyenDuong();
