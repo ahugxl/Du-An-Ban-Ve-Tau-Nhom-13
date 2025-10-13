@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            stylesheets="@GD_DanhMuc_KhachHang.css"
+            fx:controller="control.Controller_DanhMuc_KhachHang"
+            minHeight="0" minWidth="0">
+    
+    <top>
+        <VBox spacing="10" styleClass="trenKH">
+            <padding>
+                <Insets top="15.0" right="20.0" bottom="15.0" left="20.0"/>
+            </padding>
+            
+            <Label styleClass="tieude" text="QUẢN LÝ KHÁCH HÀNG"/>
+            
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label styleClass="lblTim" text="Tìm kiếm:"/>
+                <TextField fx:id="txtTim" 
+                          prefWidth="300.0" 
+                          promptText="Nhập tên, SĐT hoặc số giấy tờ..." 
+                          styleClass="txtTim"/>
+                <Button onAction="#tim" 
+                       styleClass="btnTim" 
+                       text="Tìm kiếm">
+                    <padding>
+                        <Insets top="5.0" right="15.0" bottom="5.0" left="15.0"/>
+                    </padding>
+                </Button>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <left>
+        <VBox spacing="10" styleClass="formNhap" prefWidth="300.0">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0"/>
+            </padding>
+            
+            <Label styleClass="h2" text="Thông tin khách hàng"/>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Mã khách hàng:"/>
+                <TextField fx:id="maKhachHangField" 
+                          promptText="Tự động tạo" 
+                          editable="false"
+                          styleClass="txt_FormKH"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Họ tên khách hàng:"/>
+                <TextField fx:id="hoTenField" 
+                          promptText="Nhập họ tên" 
+                          styleClass="txt_FormKH"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Số giấy tờ (CCCD/CMND):"/>
+                <TextField fx:id="soGiayToField" 
+                          promptText="Nhập số CCCD/CMND" 
+                          styleClass="txt_FormKH"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Ngày sinh:"/>
+                <DatePicker fx:id="ngaySinhPicker" 
+                           prefWidth="270.0" 
+                           promptText="Chọn ngày sinh" 
+                           styleClass="txt_FormKH"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Số điện thoại:"/>
+                <TextField fx:id="soDienThoaiField" 
+                          promptText="Nhập số điện thoại" 
+                          styleClass="txt_FormKH"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label styleClass="lbl_Form" text="Giới tính:"/>
+                <HBox spacing="15">
+                    <RadioButton fx:id="namRadio" selected="true" text="Nam">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="gioiTinhGroup"/>
+                        </toggleGroup>
+                    </RadioButton>
+                    <RadioButton fx:id="nuRadio" text="Nữ" toggleGroup="$gioiTinhGroup"/>
+                </HBox>
+            </VBox>
+            
+            <!-- Buttons -->
+            <Button fx:id="btnThem" 
+                   maxWidth="Infinity" 
+                   onAction="#them" 
+                   styleClass="btnThem" 
+                   text="Thêm khách hàng">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+                <VBox.margin>
+                    <Insets top="5"/>
+                </VBox.margin>
+            </Button>
+            
+            <Button fx:id="btnSua" 
+                   managed="false" 
+                   maxWidth="Infinity" 
+                   onAction="#sua" 
+                   styleClass="btnSua" 
+                   text="Cập nhật khách hàng" 
+                   visible="false">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+            </Button>
+            
+            <Button fx:id="btnXoaThongTin" 
+                   maxWidth="Infinity" 
+                   onAction="#xoaThongTin"
+                   styleClass="btnXoaThongTin" 
+                   text="Xóa thông tin">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+            </Button>
+        </VBox>
+    </left>
+    
+    <!-- CENTER: Customer Table -->
+    <center>
+        <VBox spacing="10" styleClass="tb">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0"/>
+            </padding>
+            
+            <Label styleClass="h2" text="Danh sách khách hàng"/>
+            
+            <TableView fx:id="tbKhachHang" styleClass="tbKhachHang" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colMaKhachHang" prefWidth="100.0" text="Mã KH"/>
+                    <TableColumn fx:id="colHoTen" prefWidth="180.0" text="Họ tên"/>
+                    <TableColumn fx:id="colSoGiayTo" prefWidth="130.0" text="Số giấy tờ"/>
+                    <TableColumn fx:id="colNgaySinh" prefWidth="110.0" text="Ngày sinh"/>
+                    <TableColumn fx:id="colSoDienThoai" prefWidth="120.0" text="Số điện thoại"/>
+                    <TableColumn fx:id="colGioiTinh" prefWidth="80.0" text="Giới tính"/>
+                    <TableColumn fx:id="colThaoTac" prefWidth="150.0" sortable="false" text="Thao tác"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+    
+</BorderPane>

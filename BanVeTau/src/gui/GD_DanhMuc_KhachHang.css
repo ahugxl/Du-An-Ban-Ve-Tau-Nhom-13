@@ -1,0 +1,49 @@
+.trenKH {
+    -fx-background-color: #9C27B0;
+}
+
+.tbKhachHang {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+}
+.tbKhachHang .column-header {
+    -fx-background-color: #F3E5F5;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.tbKhachHang .column-header .label{
+    -fx-text-fill: #7B1FA2;
+}
+
+.tbKhachHang .column-header-background {
+    -fx-background-color: #F3E5F5;
+}
+
+.tbKhachHang .table-row-cell {
+    -fx-background-color: white;
+}
+
+.tbKhachHang .table-row-cell:odd {
+    -fx-background-color: #F5F5F5;
+}
+
+.tbKhachHang .table-row-cell:selected {
+    -fx-background-color: #E1BEE7;
+    -fx-text-fill: black;
+}
+
+.tbKhachHang .table-row-cell:hover {
+    -fx-background-color: #F3E5F5;
+    -fx-cursor: hand;
+}
+
+.tbKhachHang .table-cell {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #9C27B0;
+}
+

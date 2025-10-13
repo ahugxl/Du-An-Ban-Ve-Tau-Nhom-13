@@ -221,6 +221,51 @@ public class ControllerChinh {
 
     }
 	@FXML
+	 public void chuyenSangGDNhanVien(ActionEvent event) {
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhMuc_NhanVien2.fxml"));
+           Parent nv = loader.load();
+//           String css = this.getClass().getResource("/gui/GD_DanhMuc_NhanVien2.css").toExternalForm();
+//           nv.getStylesheets().add(css);
+           mainBorderPane.setCenter(nv);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+	public void chuyenSangGDKhachHang(ActionEvent event) {
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhMuc_KhachHang.fxml"));
+           Parent nv = loader.load();
+           String css = this.getClass().getResource("/gui/GD_DanhMuc_NhanVien2.css").toExternalForm();
+           nv.getStylesheets().add(css);
+           mainBorderPane.setCenter(nv);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+	public void chuyenSangGDTaiKhoan(ActionEvent event) {
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_DanhMuc_TaiKhoan.fxml"));
+           Parent nv = loader.load();
+           String css = this.getClass().getResource("/gui/GD_DanhMuc_NhanVien2.css").toExternalForm();
+           nv.getStylesheets().add(css);
+           mainBorderPane.setCenter(nv);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+	public void chuyenSangGDDoiMatKhau(ActionEvent event) {
+       try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_HeThong_DoiMatKhau.fxml"));
+           Parent nv = loader.load();
+//           String css = this.getClass().getResource("/gui/GD_DanhMuc_NhanVien2.css").toExternalForm();
+//           nv.getStylesheets().add(css);
+           mainBorderPane.setCenter(nv);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
+	@FXML
     private void hoanTac() {
 		 mainBorderPane.setCenter(centerBanDau);
 	}

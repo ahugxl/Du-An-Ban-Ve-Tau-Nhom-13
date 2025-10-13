@@ -1,0 +1,122 @@
+/* ===== TOP SECTION ===== */
+.trenTK {
+    -fx-background-color: #673AB7;
+}
+
+
+.lblInfo {
+    -fx-font-size: 11px;
+    -fx-text-fill: #FF6F00;
+    -fx-background-color: #FFF3E0;
+    -fx-padding: 8;
+    -fx-background-radius: 3;
+}
+
+.txt_FormTK {
+    -fx-background-radius: 3;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 3;
+}
+
+.txt_FormTK:focused {
+    -fx-border-color: #673AB7;
+    -fx-border-width: 2;
+}
+
+/* ===== TABLE SECTION (CENTER) ===== */
+.tb {
+    -fx-background-color: white;
+}
+
+.tbTaiKhoan {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+}
+
+.tbTaiKhoan .column-header {
+    -fx-background-color: #EDE7F6;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.tbTaiKhoan .column-header .label{
+    -fx-text-fill: #512DA8;
+}
+
+.tbTaiKhoan .column-header-background {
+    -fx-background-color: #EDE7F6;
+}
+
+.tbTaiKhoan .table-row-cell {
+    -fx-background-color: white;
+}
+
+.tbTaiKhoan .table-row-cell:odd {
+    -fx-background-color: #F5F5F5;
+}
+
+.tbTaiKhoan .table-row-cell:selected {
+    -fx-background-color: #D1C4E9;
+    -fx-text-fill: black;
+}
+
+.tbTaiKhoan .table-row-cell:hover {
+    -fx-background-color: #EDE7F6;
+    -fx-cursor: hand;
+}
+
+.tbTaiKhoan .table-cell {
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* ===== ACTION BUTTONS IN TABLE ===== */
+.edit-button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}
+
+.reset-button {
+    -fx-background-color: #FF9800;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}
+
+.reset-button:hover {
+    -fx-background-color: #FFB74D;
+}
+
+.reset-button:pressed {
+    -fx-background-color: #F57C00;
+}
+
+
+/* ===== STATUS BADGES ===== */
+.status-active {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+}
+
+.status-locked {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+}
+
+.status-pending {
+    -fx-background-color: #FF9800;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+}

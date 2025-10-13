@@ -13,8 +13,8 @@ public class Main extends Application {
 		try {
 //			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_DangNhap.fxml"));
 //			String css=this.getClass().getResource("/gui/GD_DangNhap.css").toExternalForm();
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/GiaoDienChonVe.fxml"));
-			String css=this.getClass().getResource("/gui/GiaoDienChonVe.css").toExternalForm();
+			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_Chinh.fxml"));
+			String css=this.getClass().getResource("/gui/GD_Chinh.css").toExternalForm();
 			Scene scene = new Scene(root);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			scene.getStylesheets().add(css);	

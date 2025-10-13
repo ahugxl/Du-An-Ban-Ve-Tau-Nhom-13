@@ -7,11 +7,6 @@
     -fx-text-fill: rgb(230, 230, 240);
 }
 
-#lblTieuDeChinh {
-    -fx-font-size: 16px;
-    -fx-padding: 5 0 0 0;
-    -fx-text-fill: rgb(200, 200, 210);
-}
 
 .menu-bar {
     -fx-background-color: rgba(0, 0, 0,0.2);
