@@ -11,6 +11,12 @@ public class GaTau {
 	public GaTau() {
 	}
 	
+	public GaTau(String maGaTau, String tenGaTau) {
+		super();
+		this.maGaTau = maGaTau;
+		this.tenGaTau = tenGaTau;
+	}
+
 	public GaTau(String maGaTau, String tenGaTau, String diaChiGa, String soDienThoaiGa) {
 		this.maGaTau = maGaTau;
 		this.tenGaTau = tenGaTau;
