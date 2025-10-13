@@ -45,4 +45,33 @@ public class Tau_DAO {
 		}
         return list;
     }
+    public Tau getTauTheoMa(String maTau, Connection con) {
+		String sql = "SELECT maTau, tenTau, maLoaiTau, soLanSuaChua FROM Tau WHERE maTau = ?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+				ps.setString(1, maTau);
+				try (ResultSet rs = ps.executeQuery()) {
+					if (rs.next()) {
+						String maTauDB = rs.getString("maTau");
+						String tenTau = rs.getNString("tenTau");
+						LoaiTau loaiTauEnum;
+						String maLoaiTau = rs.getString("maLoaiTau");
+						if(maLoaiTau.equals("SE")) {
+							loaiTauEnum = LoaiTau.SE;
+						}else if(maLoaiTau.equals("SNT")) {
+							loaiTauEnum = LoaiTau.SNT;
+						}else {
+							loaiTauEnum = LoaiTau.SPT;
+						}
+						int soLanSuaChua = rs.getInt("soLanSuaChua");
+						Tau tau = new Tau(maTauDB, tenTau, loaiTauEnum, soLanSuaChua);
+						return tau;
+					}
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+    }
 }

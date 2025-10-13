@@ -5,12 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Ve {
-	// ===== Trường dẫn xuất chỉ dùng để hiển thị (TableView) =====
-	private String chuyen;   // tên chuyến / mã chuyến để hiển thị
-	private String ghe;      // vị trí ghế
-	private String tenGaDi;  // tên ga đi
-	private String tenGaDen; // tên ga đến
-	private String tenKhachHang; // tên ga đến
 	
 	private String maVe;
 	private String tenVe;
@@ -24,7 +18,7 @@ public class Ve {
 	private String trangThaiVe;
 	private boolean coPhongChoVip;
 	private Thue thueApDung;
-	private KhachHang khachHang; // Thêm thuộc tính KhachHang
+	private KhachHang khachHang; 
 	private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	public Ve() {
 	}
@@ -49,127 +43,59 @@ public class Ve {
 		this.thueApDung = thueApDung;
 		this.khachHang = khachHang;
 	}
-	public void setChuyen(String chuyen) { this.chuyen = chuyen; }
-	public void setGhe(String ghe) { this.ghe = ghe; }
-	public void setTenGaDi(String tenGaDi) { this.tenGaDi = tenGaDi; }
-	public void setTenGaDen(String tenGaDen) { this.tenGaDen = tenGaDen; }
-	public void setTenKH(String tenKH) { this.tenKhachHang = tenKH; }
+	 /* ===== Getter phục vụ TableView (PropertyValueFactory keys) ===== */
+    // clTenChuyen -> "chuyen"
+    public String getChuyen() {
+        // bạn có thể đổi hiển thị theo ý muốn (mã chuyến / tên tuyến / ...).
+        return (chuyenTau != null) ? chuyenTau.getMaChuyenTau() : null;
+    }
 
-	// ===== Getter dẫn xuất cho TableView =====
-	/** Tên chuyến tàu */
-	public String getChuyen() {
-	    if (chuyen == null) {
-	        return "";
-	    } else {
-	        String ten = chuyen;
-	        if (ten == null) {
-	            return "";
-	        } else {
-	            return ten;
-	        }
-	    }
-	}
+    // clTenGhe -> "ghe"
+    public String getGhe() {
+    	return (gheNgoi != null) ? "Ghế " + gheNgoi.getViTriGhe() : null;
+    }
 
-	/** Tên ghế */
-	public String getGhe() {
-	    if (ghe == null) {
-	        return "";
-	    } else {
-	        String ten =  ghe;
-	        if (ten == null) {
-	            return "";
-	        } else {
-	            return ten;
-	        }
-	    }
-	}
+    // clGaDi -> "tenGaDi"
+    public String getTenGaDi() {
+        return (gaDi != null) ? gaDi.getTenGaTau() : null;
+    }
 
-	/** Tên ga đi */
-	public String getTenGaDi() {
-	    if (tenGaDi == null) {
-	        return "";
-	    } else {
-	        String ten = tenGaDi;
-	        if (ten == null) {
-	            return "";
-	        } else {
-	            return ten;
-	        }
-	    }
-	}
+    // clGaDen -> "tenGaDen"
+    public String getTenGaDen() {
+        return (gaDen != null) ? gaDen.getTenGaTau() : null;
+    }
 
-	/** Tên ga đến */
-	public String getTenGaDen() {
-	    if (tenGaDen == null) {
-	        return "";
-	    } else {
-	        String ten = tenGaDen;
-	        if (ten == null) {
-	            return "";
-	        } else {
-	            return ten;
-	        }
-	    }
-	}
+    // clNgayIn -> "ngayInVeStr"
+    public String getNgayInVeStr() {
+        if (ngayInVe == null) return null;
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return ngayInVe.format(fmt);
+    }
 
-	/** Ngày in vé định dạng dd/MM/yyyy HH:mm */
-	public String getNgayInVeStr() {
-	    if (ngayInVe == null) {
-	        return "";
-	    } else {
-	        return ngayInVe.format(DTF);
-	    }
-	}
+    // clLoaiHT -> "loaiHanhTrinhStr"
+    public String getLoaiHanhTrinhStr() {
+        return (loaiHanhTrinh != null) ? loaiHanhTrinh.getDisplayName() : null;
+    }
 
-	/** Loại hành trình hiển thị (nếu là enum, dùng toString hoặc getDisplayName nếu có) */
-	public String getLoaiHanhTrinhStr() {
-	    if (loaiHanhTrinh == null) {
-	        return "";
-	    } else {
-	        return loaiHanhTrinh.getDisplayName();
-	    }
-	}
+    // clLoaiVe -> "loaiVeStr"
+    public String getLoaiVeStr() {
+        return (loaiVe != null) ? loaiVe.getDisplayName() : null;
+    }
 
-	/** Loại vé hiển thị (enum LoaiVe có getDisplayName()) */
-	public String getLoaiVeStr() {
-	    if (loaiVe == null) {
-	        return "";
-	    } else {
-	        return loaiVe.getDisplayName();
-	    }
-	}
+    // clTinhTrang -> "trangThaiVeStr"
+    public String getTrangThaiVeStr() {
+        return trangThaiVe; // nếu muốn hiển thị khác, bạn map lại ở đây
+    }
 
-	/** Trạng thái vé hiển thị (tránh null) */
-	public String getTrangThaiVeStr() {
-	    if (trangThaiVe == null) {
-	        return "";
-	    } else {
-	        return trangThaiVe;
-	    }
-	}
+    // clPhongCho -> "coPhongChoVipStr"
+    public String getCoPhongChoVipStr() {
+        return coPhongChoVip ? "Có" : "Không";
+    }
 
-	/** Có phòng chờ VIP? → "Có"/"Không" */
-	public String getCoPhongChoVipStr() {
-	    if (coPhongChoVip) {
-	        return "Có";
-	    } else {
-	        return "Không";
-	    }
-	}
-
-	/** Tên khách hàng (nếu có) */
-	public String getTenKhachHang() {
-	    if (tenKhachHang == null) {
-	        return "";
-	    } else {
-	        String ten = tenKhachHang;
-	        if (ten == null) {
-	            return "";
-	        } else {
-	            return ten;
-	        }
-	    }
-	}
+    // clTenKH -> "tenKhachHang"
+    public String getTenKhachHang() {
+        return (khachHang != null) ? khachHang.getHoTenKhachHang() : null;
+    }
     ///=========================================//
 	public KhachHang getKhachHang() {
 		return khachHang;

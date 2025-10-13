@@ -22,7 +22,7 @@
                         <TextField fx:id="txtMaVe" minWidth="300.0" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnTimTheoMaVe" minHeight="20.0" minWidth="100.0" mnemonicParsing="false" onAction="#timTheoMaVe" text="Tìm" />
+                  <Button fx:id="btnTimTheoMaVe" minHeight="20.0" minWidth="100.0" mnemonicParsing="false" text="Tìm" />
                </children>
             </VBox>
             <VBox alignment="CENTER" minWidth="300.0" spacing="10.0">

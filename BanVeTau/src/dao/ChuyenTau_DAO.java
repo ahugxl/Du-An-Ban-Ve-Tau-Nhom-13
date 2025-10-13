@@ -18,7 +18,8 @@ import entity.Tau;
 import entity.TuyenDuong;
 
 public class ChuyenTau_DAO {
-
+	 private final Tau_DAO tauDAO = new Tau_DAO();
+	 private final TuyenDuong_DAO tuyenDuongDAO = new TuyenDuong_DAO();
     /**
      * Lấy tất cả các chuyến tàu, bao gồm thông tin chi tiết về Tàu và Tuyến Đường.
      * @return danh sách các đối tượng ChuyenTau
@@ -129,4 +130,81 @@ public class ChuyenTau_DAO {
         }
         return tongSoGhe;
     }
+//    public List<ChuyenTau> getAllChuyenTau2() throws SQLException {
+//        List<ChuyenTau> ds = new ArrayList<>();
+//
+//        String sql = "SELECT maChuyenTau, maTau, maTuyenDuong, ngayGioKhoiHanh, ngayGioDen, donGiaCoBan " +
+//                     "FROM ChuyenTau";
+//
+//        ConnectDB.getInstance();
+//        try (Connection con = ConnectDB.getConnection();
+//             PreparedStatement ps = con.prepareStatement(sql);
+//             ResultSet rs = ps.executeQuery()) {
+//
+//            while (rs.next()) {
+//                String maChuyen = rs.getString("maChuyenTau");
+//                String maTau    = rs.getString("maTau");
+//                String maTD     = rs.getString("maTuyenDuong");
+//
+//                // resolve FK -> entity
+//                Tau tau = tauDAO.getTauTheoMa(maTau);
+//                TuyenDuong td = tuyenDuongDAO.getTuyenDuongTheoMa(maTD);
+//
+//                Timestamp tk = rs.getTimestamp("ngayGioKhoiHanh");
+//                Timestamp tdn = rs.getTimestamp("ngayGioDen");
+//                LocalDateTime khoiHanh = (tk != null)  ? tk.toLocalDateTime()  : null;
+//                LocalDateTime den      = (tdn != null) ? tdn.toLocalDateTime() : null;
+//
+//                double donGiaCoBan = rs.getDouble("donGiaCoBan");
+//
+//                ds.add(new ChuyenTau(maChuyen, tau, td, khoiHanh, den, donGiaCoBan));
+//            }
+//        }
+//        return ds;
+//    }
+
+    // Lấy 1 chuyến tàu theo mã
+    public ChuyenTau getTheoMa(String maChuyenTau, Connection con) throws SQLException {
+        String sql = "SELECT maChuyenTau, maTau, maTuyenDuong, ngayGioKhoiHanh, ngayGioDen, donGiaCoBan " +
+                     "FROM ChuyenTau WHERE maChuyenTau = ?";
+
+        // 1) Đọc dữ liệu thô trước
+        String maCT = null, maTau = null, maTD = null;
+        LocalDateTime khoiHanh = null, den = null;
+        double donGiaCoBan = 0.0;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, maChuyenTau);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+
+                maCT  = rs.getString("maChuyenTau");
+                maTau = rs.getString("maTau");
+                maTD  = rs.getString("maTuyenDuong");
+
+                Timestamp tk  = rs.getTimestamp("ngayGioKhoiHanh");
+                Timestamp tdn = rs.getTimestamp("ngayGioDen");
+                khoiHanh = (tk  != null) ? tk.toLocalDateTime()  : null;
+                den      = (tdn != null) ? tdn.toLocalDateTime() : null;
+
+                // Nếu cột là DECIMAL/NUMERIC, cân nhắc dùng getBigDecimal để chính xác hơn
+                donGiaCoBan = rs.getBigDecimal("donGiaCoBan") != null
+                            ? rs.getBigDecimal("donGiaCoBan").doubleValue()
+                            : 0.0;
+            }
+            // rs/ps/con đều đóng ở đây
+        }
+
+        // 2) Resolve FK sau khi đã đóng ResultSet/Connection
+        Tau tau = tauDAO.getTauTheoMa(maTau, con);
+        // Tên hàm theo bạn đang dùng ở nơi khác: getTheoMa (nếu bạn đặt là getTuyenDuongTheoMa thì giữ nguyên)
+        TuyenDuong td = tuyenDuongDAO.getTuyenDuongTheoMa(maTD, con);
+
+        return new ChuyenTau(maCT, tau, td, khoiHanh, den, donGiaCoBan);
+    }
+
+
+    
 }

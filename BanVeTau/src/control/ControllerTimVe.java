@@ -93,15 +93,15 @@ public class ControllerTimVe {
         // 1) Cấu hình cellValueFactory KHÔNG dùng lambda — bám theo getter dẫn xuất trong Ve
         clMaVe.setCellValueFactory(new PropertyValueFactory<>("maVe"));
         clTenVe.setCellValueFactory(new PropertyValueFactory<>("tenVe"));
-        clTenChuyen.setCellValueFactory(new PropertyValueFactory<>("chuyen"));            // Ve.getTenChuyen()
-        clTenGhe.setCellValueFactory(new PropertyValueFactory<>("ghe"));                  // Ve.getTenGhe()
-        clGaDi.setCellValueFactory(new PropertyValueFactory<>("tenGaDi"));                   // Ve.getTenGaDi()
-        clGaDen.setCellValueFactory(new PropertyValueFactory<>("tenGaDen"));                 // Ve.getTenGaDen()
-        clNgayIn.setCellValueFactory(new PropertyValueFactory<>("ngayInVeStr"));             // Ve.getNgayInVeStr()
-        clLoaiHT.setCellValueFactory(new PropertyValueFactory<>("loaiHanhTrinhStr"));        // Ve.getLoaiHanhTrinhStr()
-        clLoaiVe.setCellValueFactory(new PropertyValueFactory<>("loaiVeStr"));               // Ve.getLoaiVeStr()
-        clTinhTrang.setCellValueFactory(new PropertyValueFactory<>("trangThaiVeStr"));       // Ve.getTrangThaiVeStr()
-        clPhongCho.setCellValueFactory(new PropertyValueFactory<>("coPhongChoVipStr"));     // Ve.getCoPhongChopVipStr()
+        clTenChuyen.setCellValueFactory(new PropertyValueFactory<>("chuyen"));            
+        clTenGhe.setCellValueFactory(new PropertyValueFactory<>("ghe"));               
+        clGaDi.setCellValueFactory(new PropertyValueFactory<>("tenGaDi"));                 
+        clGaDen.setCellValueFactory(new PropertyValueFactory<>("tenGaDen"));               
+        clNgayIn.setCellValueFactory(new PropertyValueFactory<>("ngayInVeStr"));            
+        clLoaiHT.setCellValueFactory(new PropertyValueFactory<>("loaiHanhTrinhStr"));        
+        clLoaiVe.setCellValueFactory(new PropertyValueFactory<>("loaiVeStr"));               
+        clTinhTrang.setCellValueFactory(new PropertyValueFactory<>("trangThaiVeStr"));      
+        clPhongCho.setCellValueFactory(new PropertyValueFactory<>("coPhongChoVipStr"));     
         clTenKH.setCellValueFactory(new PropertyValueFactory<>("tenKhachHang"));
 
         
@@ -131,18 +131,18 @@ public class ControllerTimVe {
             ex.printStackTrace();
         }
     }
-    @FXML
-	private void timTheoMaVe() {
-	    String ma = txtMaVe.getText();
-	    if (ma == null || ma.isBlank()) {
-	        // load lại toàn bộ/hoặc thông báo
-	        hienTatCaVe();
-	        return;
-	    }
-	    Ve ve = ve_dao.timVeTheoMaVe(ma.trim());
-	    javafx.collections.ObservableList<Ve> data =
-	            javafx.collections.FXCollections.observableArrayList();
-	    if (ve != null) data.add(ve);
-	    tblTimVe.setItems(data);
-	}
+//    @FXML
+//	private void timTheoMaVe() {
+//	    String ma = txtMaVe.getText();
+//	    if (ma == null || ma.isBlank()) {
+//	        // load lại toàn bộ/hoặc thông báo
+//	        hienTatCaVe();
+//	        return;
+//	    }
+//	    Ve ve = ve_dao.timVeTheoMaVe(ma.trim());
+//	    javafx.collections.ObservableList<Ve> data =
+//	            javafx.collections.FXCollections.observableArrayList();
+//	    if (ve != null) data.add(ve);
+//	    tblTimVe.setItems(data);
+//	}
 }
