@@ -48,7 +48,7 @@
                   <Label fx:id="lblChucNang" text="Chức năng" />
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="btnInLaiVe" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="In lại vé" />
+                        <Button fx:id="btnInLaiVe" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#inLaiVe" text="In lại vé" />
                      </children>
                   </HBox>
                </children>
