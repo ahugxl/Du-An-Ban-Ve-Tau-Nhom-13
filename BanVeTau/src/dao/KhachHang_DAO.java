@@ -26,7 +26,7 @@ public class KhachHang_DAO {
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				KhachHang kh = new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3),
-						rs.getDate(3).toLocalDate(), rs.getString(4), rs.getBoolean(5));
+						rs.getDate(4).toLocalDate(), rs.getString(5), rs.getBoolean(6));
 				ds.add(kh);
 			}
 		} catch (SQLException e) {
@@ -34,6 +34,56 @@ public class KhachHang_DAO {
 		}
 		return ds;
 	}
+	// Tìm theo đúng số
+	public ArrayList<KhachHang> getDsKhachHangTheoSoDienThoai(String soDT) throws SQLException {
+	    String sql = "SELECT maKhachHang, hoTenKhachHang, soGiayTo, ngaySinh, soDienThoai, gioiTinh " +
+	                 "FROM KhachHang WHERE soDienThoai = ?";
+	    ArrayList<KhachHang> ds = new ArrayList<>();
+	    ConnectDB.getInstance();
+	    try (Connection con = ConnectDB.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, soDT);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                ds.add(new KhachHang(
+	                    rs.getString("maKhachHang"),
+	                    rs.getNString("hoTenKhachHang"),
+	                    rs.getString("soGiayTo"),
+	                    rs.getDate("ngaySinh").toLocalDate(),
+	                    rs.getString("soDienThoai"),
+	                    rs.getBoolean("gioiTinh")
+	                ));
+	            }
+	        }
+	    }
+	    return ds;
+	}
+	// Tìm theo đúng số
+		public ArrayList<KhachHang> getDsKhachHangTheoCCCD(String cccd) throws SQLException {
+		    String sql = "SELECT maKhachHang, hoTenKhachHang, soGiayTo, ngaySinh, soDienThoai, gioiTinh " +
+		                 "FROM KhachHang WHERE soGiayTo = ?";
+		    ArrayList<KhachHang> ds = new ArrayList<>();
+		    ConnectDB.getInstance();
+		    try (Connection con = ConnectDB.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql)) {
+		        ps.setString(1, cccd);
+		        try (ResultSet rs = ps.executeQuery()) {
+		            while (rs.next()) {
+		                ds.add(new KhachHang(
+		                    rs.getString("maKhachHang"),
+		                    rs.getNString("hoTenKhachHang"),
+		                    rs.getString("soGiayTo"),
+		                    rs.getDate("ngaySinh").toLocalDate(),
+		                    rs.getString("soDienThoai"),
+		                    rs.getBoolean("gioiTinh")
+		                ));
+		            }
+		        }
+		    }
+		    return ds;
+		}
+	
+
 	public KhachHang getKhachHangTheoMa(String ma, Connection con) throws SQLException {
 	    String sql = "SELECT maKhachHang, hoTenKhachHang, soGiayTo, ngaySinh, soDienThoai, gioiTinh " +
 	                 "FROM KhachHang WHERE maKhachHang = ?";

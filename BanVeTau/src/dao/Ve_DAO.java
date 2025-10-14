@@ -168,7 +168,10 @@ public class Ve_DAO {
 	            ghe = cacheGN.computeIfAbsent(r.maGheNgoi, k -> {
 	                try { return gnDao.getGheNgoiTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
 	            });
-	            if (ghe == null) System.out.println("Ghế ngồi mã " + r.maGheNgoi + " không tồn tại trong CSDL");
+	            if (ghe == null) {
+	            	System.out.println("Catalog: " + con.getCatalog());    // QuanLyBanVeTau3 ?
+	            	System.out.println("Ghế ngồi mã " + r.maGheNgoi + " không tồn tại trong CSDL");
+	            }
 	        }
 
 	        GaTau gaDi = null;
@@ -215,6 +218,73 @@ public class Ve_DAO {
 	    
 	    
 	}
+	public Ve getVeTheoMa(String maVeCanTim) {
+	    try {
+	        final Connection con = ConnectDB.getConnection();
+
+	        // Phase 1: đọc thô
+	        String sql = "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
+	                     "       ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, " +
+	                     "       coPhongChoVip, maThueApDung, maKhachHang " +
+	                     "FROM Ve WHERE maVe = ?";
+	        String maVe = null, tenVe = null, maCT = null, maGhe = null, maGaDi = null, maGaDen = null;
+	        String lht = null, lve = null, trangThaiVe = null, maThue = null, maKH = null;
+	        LocalDateTime ngayInVe = null;
+	        Boolean coPhongChoVip = null;
+
+	        try (PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, maVeCanTim);
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (!rs.next()) return null;
+
+	                maVe        = rs.getString("maVe");
+	                tenVe       = rs.getNString("tenVe");
+	                maCT        = rs.getString("maChuyenTau");
+	                maGhe       = rs.getString("maGheNgoi");
+	                maGaDi      = rs.getString("maGaDi");
+	                maGaDen     = rs.getString("maGaDen");
+	                Timestamp t = rs.getTimestamp("ngayInVe");
+	                ngayInVe    = (t != null) ? t.toLocalDateTime() : null;
+	                lht         = rs.getString("maLoaiHanhTrinh");
+	                lve         = rs.getString("maLoaiVe");
+	                trangThaiVe = rs.getNString("trangThaiVe");
+	                coPhongChoVip = (Boolean) rs.getObject("coPhongChoVip"); // phân biệt null
+	                maThue      = rs.getString("maThueApDung");
+	                maKH        = rs.getString("maKhachHang");
+	            }
+	        }
+
+	        // Phase 2: resolve FK (dùng cùng Connection, KHÔNG đóng con trong DAO con)
+	        ChuyenTau_DAO ctDao = new ChuyenTau_DAO();
+	        GheNgoi_DAO   gnDao = new GheNgoi_DAO();
+	        GaTau_DAO     gaDao = new GaTau_DAO();
+	        Thue_DAO      thDao = new Thue_DAO();
+	        KhachHang_DAO khDao = new KhachHang_DAO();
+
+	        ChuyenTau ct = (maCT   != null && !maCT.isBlank())   ? ctDao.getTheoMa(maCT, con)        : null;
+	        GheNgoi   gn = (maGhe  != null && !maGhe.isBlank())  ? gnDao.getGheNgoiTheoMa(maGhe, con): null;
+	        GaTau     ga1= (maGaDi != null && !maGaDi.isBlank()) ? gaDao.getGaTauTheoMa(maGaDi, con) : null;
+	        GaTau     ga2= (maGaDen!= null && !maGaDen.isBlank())? gaDao.getGaTauTheoMa(maGaDen, con): null;
+	        Thue      th = (maThue != null && !maThue.isBlank()) ? thDao.getThueTheoMa(maThue, con)  : null;
+	        KhachHang kh = (maKH   != null && !maKH.isBlank())   ? khDao.getKhachHangTheoMa(maKH, con): null;
+
+	        return new Ve(
+	            maVe, tenVe, ct, gn, ga1, ga2,
+	            ngayInVe,
+	            parseLoaiHanhTrinh(lht),
+	            parseLoaiVe(lve),
+	            trangThaiVe,
+	            coPhongChoVip != null && coPhongChoVip,
+	            th, kh
+	        );
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+
 	
 	private LoaiHanhTrinh parseLoaiHanhTrinh(String code) {
 	    if (code == null) return null;
@@ -222,7 +292,8 @@ public class Ve_DAO {
 	        case "Thuong":         return LoaiHanhTrinh.Thuong;
 	        case "KhuHoiLuotDi":   return LoaiHanhTrinh.KhuHoiLuotDi;
 	        case "KhuHoiLuotVe":   return LoaiHanhTrinh.KhuHoiLuotVe;
-	        default:               throw new IllegalArgumentException("Unknown maLoaiHanhTrinh: " + code);
+	        default:               System.out.println("Không tìm thấy maLoaiHanhTrinh: " + code);
+	                               return null;
 	    }
 	}
 	
@@ -234,7 +305,8 @@ public class Ve_DAO {
 	        case "SinhVien":      return LoaiVe.SinhVien;
 	        case "MeVNAH":        return LoaiVe.MeVNAH;
 	        case "NguoiNuocNgoai":return LoaiVe.NguoiNuocNgoai;
-	        default:              throw new IllegalArgumentException("Unknown maLoaiVe: " + code);
+	        default:              System.out.println("Không tìm thấy maLoaiVe: " + code);
+	                              return null;
 	    }
 	}
 

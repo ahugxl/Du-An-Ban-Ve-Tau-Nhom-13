@@ -36,34 +36,34 @@ public class GheNgoi_DAO {
         return list;
     }
  // Lấy toàn bộ ghế ngồi
-    public ArrayList<GheNgoi> getAllGheNgoi() throws SQLException {
-    	ArrayList<GheNgoi> ds = new ArrayList<>();
-
-        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau FROM GheNgoi";
-
-        ConnectDB.getInstance();
-        try (Connection con = ConnectDB.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                String maGhe = rs.getString("maGheNgoi");
-
-                // viTriGhe đang NVARCHAR -> ép int
-                int viTri = rs.getInt("viTriGhe");
-
-                ToaTau toa = toaTauDAO.getToaTauTheoMa(rs.getString("maToaTau"), con);
-
-                ds.add(new GheNgoi(maGhe, viTri, toa));
-            }
-        }
-        return ds;
-    }
+//    public ArrayList<GheNgoi> getAllGheNgoi() throws SQLException {
+//    	ArrayList<GheNgoi> ds = new ArrayList<>();
+//
+//        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau FROM GheNgoi";
+//
+//        ConnectDB.getInstance();
+//        try (Connection con = ConnectDB.getConnection();
+//             PreparedStatement ps = con.prepareStatement(sql);
+//             ResultSet rs = ps.executeQuery()) {
+//
+//            while (rs.next()) {
+//                String maGhe = rs.getString("maGheNgoi");
+//
+//                // viTriGhe đang NVARCHAR -> ép int
+//                int viTri = rs.getInt("viTriGhe");
+//
+//                ToaTau toa = toaTauDAO.getToaTauTheoMa(rs.getString("maToaTau"), con);
+//
+//                ds.add(new GheNgoi(maGhe, viTri, toa));
+//            }
+//        }
+//        return ds;
+//    }
 
     // Lấy 1 ghế theo mã
     public GheNgoi getGheNgoiTheoMa(String maGheNgoi, Connection con) throws SQLException {
         String sql = "SELECT maGheNgoi, viTriGhe, maToaTau" +
-                     "FROM GheNgoi WHERE maGheNgoi = ?";
+                     " FROM GheNgoi WHERE maGheNgoi = ?";
 
         
         	try (PreparedStatement ps = con.prepareStatement(sql)) {

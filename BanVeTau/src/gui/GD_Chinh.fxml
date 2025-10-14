@@ -35,7 +35,7 @@
 					<menus>
 						<Menu mnemonicParsing="false" text="Hệ thống">
 							<items>
-								<MenuItem mnemonicParsing="false" onAction="#chuyenGDFUN" text="Giải trí" />
+								<MenuItem mnemonicParsing="false" text="Giải trí" />
 								<MenuItem mnemonicParsing="false" onAction="#hoanTac" text="Quay lại màn hình chính" />
 								<MenuItem mnemonicParsing="false" onAction="#doiNenTuFile" text="Đổi hình nền" />
 								<MenuItem mnemonicParsing="false" onAction="#chuyenSangGDDoiMatKhau" text="Đổi mật khẩu" />

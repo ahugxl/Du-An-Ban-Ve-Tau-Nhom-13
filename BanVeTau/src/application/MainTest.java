@@ -11,7 +11,7 @@ public class MainTest extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/GD_FunVideo.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/gui/ControllerChonVe.fxml"));
 			Scene scene = new Scene(root);
 //			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 //			String css=this.getClass().getResource("/gui/GD_DangNhap.css").toExternalForm();
