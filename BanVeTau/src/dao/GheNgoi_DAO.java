@@ -39,7 +39,7 @@ public class GheNgoi_DAO {
     public ArrayList<GheNgoi> getAllGheNgoi() throws SQLException {
     	ArrayList<GheNgoi> ds = new ArrayList<>();
 
-        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau, daDat FROM GheNgoi";
+        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau FROM GheNgoi";
 
         ConnectDB.getInstance();
         try (Connection con = ConnectDB.getConnection();
@@ -53,9 +53,8 @@ public class GheNgoi_DAO {
                 int viTri = rs.getInt("viTriGhe");
 
                 ToaTau toa = toaTauDAO.getToaTauTheoMa(rs.getString("maToaTau"), con);
-                boolean daDat = rs.getBoolean("daDat");
 
-                ds.add(new GheNgoi(maGhe, viTri, toa, daDat));
+                ds.add(new GheNgoi(maGhe, viTri, toa));
             }
         }
         return ds;
@@ -63,7 +62,7 @@ public class GheNgoi_DAO {
 
     // Lấy 1 ghế theo mã
     public GheNgoi getGheNgoiTheoMa(String maGheNgoi, Connection con) throws SQLException {
-        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau, daDat " +
+        String sql = "SELECT maGheNgoi, viTriGhe, maToaTau" +
                      "FROM GheNgoi WHERE maGheNgoi = ?";
 
         
@@ -76,9 +75,8 @@ public class GheNgoi_DAO {
                     String maGhe = rs.getString("maGheNgoi");
                     int viTri = rs.getInt("viTriGhe");
                     ToaTau toa = toaTauDAO.getToaTauTheoMa(rs.getString("maToaTau"), con);
-                    boolean daDat = rs.getBoolean("daDat");
 
-                    return new GheNgoi(maGhe, viTri, toa, daDat);
+                    return new GheNgoi(maGhe, viTri, toa);
                 }
             }
         }

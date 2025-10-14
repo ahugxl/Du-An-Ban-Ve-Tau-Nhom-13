@@ -6,7 +6,6 @@ public class GheNgoi {
 	private String maGheNgoi;
 	private int viTriGhe;
 	private ToaTau toaTau;
-	private boolean daDat;
 	public GheNgoi() {
 	}
 	
@@ -17,25 +16,11 @@ public class GheNgoi {
 
 	
 
-	public GheNgoi(String maGheNgoi, int viTriGhe, ToaTau toaTau, boolean daDat) {
+	public GheNgoi(String maGheNgoi, int viTriGhe, ToaTau toaTau) {
 		super();
 		this.maGheNgoi = maGheNgoi;
 		this.viTriGhe = viTriGhe;
 		this.toaTau = toaTau;
-		this.daDat = daDat;
-	}
-
-	public GheNgoi(boolean daDat) {
-		super();
-		this.daDat = daDat;
-	}
-	
-	public boolean isDaDat() {
-		return daDat;
-	}
-
-	public void setDaDat(boolean daDat) {
-		this.daDat = daDat;
 	}
 
 	public String getMaGheNgoi() {
