@@ -3,7 +3,9 @@ package control;
 import dao.ChuyenTau_DAO; // THÊM DAO MỚI
 import dao.GheNgoi_DAO;
 import dao.ToaTau_DAO;
+import dao.GaTau_DAO_mthanh;
 import entity.ChuyenTau; // THÊM ENTITY MỚI
+import entity.GaTau;
 import entity.GheNgoi;
 import entity.ToaTau;
 import javafx.event.ActionEvent;
@@ -13,7 +15,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -24,17 +31,31 @@ import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerChonVe {
-
+	
+	@FXML private HBox rootHBox;
     @FXML private HBox boxTau;
     @FXML private HBox boxToaIcons;
     @FXML private GridPane gridGhe;
     @FXML private Label lblChieuDi;
     @FXML private Label lblTenToa;
     @FXML private Label lblSelectedTrainInfo;
+    @FXML private VBox rightSidebar;
+    @FXML private ComboBox<GaTau> cmbGaDi;
+    @FXML private ComboBox<GaTau> cmbGaDen;
+    @FXML private RadioButton rbMotChieu;
+    @FXML private RadioButton rbKhuHoi;
+    @FXML private ToggleGroup radioChieuDi;
+    @FXML private DatePicker dpNgayDi;
+    @FXML private DatePicker dpNgayVe;
+    @FXML private Button btnTimKiem;
+    @FXML private CheckBox cbVipLounge;
+ // Thay HBox boxTau bằng GridPane gridTau
+    @FXML private GridPane gridTau;
 
     // THÊM DAO MỚI
     private final ChuyenTau_DAO chuyenTauDAO = new ChuyenTau_DAO(); 
@@ -48,6 +69,8 @@ public class ControllerChonVe {
     private String maChuyenTauDangChon = null;
     private List<ToaTau> danhSachToaCuaTau = new ArrayList<>();
     private int currentToaIndex = -1;
+    
+    private final GaTau_DAO_mthanh gaTauDAO = new GaTau_DAO_mthanh();
 
     @FXML
     public void initialize() throws SQLException {
@@ -55,72 +78,80 @@ public class ControllerChonVe {
                                           LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
         // THAY ĐỔI LỚN: Tải ChuyenTau thay vì Tau
         loadChuyenTau();
+        List<GaTau> dsGa = gaTauDAO.getAllGaTau();
+        cmbGaDi.getItems().addAll(dsGa);
+        cmbGaDen.getItems().addAll(dsGa);
+        
+        // Thiết lập giá trị mặc định (ví dụ)
+        cmbGaDi.getSelectionModel().selectFirst();
+        cmbGaDen.getSelectionModel().selectLast();
+        dpNgayDi.setValue(LocalDate.now());
+
+        // Thêm listener để bật/tắt DatePicker ngày về
+        radioChieuDi.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            if (newToggle == rbKhuHoi) {
+                dpNgayVe.setDisable(false);
+            } else {
+                dpNgayVe.setDisable(true);
+                dpNgayVe.setValue(null);
+            }
+        });
+        rightSidebar.prefWidthProperty().bind(rootHBox.widthProperty().divide(5));
     }
 
     // THAY ĐỔI LỚN: Phương thức này giờ làm việc với ChuyenTau
+ // Trong file ControllerChonVe.java
+
     private void loadChuyenTau() throws SQLException {
-        // Giả sử bạn có phương thức getChuyenTauByCriteria() trong DAO
-        List<ChuyenTau> listChuyenTau = chuyenTauDAO.getAllChuyenTau(); // Hoặc phương thức phù hợp
-        boxTau.getChildren().clear();
+        // 1. Lấy danh sách các chuyến tàu từ database
+        List<ChuyenTau> listChuyenTau = chuyenTauDAO.getAllChuyenTau();
+        
+        // 2. Dọn dẹp các card tàu cũ khỏi GridPane
+        gridTau.getChildren().clear();
 
+        // 3. Dùng biến đếm để xác định vị trí cột sẽ thêm card tàu vào
+        int columnIndex = 0; 
+        
+        // 4. Duyệt qua danh sách chuyến tàu và tạo card cho mỗi chuyến
         for (ChuyenTau chuyenTau : listChuyenTau) {
+            // Gọi phương thức createTrainCard để tạo giao diện cho card
             StackPane trainCard = createTrainCard(chuyenTau);
-            trainCard.setOnMouseClicked(e -> {
-                if (selectedTrainCard != null) {
-                    selectedTrainCard.getStyleClass().remove("train-card-selected");
-                }
-                trainCard.getStyleClass().add("train-card-selected");
-                selectedTrainCard = trainCard;
-
-                maChuyenTauDangChon = chuyenTau.getMaChuyenTau();
-                lblSelectedTrainInfo.setText(chuyenTau.getTau().getMaTau());
-                loadToaIcons(chuyenTau.getTau().getMaTau());
-            });
-            boxTau.getChildren().add(trainCard);
+            
+            // Thêm card tàu vào GridPane tại cột `columnIndex` và hàng số 0
+            gridTau.add(trainCard, columnIndex, 0); 
+            
+            // Tăng chỉ số cột để card tiếp theo được đặt vào cột kế bên
+            columnIndex++; 
         }
         
-        if (!listChuyenTau.isEmpty()) {
-            boxTau.getChildren().get(0).fireEvent(new javafx.scene.input.MouseEvent(javafx.scene.input.MouseEvent.MOUSE_CLICKED, 
+        // 5. Tự động chọn (click) vào card tàu đầu tiên trong danh sách
+        if (!listChuyenTau.isEmpty() && gridTau.getChildren().size() > 0) {
+            gridTau.getChildren().get(0).fireEvent(new javafx.scene.input.MouseEvent(
+                javafx.scene.input.MouseEvent.MOUSE_CLICKED, 
                 0, 0, 0, 0, javafx.scene.input.MouseButton.PRIMARY, 1, 
                 true, true, true, true, true, true, true, true, true, true, null));
         }
     }
 
     // VIẾT LẠI HOÀN TOÀN: Phương thức này tạo card tàu giống hệt mẫu thiết kế
+ // Trong file ControllerChonVe.java
+
     private StackPane createTrainCard(ChuyenTau chuyenTau) throws SQLException {
-        // 1. Tạo phần thân tàu (ảnh nền)
-        ImageView trainBody = new ImageView(new Image(getClass().getResourceAsStream("/image/tau.png")));
-        trainBody.setFitHeight(130);
-        trainBody.setFitWidth(180);
-
-        // 2. Tạo phần bánh xe
-        ImageView trainWheels = new ImageView(new Image(getClass().getResourceAsStream("/image/tau.png")));
-        trainWheels.setFitHeight(30);
-        trainWheels.setFitWidth(180);
-
-        // 3. Tạo VBox chứa thân tàu và bánh xe
-        VBox trainImageContainer = new VBox(trainBody, trainWheels);
-        trainImageContainer.setAlignment(Pos.CENTER);
-
-        // 4. Tạo VBox chứa nội dung chữ
+        // 1. Tạo VBox chứa nội dung chữ (giống như cũ)
         VBox textContent = new VBox(5);
         textContent.setAlignment(Pos.CENTER);
         textContent.setPadding(new Insets(10, 0, 0, 0));
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
         Label lblMaTau = new Label(chuyenTau.getTau().getMaTau());
         lblMaTau.getStyleClass().add("card-train-code");
+        Label lblThoiGianDi = new Label("TG đi:   " + chuyenTau.getNgayGioKhoiHanh().format(formatter));
+        Label lblThoiGianDen = new Label("TG đến: " + chuyenTau.getNgayGioDen().format(formatter));
+        Label lblSoLuong = new Label("SL chỗ đặt   SL chỗ trống");
+        lblThoiGianDi.getStyleClass().add("card-train-time");
+        lblThoiGianDen.getStyleClass().add("card-train-time");
+        lblSoLuong.getStyleClass().add("card-train-time");
 
-     // Tạo một formatter duy nhất cho cả ngày và giờ
-        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM HH:mm");
-
-        // Lấy đối tượng LocalDateTime và gọi phương thức .format() của nó
-        Label lblThoiGianDi = new Label("TG đi   " + chuyenTau.getNgayGioKhoiHanh().format(formatter));
-        Label lblThoiGianDen = new Label("TG đến " + chuyenTau.getNgayGioDen().format(formatter));
-
-        // Logic lấy số ghế (bạn cần viết các phương thức này trong DAO)
         int soGheDat = chuyenTauDAO.getSoLuongGheDaDat(chuyenTau.getMaChuyenTau());
         int tongSoGhe = chuyenTauDAO.getTongSoGhe(chuyenTau.getMaChuyenTau());
         int soGheTrong = tongSoGhe - soGheDat;
@@ -132,13 +163,37 @@ public class ControllerChonVe {
         
         HBox seatInfoBox = new HBox(30, lblChoDat, lblChoTrong);
         seatInfoBox.setAlignment(Pos.CENTER);
+        textContent.getChildren().addAll(lblMaTau, lblThoiGianDi, lblThoiGianDen, lblSoLuong, seatInfoBox);
 
-        textContent.getChildren().addAll(lblMaTau, lblThoiGianDi, lblThoiGianDen, seatInfoBox);
+        // 2. Tạo StackPane đóng vai trò là card chính
+        // KHÔNG CÒN ImageView cho thân tàu và bánh xe nữa
+        StackPane finalCard = new StackPane(textContent); // Chỉ chứa phần chữ
+        finalCard.setUserData(chuyenTau);
+        
+        // 3. Gán các style class cần thiết
+        finalCard.getStyleClass().addAll("train-card", "train-card-gray"); // Mặc định là màu xám
+        
+        // 4. Cập nhật lại sự kiện click
+        finalCard.setOnMouseClicked(e -> {
+            if (selectedTrainCard != null) {
+                // Xóa style của card cũ
+                selectedTrainCard.getStyleClass().remove("train-card-selected");
+                selectedTrainCard.getStyleClass().remove("train-card-blue");
+                selectedTrainCard.getStyleClass().add("train-card-gray");
+            }
+            
+            // Thêm style cho card mới được chọn
+            finalCard.getStyleClass().add("train-card-selected");
+            finalCard.getStyleClass().add("train-card-blue");
+            finalCard.getStyleClass().remove("train-card-gray");
+            
+            selectedTrainCard = finalCard;
 
-        // 5. Dùng StackPane để chồng hình ảnh và chữ lên nhau
-        StackPane finalCard = new StackPane(trainImageContainer, textContent);
-        finalCard.getStyleClass().add("train-card");
-        finalCard.setUserData(chuyenTau); // Lưu lại đối tượng ChuyenTau
+            // Các logic còn lại giữ nguyên
+            maChuyenTauDangChon = chuyenTau.getMaChuyenTau();
+            lblSelectedTrainInfo.setText(chuyenTau.getTau().getMaTau());
+            loadToaIcons(chuyenTau.getTau().getMaTau());
+        });
         
         return finalCard;
     }
@@ -170,21 +225,8 @@ public class ControllerChonVe {
 
             // Gán sự kiện click cho mỗi toa
             toaContainer.setOnMouseClicked(e -> {
-                // Bỏ chọn style của toa cũ (nếu có)
-                if(selectedToaNode != null) {
-                    selectedToaNode.getStyleClass().remove("toa-icon-selected");
-                }
-                // Thêm style cho toa vừa được click
-                toaContainer.getStyleClass().add("toa-icon-selected");
-                selectedToaNode = toaContainer;
-
-                // Lấy thông tin toa và cập nhật giao diện
-                ToaTau selectedToa = (ToaTau) toaContainer.getUserData();
-                currentToaIndex = danhSachToaCuaTau.indexOf(selectedToa);
-                lblTenToa.setText(String.format("Toa số %d: %s", selectedToa.getThuTuToa(), selectedToa.getTenToaTau()));
-                
-                // Tải sơ đồ ghế của toa vừa chọn
-                loadGhe(selectedToa.getMaToaTau());
+                // Chỉ cần gọi phương thức chung
+                updateToaSelection(toaContainer); 
             });
             boxToaIcons.getChildren().add(toaContainer);
         }
@@ -308,10 +350,8 @@ public class ControllerChonVe {
     private void selectToaByIndex(int index) {
         if (index >= 0 && index < danhSachToaCuaTau.size()) {
             Node toaNode = boxToaIcons.getChildren().get(index);
-            // Kích hoạt sự kiện click để cập nhật toàn bộ giao diện
-            toaNode.fireEvent(new javafx.scene.input.MouseEvent(javafx.scene.input.MouseEvent.MOUSE_CLICKED, 
-                0, 0, 0, 0, javafx.scene.input.MouseButton.PRIMARY, 1, 
-                true, true, true, true, true, true, true, true, true, true, null));
+            // Gọi trực tiếp phương thức chung thay vì mô phỏng click
+            updateToaSelection(toaNode); 
         }
     }
 
@@ -350,5 +390,35 @@ public class ControllerChonVe {
         }
         System.out.println("Đã hủy tất cả các ghế đã chọn.");
     }
-    // ...
+    private void updateToaSelection(Node toaNode) {
+        // Bỏ chọn style của toa cũ
+        if (selectedToaNode != null) {
+            selectedToaNode.getStyleClass().remove("toa-icon-selected");
+        }
+        // Thêm style cho toa mới được chọn
+        toaNode.getStyleClass().add("toa-icon-selected");
+        selectedToaNode = toaNode;
+
+        // Lấy thông tin toa và cập nhật giao diện
+        ToaTau selectedToa = (ToaTau) toaNode.getUserData();
+        currentToaIndex = danhSachToaCuaTau.indexOf(selectedToa);
+        lblTenToa.setText(String.format("Toa số %d: %s", selectedToa.getThuTuToa(), selectedToa.getTenToaTau()));
+        
+        // Tải sơ đồ ghế của toa
+        loadGhe(selectedToa.getMaToaTau());
+    }
+    @FXML
+    void timKiemChuyenTau(ActionEvent event) {
+        GaTau gaDi = cmbGaDi.getValue();
+        GaTau gaDen = cmbGaDen.getValue();
+        LocalDate ngayDi = dpNgayDi.getValue();
+        
+        System.out.println("Bắt đầu tìm kiếm chuyến tàu:");
+        System.out.println("Ga đi: " + gaDi);
+        System.out.println("Ga đến: " + gaDen);
+        System.out.println("Ngày đi: " + ngayDi);
+        
+        // TODO: Gọi đến phương thức loadChuyenTau với các tham số tìm kiếm
+        // loadChuyenTau(gaDi.getMaGaTau(), gaDen.getMaGaTau(), ngayDi);
+    }
 }

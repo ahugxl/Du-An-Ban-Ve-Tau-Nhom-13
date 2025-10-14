@@ -1,7 +1,7 @@
 /* General Styling */
 .root {
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-background-color: #f4f4f4;
+    -fx-background-color: rgb(25, 35, 80);
 }
 
 /* Header Panel */
@@ -32,46 +32,66 @@
 
 
 /* Train Card Styling */
+/* Train Card Styling - PHIÊN BẢN MỚI */
+
+/* 1. Style chung cho card tàu */
 .train-card {
-    -fx-background-color: white;
-    -fx-padding: 10px;
-    -fx-border-color: #ccc;
-    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-background-color: transparent; /* Nền trong suốt, không còn màu trắng */
+    -fx-border-color: transparent; /* Viền trong suốt mặc định */
+    -fx-border-width: 2px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 3);
-    -fx-cursor: hand;
-    -fx-alignment: center;
-    -fx-font-size: 11px;
-    -fx-text-fill: #333;
+    
+    /* Cấu hình cho ảnh nền */
+    -fx-background-repeat: no-repeat;  /* Không lặp lại ảnh nền */
+    -fx-background-position: center bottom; /* Căn ảnh nền ở giữa và ở dưới */
+    -fx-background-size: 70% 100%;     /* Co giãn ảnh vừa khít bên trong, không bị méo */
+    
+    -fx-pref-width: 220px; /* Kích thước card */
+    -fx-pref-height: 280px;
 }
 
+/* 2. Style cho card màu xám (trạng thái bình thường) */
+.train-card-gray {
+    -fx-background-image: url("../image/tau.png");
+}
+
+/* 3. Style cho card màu xanh (trạng thái được chọn) */
+.train-card-blue {
+    -fx-background-image: url("../image/tauchon.png");
+}
+/* Style cho card khi di chuột qua (hover) */
 .train-card:hover {
-    -fx-border-color: #0078D7;
+    -fx-background-image: url("../image/tauhover.png"); /* <-- Đặt ảnh cho trạng thái hover ở đây */
 }
-
+/* 4. Thêm viền vàng khi card được chọn */
 .train-card-selected {
-    -fx-background-color: #e7f3fe; /* Màu xanh nhạt khi chọn */
-    -fx-border-color: #0078D7;
-    -fx-border-width: 2px;
+    -fx-border-color: #ffc000;
 }
 
-.train-code {
-    -fx-font-size: 16px;
+/* Các style cho chữ bên trong card vẫn giữ nguyên */
+.card-train-code {
+    -fx-font-size: 15px; /* Giảm kích thước font để vừa hơn */
     -fx-font-weight: bold;
-    -fx-background-color: #ffc000; /* Màu vàng */
-    -fx-padding: 2px 8px;
-    -fx-background-radius: 5px;
-    -fx-text-fill: #333;
-    -fx-margin-bottom: 5px; /* Khoảng cách với các label dưới */
+    -fx-text-fill: black; /* Hoặc màu đen để nổi bật trên nền trắng */
+    
+    /* Vị trí tương đối cho tên tàu trong vùng trắng */
+    -fx-translate-y: -20px; /* Di chuyển lên trên nhiều hơn */
+    -fx-alignment: center;   /* Căn giữa chữ */
 }
-
-/* Train Info Label (SE8 bên dưới các toa icons) */
-.train-info-label {
-    -fx-font-size: 18px;
+.card-train-time {
+    -fx-font-size: 12px; /* Giảm kích thước font */
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
-    -fx-padding: 5px 0 0 0;
+    -fx-translate-y: -15px;
+    /* Có thể thêm translate-y nếu cần dịch chuyển cả khối chữ xuống */
+}
+.card-train-seats-booked, .card-train-seats-available {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-translate-y: -15px;
 }
 
 /* Toa Icon Styling */
@@ -225,4 +245,73 @@
 
 .cancel-button:hover {
     -fx-background-color: #c9302c;
+}
+/* Sidebar bên phải */
+.right-sidebar {
+    -fx-pref-width: 280px;
+    -fx-background-color: #f0f2f5;
+    -fx-padding: 10px;
+}
+
+.sidebar-section {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-spacing: 10px;
+}
+
+.sidebar-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #005A9E;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 2px;
+    -fx-padding-bottom: 5px;
+    -fx-alignment: center;
+    -fx-pref-width: 250px;
+}
+
+/* Tab giỏ vé */
+.ticket-cart-tabs .tab-header-background {
+    -fx-background-color: #f0f2f5;
+}
+.ticket-cart-tabs .tab {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+}
+.ticket-cart-tabs .tab:selected {
+    -fx-background-color: #ffc000;
+}
+
+/* Form tìm kiếm */
+.search-button {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-pref-width: 250px;
+    -fx-padding: 8px;
+    -fx-margin-top: 10px;
+}
+.search-button:hover {
+    -fx-background-color: #005A9E;
+}
+
+/* Phần dịch vụ */
+.footer-container {
+    -fx-background-color: white;
+}
+.services-panel {
+    -fx-padding: 15px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 1px;
+}
+.service-title {
+    -fx-font-weight: bold;
+}
+.service-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: #555;
 }

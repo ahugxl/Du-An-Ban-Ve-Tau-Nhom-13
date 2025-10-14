@@ -80,8 +80,7 @@ public class GaTau {
 
 	@Override
 	public String toString() {
-		return "GaTau [maGaTau=" + maGaTau + ", tenGaTau=" + tenGaTau + ", diaChiGa=" + diaChiGa + ", soDienThoaiGa="
-				+ soDienThoaiGa + "]";
+		return this.tenGaTau;
 	}
 	
 }
