@@ -58,7 +58,8 @@
 						</Menu>
 						<Menu mnemonicParsing="false" text="Xử lý">
 							<items>
-								<MenuItem mnemonicParsing="false" text="Action 1" />
+								<MenuItem mnemonicParsing="false" onAction="#hienGiaoDienHuyVe" text="Hủy vé" />
+                        <MenuItem mnemonicParsing="false" onAction="#hienGiaoDienInLaiVe" text="In lại vé" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Tìm kiếm">

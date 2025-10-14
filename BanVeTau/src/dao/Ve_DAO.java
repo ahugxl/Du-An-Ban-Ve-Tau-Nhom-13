@@ -117,9 +117,13 @@ public class Ve_DAO {
 	    List<VeRaw> raws = new ArrayList<>();
 	    try {
 	    	final Connection con = ConnectDB.getConnection();
-	    	String sql = "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
-		                 "       ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, coPhongChoVip, maThueApDung, maKhachHang " +
-		                 "FROM Ve";
+	    	String sql =
+	    		    "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
+	    		    "       ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, " +
+	    		    "       coPhongChoVip, maThueApDung, maKhachHang " +
+	    		    "FROM dbo.Ve " +
+	    		    "WHERE ISNULL(trangThaiXoa, 0) = 0";
+
 	    	try (
 	    		PreparedStatement ps = con.prepareStatement(sql);
 	    		ResultSet rs = ps.executeQuery()) {
@@ -223,10 +227,15 @@ public class Ve_DAO {
 	        final Connection con = ConnectDB.getConnection();
 
 	        // Phase 1: đọc thô
-	        String sql = "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
-	                     "       ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, " +
-	                     "       coPhongChoVip, maThueApDung, maKhachHang " +
-	                     "FROM Ve WHERE maVe = ?";
+	        String sql =
+	        	    "SELECT v.maVe, v.tenVe, v.maChuyenTau, v.maGheNgoi, v.maGaDi, v.maGaDen, " +
+	        	    "       v.ngayInVe, v.maLoaiHanhTrinh, v.maLoaiVe, v.trangThaiVe, " +
+	        	    "       v.coPhongChoVip, v.maThueApDung, v.maKhachHang " +
+	        	    "FROM dbo.Ve AS v " +
+	        	    "WHERE v.maVe = ? AND ISNULL(v.[trangThaiXoa], 0) = 0";
+
+
+
 	        String maVe = null, tenVe = null, maCT = null, maGhe = null, maGaDi = null, maGaDen = null;
 	        String lht = null, lve = null, trangThaiVe = null, maThue = null, maKH = null;
 	        LocalDateTime ngayInVe = null;
@@ -285,7 +294,23 @@ public class Ve_DAO {
 	}
 
 
-	
+	public boolean huyVe(String maVe) {
+	    // Chỉ hủy nếu hiện chưa bị đánh dấu xóa
+	    final String sql =
+	        "UPDATE Ve SET trangThaiXoa = 1 " +
+	        "WHERE maVe = ? AND ISNULL(trangThaiXoa, 0) = 0";
+
+	    try (Connection con = ConnectDB.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, maVe);
+	        int changed = ps.executeUpdate();
+	        return changed > 0; // true = hủy thành công
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 	private LoaiHanhTrinh parseLoaiHanhTrinh(String code) {
 	    if (code == null) return null;
 	    switch (code.trim()) {
