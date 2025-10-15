@@ -42,8 +42,8 @@ public class NhanVien_DAO {
 					cv = ChucVu.NhanVienQuanLy;
 				}
 				TaiKhoan tk = new TaiKhoan(rs.getString(8));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
+				
+				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk);
 				dsnv.add(nv);
 			}
 		} catch (SQLException e) {
@@ -78,8 +78,8 @@ public class NhanVien_DAO {
 					cv = ChucVu.NhanVienQuanLy;
 				}
 				TaiKhoan tk = new TaiKhoan(rs.getString(9));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
+				
+				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk);
 				dsnv.add(nv);
 			}
 		} catch (SQLException e) {
@@ -120,8 +120,8 @@ public class NhanVien_DAO {
 					cv = ChucVu.NhanVienQuanLy;
 				}
 				TaiKhoan tk = new TaiKhoan(rs.getString(9));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
+				
+				nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class NhanVien_DAO {
 			stmt.setString(6, nv.isTrangThaiLamViec() ? "Đang làm việc" : "Đã nghỉ");
 			stmt.setString(7, nv.getCv().name());
 			stmt.setString(8, nv.getTaiKhoan().getTenTaiKhoan());
-			stmt.setBoolean(9, nv.isTrangThaiXoa());
+			stmt.setBoolean(9, false); // trangThaiXoa mặc định là false
 
 			return stmt.executeUpdate() > 0;
 
@@ -206,7 +206,7 @@ public class NhanVien_DAO {
 				TaiKhoan tk = new TaiKhoan(rs.getString("tenTaiKhoan"));
 				NhanVien nv = new NhanVien(rs.getString("maNhanVien"), rs.getString("tenNhanVien"),
 						rs.getDate("ngaySinh").toLocalDate(), rs.getBoolean("gioiTinh"), rs.getString("soDienThoai"),
-						rs.getBoolean("trangThaiLamViec"), cv, tk, rs.getBoolean("trangThaiXoa"));
+						rs.getBoolean("trangThaiLamViec"), cv, tk);
 				ds.add(nv);
 			}
 		} catch (SQLException e) {
