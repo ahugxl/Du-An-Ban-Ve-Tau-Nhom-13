@@ -123,15 +123,39 @@ public class ControllerDangNhap implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		try {
-            String musicFile = "src/music/music.mp3";
-            Media media = new Media(new File(musicFile).toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
-        } catch (Exception e) {
-            System.err.println("Lỗi: Không tìm thấy file nhạc hoặc không thể phát.");
-            e.printStackTrace();
-        }
+		    URL url = getClass().getResource("/music/music.mp3"); // trong classpath
+		    if (url == null) throw new IllegalStateException("Không tìm thấy resource /music/music.mp3");
+
+		    Media media = new Media(url.toExternalForm()); // đúng dạng URI (kể cả khi chạy từ JAR)
+		    mediaPlayer = new MediaPlayer(media);
+		    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // phát lặp, tùy chọn
+		    mediaPlayer.setVolume(0.4);                         // âm lượng, tùy chọn
+		    mediaPlayer.setOnError(() -> System.err.println("Media error: " + mediaPlayer.getError()));
+		    mediaPlayer.play();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    System.err.println("Lỗi: Không tìm thấy file nhạc hoặc không thể phát.");
+		}
+
 		
 	}
-    
+	public void hienGiaoDienQuenMatKhau(ActionEvent event) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_QuenMatKhau.fxml"));
+        try {
+			root = loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//        String css=this.getClass().getResource("/gui/GD_Chinh.css").toExternalForm();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+//        scene.getStylesheets().add(css);
+        stage.setScene(scene);
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose(); // giải phóng tài nguyên media
+        }
+        stage.show();
+	}
 }

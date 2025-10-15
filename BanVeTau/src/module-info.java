@@ -8,6 +8,8 @@ module BanVeTau {
 	requires javafx.graphics;
 	requires org.apache.pdfbox;
 	requires org.apache.commons.logging;
+	requires java.mail;
+	requires java.activation;
 	opens control to javafx.fxml;
 	exports control;
 	opens entity to javafx.base;

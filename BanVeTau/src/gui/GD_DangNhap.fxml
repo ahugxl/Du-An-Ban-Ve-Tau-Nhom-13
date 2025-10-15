@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerDangNhap">
    <children>
-      <Button fx:id="btnQuenMatKhau" layoutX="241.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" text="Quên mật khẩu ?" />
+      <Button fx:id="btnQuenMatKhau" layoutX="241.0" layoutY="336.0" mnemonicParsing="false" onAction="#hienGiaoDienQuenMatKhau" prefHeight="26.0" prefWidth="109.0" text="Quên mật khẩu ?" />
       <Label fx:id="lblTK" layoutX="360.0" layoutY="45.0" prefHeight="45.0" prefWidth="200.0" text="Tài khoản">
          <font>
             <Font size="30.0" />
