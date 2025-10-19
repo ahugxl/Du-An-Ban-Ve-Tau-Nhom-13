@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import connectDB.ConnectDB;
+import entity.ChangTau;
 import entity.ChuyenTau;
 import entity.GaTau;
 import entity.LoaiTau;
@@ -164,47 +166,141 @@ public class ChuyenTau_DAO {
 //    }
 
     // Lấy 1 chuyến tàu theo mã
-    public ChuyenTau getTheoMa(String maChuyenTau, Connection con) throws SQLException {
-        String sql = "SELECT maChuyenTau, maTau, maTuyenDuong, ngayGioKhoiHanh, ngayGioDen, donGiaCoBan " +
-                     "FROM ChuyenTau WHERE maChuyenTau = ?";
+ // Trong file ChuyenTau_DAO.java
 
-        // 1) Đọc dữ liệu thô trước
-        String maCT = null, maTau = null, maTD = null;
-        LocalDateTime khoiHanh = null, den = null;
-        double donGiaCoBan = 0.0;
+    /**
+     * Tìm một chuyến tàu duy nhất dựa vào mã chuyến tàu.
+     * Phương thức này sẽ tải đầy đủ thông tin của ChuyenTau, bao gồm cả danh sách các ChangTau.
+     * @param maChuyenTau Mã của chuyến tàu cần tìm.
+     * @return Đối tượng ChuyenTau đã được nạp đầy đủ dữ liệu, hoặc null nếu không tìm thấy.
+     * @throws SQLException 
+     */
+ // Trong file ChuyenTau_DAO.java
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+    /**
+     * Tìm một chuyến tàu duy nhất dựa vào mã.
+     * Phương thức này tải đầy đủ thông tin của ChuyenTau, bao gồm Tau, TuyenDuong, và List<ChangTau>.
+     * @param maChuyenTau Mã của chuyến tàu cần tìm.
+     * @return Đối tượng ChuyenTau đã được nạp đầy đủ dữ liệu, hoặc null nếu không tìm thấy.
+     * @throws SQLException
+     */
+    public ChuyenTau getChuyenTauTheoMa(String maChuyenTau) throws SQLException {
+        ChuyenTau chuyenTau = null;
+        Connection con = ConnectDB.getConnection();
+        ChangTau_DAO changTauDAO = new ChangTau_DAO(); 
 
-            ps.setString(1, maChuyenTau);
+        String sql = "SELECT ct.*, t.tenTau, t.maLoaiTau, t.soLanSuaChua, " +
+                     "       td.tenTuyenDuong, td.gaKhoiHanh AS maGaKhoiHanh_TD, td.gaKetThuc AS maGaKetThuc_TD, " +
+                     "       gaDi_td.tenGaTau AS tenGaDi_TuyenDuong, " +
+                     "       gaDen_td.tenGaTau AS tenGaDen_TuyenDuong " +
+                     "FROM ChuyenTau ct " +
+                     "JOIN Tau t ON ct.maTau = t.maTau " +
+                     "JOIN TuyenDuong td ON ct.maTuyenDuong = td.maTuyenDuong " +
+                     "JOIN GaTau gaDi_td ON td.gaKhoiHanh = gaDi_td.maGaTau " +
+                     "JOIN GaTau gaDen_td ON td.gaKetThuc = gaDen_td.maGaTau " +
+                     "WHERE ct.maChuyenTau = ?";
+                     
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, maChuyenTau);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                // 1. Tạo đối tượng ChuyenTau từ ResultSet
+                chuyenTau = new ChuyenTau();
+                chuyenTau.setMaChuyenTau(rs.getString("maChuyenTau"));
+                chuyenTau.setDonGiaCoBan(rs.getDouble("donGiaCoBan"));
+                chuyenTau.setNgayGioKhoiHanh(rs.getTimestamp("ngayGioKhoiHanh").toLocalDateTime());
+                chuyenTau.setNgayGioDen(rs.getTimestamp("ngayGioDen").toLocalDateTime());
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) return null;
+                // 2. Tạo các đối tượng con (Tau, TuyenDuong)
+                Tau tau = new Tau();
+                tau.setMaTau(rs.getString("maTau"));
+                tau.setTenTau(rs.getString("tenTau"));
+                
+                // --- PHẦN HOÀN THIỆN ---
+                tau.setSoLanSuaChua(rs.getInt("soLanSuaChua"));
+                String maLoaiTau = rs.getString("maLoaiTau");
+                if(maLoaiTau != null) {
+                    tau.setLoaiTau(LoaiTau.valueOf(maLoaiTau.trim()));
+                }
+                // --- KẾT THÚC PHẦN HOÀN THIỆN ---
 
-                maCT  = rs.getString("maChuyenTau");
-                maTau = rs.getString("maTau");
-                maTD  = rs.getString("maTuyenDuong");
+                GaTau gaDi_TuyenDuong = new GaTau(rs.getString("maGaKhoiHanh_TD"), rs.getString("tenGaDi_TuyenDuong"));
+                GaTau gaDen_TuyenDuong = new GaTau(rs.getString("maGaKetThuc_TD"), rs.getString("tenGaDen_TuyenDuong"));
+                
+                TuyenDuong tuyenDuong = new TuyenDuong();
+                tuyenDuong.setMaTuyenDuong(rs.getString("maTuyenDuong"));
+                tuyenDuong.setTenTuyenDuong(rs.getString("tenTuyenDuong"));
+                tuyenDuong.setGaKhoiHanh(gaDi_TuyenDuong);
+                tuyenDuong.setGaKetThuc(gaDen_TuyenDuong);
 
-                Timestamp tk  = rs.getTimestamp("ngayGioKhoiHanh");
-                Timestamp tdn = rs.getTimestamp("ngayGioDen");
-                khoiHanh = (tk  != null) ? tk.toLocalDateTime()  : null;
-                den      = (tdn != null) ? tdn.toLocalDateTime() : null;
-
-                // Nếu cột là DECIMAL/NUMERIC, cân nhắc dùng getBigDecimal để chính xác hơn
-                donGiaCoBan = rs.getBigDecimal("donGiaCoBan") != null
-                            ? rs.getBigDecimal("donGiaCoBan").doubleValue()
-                            : 0.0;
+                chuyenTau.setTau(tau);
+                chuyenTau.setTuyenDuong(tuyenDuong);
+                
+                // 3. Lấy danh sách các chặng và gán vào chuyến tàu
+                ArrayList<ChangTau> dsChang = changTauDAO.getChangTauByMaChuyenTau(chuyenTau.getMaChuyenTau());
+                chuyenTau.setDanhSachChang(dsChang);
             }
-            // rs/ps/con đều đóng ở đây
         }
-
-        // 2) Resolve FK sau khi đã đóng ResultSet/Connection
-        Tau tau = tauDAO.getTauTheoMa(maTau, con);
-        // Tên hàm theo bạn đang dùng ở nơi khác: getTheoMa (nếu bạn đặt là getTuyenDuongTheoMa thì giữ nguyên)
-        TuyenDuong td = tuyenDuongDAO.getTuyenDuongTheoMa(maTD, con);
-
-        return new ChuyenTau(maCT, tau, td, khoiHanh, den, donGiaCoBan);
+        
+        return chuyenTau;
     }
 
+    /**
+     * Tìm kiếm các chuyến tàu dựa trên ga đi, ga đến và ngày khởi hành.
+     * Phương thức này sẽ tải đầy đủ thông tin cho mỗi ChuyenTau, bao gồm cả danh sách các ChangTau.
+     * @param gaDi Đối tượng GaTau của ga đi.
+     * @param gaDen Đối tượng GaTau của ga đến.
+     * @param ngayDi Ngày khởi hành mong muốn.
+     * @return Danh sách các ChuyenTau phù hợp, mỗi ChuyenTau đã chứa List<ChangTau> của nó.
+     * @throws SQLException 
+     */
+ // Trong file ChuyenTau_DAO.java
+
+    /**
+     * Tìm kiếm các chuyến tàu dựa trên ga đi, ga đến và ngày khởi hành.
+     * PHIÊN BẢN MỚI: Tìm các chuyến tàu có lịch trình đi qua các ga đã chọn.
+     * @param gaDi Đối tượng GaTau của ga đi.
+     * @param gaDen Đối tượng GaTau của ga đến.
+     * @param ngayDi Ngày khởi hành mong muốn.
+     * @return Danh sách các ChuyenTau phù hợp.
+     * @throws SQLException 
+     */
+    public ArrayList<ChuyenTau> findChuyenTau(GaTau gaDi, GaTau gaDen, LocalDate ngayDi) throws SQLException {
+    	ArrayList<ChuyenTau> dsChuyenTau = new ArrayList<>();
+        Connection con = ConnectDB.getConnection();
+        ChangTau_DAO changTauDAO = new ChangTau_DAO();
+
+        // Câu SQL này sử dụng EXISTS để kiểm tra xem một chuyến tàu có đi qua
+        // ga đi và ga đến yêu cầu hay không, đồng thời kiểm tra thứ tự của chúng.
+        String sql = "SELECT DISTINCT ct.* FROM ChuyenTau ct " +
+                     "JOIN ChangTau c_di ON ct.maChuyenTau = c_di.maChuyenTau " +
+                     "JOIN ChangTau c_den ON ct.maChuyenTau = c_den.maChuyenTau " +
+                     "WHERE c_di.maGaDi = ? " +
+                     "AND c_den.maGaDen = ? " +
+                     "AND c_di.soThuTu < c_den.soThuTu " +
+                     "AND CONVERT(date, ct.ngayGioKhoiHanh) = ?";
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, gaDi.getMaGaTau());
+            pstmt.setString(2, gaDen.getMaGaTau());
+            pstmt.setDate(3, java.sql.Date.valueOf(ngayDi));
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            // Dùng DAO để lấy đối tượng ChuyenTau hoàn chỉnh từ mã tìm được
+            while (rs.next()) {
+                ChuyenTau chuyenTau = getChuyenTauTheoMa(rs.getString("maChuyenTau"));
+                if (chuyenTau != null) {
+                    dsChuyenTau.add(chuyenTau);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return dsChuyenTau;
+    }
 
     
 }

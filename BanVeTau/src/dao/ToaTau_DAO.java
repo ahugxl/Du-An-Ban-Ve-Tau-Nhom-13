@@ -99,41 +99,64 @@ public class ToaTau_DAO {
 //    }
 
     // Lấy 1 toa tàu theo mã
-    public ToaTau getToaTauTheoMa(String maToaTau, Connection con) throws SQLException {
+    /**
+     * Tìm một toa tàu theo mã.
+     * Phương thức này tự quản lý việc kết nối CSDL và gọi các DAO phụ thuộc.
+     * @param maToaTau Mã của toa tàu cần tìm.
+     * @return Đối tượng ToaTau nếu tìm thấy, ngược lại trả về null.
+     * @throws SQLException
+     */
+ // Trong file ToaTau_DAO.java
+
+    public ToaTau getToaTauTheoMa(String maToaTau) throws SQLException {
+        ToaTau toaTau = null;
+        Connection con = ConnectDB.getConnection();
+        Tau_DAO tauDAO = new Tau_DAO();
+
         String sql = "SELECT maToaTau, tenToaTau, thuTuToa, maLoaiToa, soLuongGhe, heSoHangToa, maTau " +
                      "FROM ToaTau WHERE maToaTau = ?";
 
-        
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, maToaTau);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    String maToa   = rs.getString("maToaTau");
-                    String tenToa  = rs.getNString("tenToaTau");
-                    int thuTu      = rs.getInt("thuTuToa");
+                    // 1. Đọc tất cả các cột từ ResultSet
+                    String maToa = rs.getString("maToaTau");
+                    String tenToa = rs.getNString("tenToaTau");
+                    int thuTu = rs.getInt("thuTuToa");
+                    int soGhe = rs.getInt("soLuongGhe");
+                    double heSo = rs.getDouble("heSoHangToa"); // Đọc hệ số
+                    String maTau = rs.getString("maTau");
+                    String codeLT = rs.getString("maLoaiToa");
+
+                    // 2. Chuyển đổi mã loại toa sang enum
                     LoaiToaTau loaiToa;
-                    String codeLT  = rs.getString("maLoaiToa");
-                    if (codeLT.equals("GNK6DH")) {
-    					loaiToa = LoaiToaTau.GiuongNamSauCho;
-    				} else if (codeLT.equals("GNK4DH")) {
-    					loaiToa = LoaiToaTau.GiuongNamBonCho;
-    				} else if (codeLT.equals("NMDH")) {
-    					loaiToa = LoaiToaTau.NgoiMem;
-    				} else {
-    					loaiToa = LoaiToaTau.NgoiCung;
-    				}
+                    switch (codeLT.toUpperCase()) {
+                        case "GNK6DH":
+                            loaiToa = LoaiToaTau.GiuongNamSauCho;
+                            break;
+                        case "GNK4DH":
+                            loaiToa = LoaiToaTau.GiuongNamBonCho;
+                            break;
+                        case "NMDH":
+                            loaiToa = LoaiToaTau.NgoiMem;
+                            break;
+                        default:
+                            loaiToa = LoaiToaTau.NgoiCung;
+                            break;
+                    }
 
-                    int soGhe      = rs.getInt("soLuongGhe");
-                    double heSo    = rs.getDouble("heSoHangToa");
-                    String maTau   = rs.getString("maTau");
-                    Tau tau        = tauDAO.getTauTheoMa(maTau, con);
+                    // 3. Lấy đối tượng Tau hoàn chỉnh
+                    Tau tau = tauDAO.getTauTheoMa(maTau);
 
-                    return new ToaTau(maToa, tenToa, thuTu, loaiToa, soGhe, heSo, tau);
+                    // 4. Tạo đối tượng ToaTau với đầy đủ thông tin
+                    toaTau = new ToaTau(maToa, tenToa, thuTu, loaiToa, soGhe, heSo, tau);
+                    System.out.println(">>> DEBUG (ToaTau_DAO): Đối tượng ToaTau sắp trả về: " + toaTau); 
+                    
                 }
             }
         }
-        return null; // không tìm thấy
+        return toaTau;
     }
 }

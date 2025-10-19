@@ -1,7 +1,11 @@
 package entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Ve {
@@ -9,7 +13,7 @@ public class Ve {
 	private String maVe;
 	private String tenVe;
 	private ChuyenTau chuyenTau;
-	private GheNgoi gheNgoi;
+	private GheNgoi_mthanh gheNgoi;
 	private GaTau gaDi;
 	private GaTau gaDen;
 	private LocalDateTime ngayInVe;
@@ -19,15 +23,19 @@ public class Ve {
 	private boolean coPhongChoVip;
 	private Thue thueApDung;
 	private KhachHang khachHang; 
+	private List<ChiTietKhuyenMai> danhSachChiTietKhuyenMai;
 	private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	public Ve() {
+		this.danhSachChiTietKhuyenMai = new ArrayList<>();
 	}
 
 	
 
-	public Ve(String maVe, String tenVe, ChuyenTau chuyenTau, GheNgoi gheNgoi, GaTau gaDi, GaTau gaDen,
+	
+	 public Ve(String maVe, String tenVe, ChuyenTau chuyenTau, GheNgoi_mthanh gheNgoi, GaTau gaDi, GaTau gaDen,
 			LocalDateTime ngayInVe, LoaiHanhTrinh loaiHanhTrinh, LoaiVe loaiVe, String trangThaiVe,
-			boolean coPhongChoVip, Thue thueApDung, KhachHang khachHang) {
+			boolean coPhongChoVip, Thue thueApDung, KhachHang khachHang,
+			List<ChiTietKhuyenMai> danhSachChiTietKhuyenMai) {
 		super();
 		this.maVe = maVe;
 		this.tenVe = tenVe;
@@ -42,7 +50,12 @@ public class Ve {
 		this.coPhongChoVip = coPhongChoVip;
 		this.thueApDung = thueApDung;
 		this.khachHang = khachHang;
+		this.danhSachChiTietKhuyenMai = danhSachChiTietKhuyenMai;
 	}
+
+
+
+
 	 /* ===== Getter phục vụ TableView (PropertyValueFactory keys) ===== */
     // clTenChuyen -> "chuyen"
     public String getChuyen() {
@@ -75,11 +88,6 @@ public class Ve {
     // clLoaiHT -> "loaiHanhTrinhStr"
     public String getLoaiHanhTrinhStr() {
         return (loaiHanhTrinh != null) ? loaiHanhTrinh.getDisplayName() : null;
-    }
-
-    // clLoaiVe -> "loaiVeStr"
-    public String getLoaiVeStr() {
-        return (loaiVe != null) ? loaiVe.getDisplayName() : null;
     }
 
     // clTinhTrang -> "trangThaiVeStr"
@@ -115,7 +123,7 @@ public class Ve {
 		return chuyenTau;
 	}
 
-	public GheNgoi getGheNgoi() {
+	public GheNgoi_mthanh getGheNgoi() {
 		return gheNgoi;
 	}
 
@@ -163,7 +171,7 @@ public class Ve {
 		this.chuyenTau = chuyenTau;
 	}
 
-	public void setGheNgoi(GheNgoi gheNgoi) {
+	public void setGheNgoi(GheNgoi_mthanh gheNgoi) {
 		this.gheNgoi = gheNgoi;
 	}
 
@@ -198,6 +206,144 @@ public class Ve {
 	public void setThueApDung(Thue thueApDung) {
 		this.thueApDung = thueApDung;
 	}
+	
+	public List<ChiTietKhuyenMai> getDanhSachChiTietKhuyenMai() {
+		return danhSachChiTietKhuyenMai;
+	}
+
+
+
+
+	public void setDanhSachChiTietKhuyenMai(List<ChiTietKhuyenMai> danhSachChiTietKhuyenMai) {
+		this.danhSachChiTietKhuyenMai = danhSachChiTietKhuyenMai;
+	}
+
+	public double getTienPhongChoVip(boolean coPhongChoVip) {
+		if (coPhongChoVip)
+			return 20000;
+		return 0;
+	}
+
+
+	public double getGiaVeThucTe() {
+        int tongKm = 0;
+        boolean batDauTinh = false;
+        
+        ArrayList<ChangTau> dsChang = chuyenTau.getDanhSachChang();
+
+        if (dsChang == null || dsChang.isEmpty()) {
+            System.out.println("Lỗi: ChuyenTau không có danh sách chặng để tính toán.");
+            return 0; 
+        }
+
+        dsChang.sort((c1, c2) -> Integer.compare(c1.getSoThuTu(), c2.getSoThuTu()));
+
+        for (ChangTau chang : dsChang) {
+            if (!batDauTinh && chang.getGaDi().getMaGaTau().equals(this.gaDi.getMaGaTau())) {
+                batDauTinh = true;
+            }
+            if (batDauTinh) {
+                tongKm += chang.getSoKm();
+            }
+            if (batDauTinh && chang.getGaDen().getMaGaTau().equals(this.gaDen.getMaGaTau())) {
+                break;
+            }
+        }
+
+        System.out.println("Tổng km tính được: " + tongKm); // KIỂM TRA GIÁ TRỊ NÀY
+        
+        double donGiaCoBan = chuyenTau.getDonGiaCoBan();
+        System.out.println("Đơn giá cơ sở: " + donGiaCoBan); // KIỂM TRA GIÁ TRỊ NÀY
+        
+        double heSoHangGhe = gheNgoi.getToaTau().getHeSoHangToa();
+        ToaTau  tt = gheNgoi.getToaTau();
+        System.out.println("Hệ số hạng ghế: " + heSoHangGhe);
+        System.out.println("tt: " + tt.toString());
+        return (tongKm * donGiaCoBan * heSoHangGhe) + getTienPhongChoVip(coPhongChoVip);
+    }
+
+    /**
+     * 2. Tính số tiền được Giảm giá.
+     * @param ngayDatVe Ngày thực hiện việc đặt vé.
+     * @return Số tiền được giảm.
+     */
+	// Bên trong lớp Ve.java
+
+	/**
+	 * Tính tổng số tiền được giảm giá cho vé.
+	 * PHIÊN BẢN CUỐI CÙNG: Dùng LoaiVe là class, tách biệt giảm giá đối tượng và khuyến mãi.
+	 *
+	 * @param ngayDatVe Ngày thực hiện việc đặt vé.
+	 * @return Tổng số tiền được giảm.
+	 */
+	public double getGiamGia(LocalDate ngayDatVe) {
+	    double donGia = getGiaVeThucTe();
+	    double giaSauKhiGiamPhanTram = donGia;
+	    double giamGiaCoDinh = 0.0;
+
+	    // --- 1. ÁP DỤNG GIẢM GIÁ THEO ĐỐI TƯỢNG (Từ class LoaiVe) ---
+	    LoaiVe loaiVe = getLoaiVe();
+	    
+	    // Lấy thẳng tỷ lệ giảm giá từ đối tượng LoaiVe, không cần switch-case
+	    double tiLeGiamGiaDoiTuong = loaiVe.getTiLeGiamGia();
+	    
+	    // Áp dụng giảm giá đối tượng vào giá vé
+	    giaSauKhiGiamPhanTram = giaSauKhiGiamPhanTram * (1 - tiLeGiamGiaDoiTuong);
+
+	    // --- 2. ÁP DỤNG CÁC CHƯƠG TRÌNH KHUYẾN MÃI (Bao gồm cả mua vé sớm) ---
+	 // Giả định enum LoaiKhuyenMai của bạn có các hằng số là PhanTram và SoTienCoDinh
+
+	    if (this.danhSachChiTietKhuyenMai != null && !this.danhSachChiTietKhuyenMai.isEmpty()) {
+	        // 1. Lặp qua danh sách các "ChiTietKhuyenMai"
+	        for (ChiTietKhuyenMai chiTiet : this.danhSachChiTietKhuyenMai) {
+	            
+	            // 2. Từ mỗi "chiTiet", lấy ra đối tượng "KhuyenMai" tương ứng
+	            KhuyenMai km = chiTiet.getKhuyenMai();
+	            
+	            // 3. Kiểm tra loại khuyến mãi và tính toán
+	            if (km.getLoaiKhuyenMai() == LoaiKhuyenMai.PhanTram) {
+	                // Áp dụng giảm giá % tiếp nối
+	                giaSauKhiGiamPhanTram = giaSauKhiGiamPhanTram * (1 - km.getGiaTriKhuyenMai());
+	            } 
+	            else if (km.getLoaiKhuyenMai() == LoaiKhuyenMai.SoTienCoDinh) {
+	                // Cộng dồn các khoản giảm giá cố định
+	                giamGiaCoDinh += km.getGiaTriKhuyenMai();
+	            }
+	        }
+	    }
+
+	    // --- 3. TÍNH TOÁN TỔNG SỐ TIỀN GIẢM ---
+	    double tongGiamGiaPhanTram = donGia - giaSauKhiGiamPhanTram;
+	    return tongGiamGiaPhanTram + giamGiaCoDinh;
+	}
+
+    /**
+     * 3. Tính Số tiền thuế.
+     * @param ngayDatVe Ngày thực hiện việc đặt vé.
+     * @return Số tiền thuế VAT 10%.
+     */
+    public double getSoTienThue(LocalDate ngayDatVe) {
+        double giaSauGiam = getGiaVeThucTe() - getGiamGia(ngayDatVe);
+        return giaSauGiam * thueApDung.getMucThue();
+    }
+
+    /**
+     * 4. Tính Giá vé cuối cùng sau thuế.
+     * @param ngayDatVe Ngày thực hiện việc đặt vé.
+     * @return Tổng số tiền phải thanh toán.
+     */
+    public double getGiaVeSauThue(LocalDate ngayDatVe) {
+        double giaSauGiam = getGiaVeThucTe() - getGiamGia(ngayDatVe);
+        return giaSauGiam + getSoTienThue(ngayDatVe);
+    }
+
+    // --- Phương thức phụ để xác định tỷ lệ giảm giá ---
+ // Bên trong lớp Ve.java
+
+    /**
+     * Phương thức phụ để xác định tỷ lệ giảm giá (R).
+     * ĐÃ CẬP NHẬT THEO ENUM LOAIVE MỚI.
+     */
 
 	@Override
 	public int hashCode() {

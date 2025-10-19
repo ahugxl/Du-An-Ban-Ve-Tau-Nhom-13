@@ -2,40 +2,25 @@ package entity;
 
 import java.util.Objects;
 
-public class GheNgoi {
+public class GheNgoi_mthanh {
 	private String maGheNgoi;
 	private int viTriGhe;
 	private ToaTau toaTau;
-	private boolean daDat;
-	public GheNgoi() {
+	public GheNgoi_mthanh() {
 	}
 	
-	public GheNgoi(String maGheNgoi) {
+	public GheNgoi_mthanh(String maGheNgoi) {
 		super();
 		this.maGheNgoi = maGheNgoi;
 	}
 
 	
 
-	public GheNgoi(String maGheNgoi, int viTriGhe, ToaTau toaTau, boolean daDat) {
+	public GheNgoi_mthanh(String maGheNgoi, int viTriGhe, ToaTau toaTau) {
 		super();
 		this.maGheNgoi = maGheNgoi;
 		this.viTriGhe = viTriGhe;
 		this.toaTau = toaTau;
-		this.daDat = daDat;
-	}
-
-	public GheNgoi(boolean daDat) {
-		super();
-		this.daDat = daDat;
-	}
-	
-	public boolean isDaDat() {
-		return daDat;
-	}
-
-	public void setDaDat(boolean daDat) {
-		this.daDat = daDat;
 	}
 
 	public String getMaGheNgoi() {
@@ -75,7 +60,7 @@ public class GheNgoi {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GheNgoi other = (GheNgoi) obj;
+		GheNgoi_mthanh other = (GheNgoi_mthanh) obj;
 		return Objects.equals(maGheNgoi, other.maGheNgoi);
 	}
 

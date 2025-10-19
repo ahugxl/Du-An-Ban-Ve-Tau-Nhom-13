@@ -33,7 +33,16 @@ public class GaTau_DAO {
         return ds;
     }
  // Lấy 1 ga tàu theo mã
-    public GaTau getGaTauTheoMa(String maGa, Connection con) throws SQLException {
+    /**
+     * Tìm một ga tàu theo mã.
+     * Phương thức này tự quản lý việc kết nối đến CSDL.
+     * @param maGa Mã của ga tàu cần tìm.
+     * @return Đối tượng GaTau nếu tìm thấy, ngược lại trả về null.
+     * @throws SQLException
+     */
+    public GaTau getGaTauTheoMa(String maGa) throws SQLException {
+        GaTau gaTau = null;
+        Connection con = ConnectDB.getConnection(); // Lấy kết nối ở đầu phương thức
         String sql = "SELECT maGaTau, tenGaTau, diaChiGa, soDienThoaiGa " +
                      "FROM GaTau WHERE maGaTau = ?";
 
@@ -48,10 +57,13 @@ public class GaTau_DAO {
                     String diaC = rs.getNString("diaChiGa");
                     String sdt  = rs.getString("soDienThoaiGa");
 
-                    return new GaTau(ma, ten, diaC, sdt);
+                    gaTau = new GaTau(ma, ten, diaC, sdt);
                 }
             }
         }
-        return null; // không tìm thấy
+        // Khối try-with-resources sẽ tự động đóng PreparedStatement và ResultSet.
+        // Connection sẽ được quản lý bởi lớp ConnectDB.
+
+        return gaTau; // Trả về gaTau (có thể là null nếu không tìm thấy)
     }
 }

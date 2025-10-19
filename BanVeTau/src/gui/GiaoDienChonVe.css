@@ -12,7 +12,7 @@
 .title-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: black; /* Chữ trắng */
+    -fx-text-fill: white; /* Chữ trắng */
 }
 
 /* ScrollPane trong header */
@@ -46,10 +46,10 @@
     /* Cấu hình cho ảnh nền */
     -fx-background-repeat: no-repeat;  /* Không lặp lại ảnh nền */
     -fx-background-position: center bottom; /* Căn ảnh nền ở giữa và ở dưới */
-    -fx-background-size: 70% 100%;     /* Co giãn ảnh vừa khít bên trong, không bị méo */
+    -fx-background-size: 85% 100%;     /* Co giãn ảnh vừa khít bên trong, không bị méo */
     
     -fx-pref-width: 220px; /* Kích thước card */
-    -fx-pref-height: 280px;
+    -fx-pref-height: 240px;
 }
 
 /* 2. Style cho card màu xám (trạng thái bình thường) */
@@ -77,7 +77,7 @@
     -fx-text-fill: black; /* Hoặc màu đen để nổi bật trên nền trắng */
     
     /* Vị trí tương đối cho tên tàu trong vùng trắng */
-    -fx-translate-y: -20px; /* Di chuyển lên trên nhiều hơn */
+    -fx-translate-y: -12px; /* Di chuyển lên trên nhiều hơn */
     -fx-alignment: center;   /* Căn giữa chữ */
 }
 .card-train-time {
@@ -113,7 +113,8 @@
 }
 .toa-icon-container Label {
     -fx-font-size: 12px;
-    -fx-text-fill: #333;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
 
 
@@ -135,7 +136,7 @@
 .panel-title {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: rgb(25, 35, 80);
     -fx-padding-bottom: 10px;
 }
 
@@ -288,7 +289,7 @@
 
 /* Form tìm kiếm */
 .search-button {
-    -fx-background-color: #0078D7;
+    -fx-background-color: rgb(25, 35, 80);
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-pref-width: 250px;
@@ -314,4 +315,81 @@
 .service-description {
     -fx-font-size: 11px;
     -fx-text-fill: #555;
+}
+/* --- CSS CHO GIỎ VÉ --- */
+
+/* Vùng cuộn chứa các vé */
+.cart-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Định dạng cho mỗi mục (HBox) vé trong giỏ */
+.cart-item {
+    -fx-padding: 8px 5px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent; /* Đường kẻ ngang phân cách */
+    -fx-border-width: 1px;
+}
+
+/* Định dạng cho phần text (tên tàu, giờ đi...) */
+.cart-item-details Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+/* Định dạng cho giá vé */
+.cart-item-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 0 10px; /* Khoảng cách trái/phải */
+}
+
+/* Định dạng cho icon xóa */
+.delete-icon {
+    -fx-cursor: hand; /* Biến con trỏ thành hình bàn tay */
+    -fx-opacity: 1.0; /* Độ trong suốt mặc định */
+}
+
+/* Hiệu ứng khi di chuột qua icon xóa */
+.delete-icon:hover {
+    -fx-opacity: 0.7; /* Hơi mờ đi khi di chuột qua để tạo hiệu ứng */
+}
+/* Điều chỉnh HBox.setHgrow cho spacer trong Java Controller */
+.cart-item {
+    -fx-padding: 8px 5px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 1px;
+    -fx-alignment: CENTER_LEFT; /* Đảm bảo các thành phần căn trái */
+}
+
+/* Đảm bảo Label không bị ép quá mức */
+.cart-item-details {
+    -fx-max-width: infinity; /* Cho phép VBox này mở rộng hết mức có thể */
+}
+
+.cart-item-details Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-wrap-text: false; /* Ngăn không cho text xuống dòng không cần thiết nếu đủ chỗ */
+}
+
+.cart-item-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 0 10px;
+}
+/* CheckBox trong giỏ vé */
+.vip-checkbox {
+    -fx-font-size: 11px;
+    -fx-text-fill: #007aff; /* Màu xanh dương */
+    -fx-padding: 5px 0 0 0;
+}
+
+/* Hộp chứa tổng tiền */
+.cart-total-box {
+    -fx-padding: 10px 8px;
+    -fx-border-color: #e0e0e0 transparent transparent transparent;
+    -fx-border-width: 1px;
+    -fx-font-weight: bold;
 }

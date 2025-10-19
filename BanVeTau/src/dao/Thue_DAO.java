@@ -41,12 +41,21 @@ public class Thue_DAO {
     }
 
     // Lấy 1 thuế theo mã
-    public Thue getThueTheoMa(String maSoThue, Connection con) throws SQLException {
+    /**
+     * Tìm một loại thuế theo mã số thuế.
+     * Phương thức này tự quản lý việc kết nối đến CSDL.
+     * @param maSoThue Mã số thuế cần tìm.
+     * @return Đối tượng Thue nếu tìm thấy, ngược lại trả về null.
+     * @throws SQLException
+     */
+    public Thue getThueTheoMa(String maSoThue) throws SQLException {
+        Thue thue = null;
+        Connection con = ConnectDB.getConnection(); // Tự lấy kết nối
+
         String sql = "SELECT maSoThue, tenThue, mucThue, trangThai, ngayBatDau " +
                      "FROM Thue WHERE maSoThue = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, maSoThue);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -58,10 +67,10 @@ public class Thue_DAO {
                     Date d      = rs.getDate("ngayBatDau");
                     LocalDate nb = (d != null) ? d.toLocalDate() : null;
 
-                    return new Thue(ma, ten, muc, tt, nb);
+                    thue = new Thue(ma, ten, muc, tt, nb);
                 }
             }
         }
-        return null; // không tìm thấy
+        return thue;
     }
 }

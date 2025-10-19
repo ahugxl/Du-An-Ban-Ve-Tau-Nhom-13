@@ -16,18 +16,18 @@ import java.util.Map;
 import connectDB.ConnectDB;
 import entity.ChuyenTau;
 import entity.GaTau;
-import entity.GheNgoi;
+import entity.GheNgoi_mthanh;
 import entity.KhachHang;
 import entity.LoaiHanhTrinh;
 import entity.LoaiVe;
 import entity.Thue;
 import entity.Ve;
 
-public class Ve_DAO {
-	private KhachHang_DAO kh_dao;
+public class Ve_DAO_mthanh {
+	private KhachHang_DAO_mthanh kh_dao;
 	private GaTau_DAO ga_dao;
 	private ChuyenTau_DAO ct_dao;
-	private GheNgoi_DAO gn_dao;
+	private GheNgoi_DAO_mthanh gn_dao;
 //	public ArrayList<Ve> getalltbVe(){
 //		kh_dao= new KhachHang_DAO();
 //		ga_dao= new GaTau_DAO();
@@ -106,115 +106,127 @@ public class Ve_DAO {
 //		}
 //		return dsVe;
 //	}
-	public ArrayList<Ve> getalltbVe() {
-	    ArrayList<Ve> dsVe = new ArrayList<>();
-	    class VeRaw {
-	        String maVe, tenVe, maCT, maGheNgoi, maGaDi, maGaDen, trangThaiVe, maThue, maKH;
-	        String maLoaiHanhTrinh, maLoaiVe;
-	        LocalDateTime ngayInVe;
-	        boolean coPhongChoVip;
-	    }
-	    List<VeRaw> raws = new ArrayList<>();
-	    try {
-	    	final Connection con = ConnectDB.getConnection();
-	    	String sql = "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
-		                 "       ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, coPhongChoVip, maThueApDung, maKhachHang " +
-		                 "FROM Ve";
-	    	try (
-	    		PreparedStatement ps = con.prepareStatement(sql);
-	    		ResultSet rs = ps.executeQuery()) {
-	    			while (rs.next()) {
-			            VeRaw r = new VeRaw();
-			            r.maVe             = rs.getString("maVe");
-			            r.tenVe            = rs.getNString("tenVe"); // NVARCHAR
-			            r.maCT             = rs.getString("maChuyenTau");
-			            r.maGheNgoi        = rs.getString("maGheNgoi");
-			            r.maGaDi           = rs.getString("maGaDi");
-			            r.maGaDen          = rs.getString("maGaDen");
-			            Timestamp t        = rs.getTimestamp("ngayInVe");
-			            r.ngayInVe         = (t != null) ? t.toLocalDateTime() : null;
-			            r.maLoaiHanhTrinh  = rs.getString("maLoaiHanhTrinh");
-			            r.maLoaiVe         = rs.getString("maLoaiVe");
-			            r.trangThaiVe      = rs.getNString("trangThaiVe");
-			            r.coPhongChoVip    = rs.getBoolean("coPhongChoVip");
-			            r.maThue           = rs.getString("maThueApDung");
-			            r.maKH             = rs.getString("maKhachHang");
-			            raws.add(r);
-			        }
-	    		}
-	    KhachHang_DAO khDao   = new KhachHang_DAO();
-	    GaTau_DAO gaDao       = new GaTau_DAO();
-	    ChuyenTau_DAO ctDao   = new ChuyenTau_DAO();
-	    GheNgoi_DAO gnDao     = new GheNgoi_DAO();
-	    Thue_DAO thueDao      = new Thue_DAO();
+	// Trong file Ve_DAO.java
+//	public ArrayList<Ve> getalltbVe() {
+//	    ArrayList<Ve> dsVe = new ArrayList<>();
+//	    // Lớp nội bộ VeRaw không thay đổi
+//	    class VeRaw {
+//	        String maVe, tenVe, maCT, maGheNgoi, maGaDi, maGaDen, trangThaiVe, maThue, maKH;
+//	        String maLoaiHanhTrinh, maLoaiVe;
+//	        LocalDateTime ngayInVe;
+//	        boolean coPhongChoVip;
+//	    }
+//	    List<VeRaw> raws = new ArrayList<>();
+//	    
+//	    try {
+//	        final Connection con = ConnectDB.getConnection();
+//	        String sql = "SELECT maVe, tenVe, maChuyenTau, maGheNgoi, maGaDi, maGaDen, " +
+//	                     "ngayInVe, maLoaiHanhTrinh, maLoaiVe, trangThaiVe, coPhongChoVip, maThueApDung, maKhachHang " +
+//	                     "FROM Ve";
+//	        
+//	        try (PreparedStatement ps = con.prepareStatement(sql);
+//	             ResultSet rs = ps.executeQuery()) {
+//	            while (rs.next()) {
+//	                VeRaw r = new VeRaw();
+//	                // ... (phần đọc dữ liệu thô không thay đổi) ...
+//	                r.maVe = rs.getString("maVe");
+//	                r.tenVe = rs.getNString("tenVe");
+//	                r.maCT = rs.getString("maChuyenTau");
+//	                r.maGheNgoi = rs.getString("maGheNgoi");
+//	                r.maGaDi = rs.getString("maGaDi");
+//	                r.maGaDen = rs.getString("maGaDen");
+//	                Timestamp t = rs.getTimestamp("ngayInVe");
+//	                r.ngayInVe = (t != null) ? t.toLocalDateTime() : null;
+//	                r.maLoaiHanhTrinh = rs.getString("maLoaiHanhTrinh");
+//	                r.maLoaiVe = rs.getString("maLoaiVe");
+//	                r.trangThaiVe = rs.getNString("trangThaiVe");
+//	                r.coPhongChoVip = rs.getBoolean("coPhongChoVip");
+//	                r.maThue = rs.getString("maThueApDung");
+//	                r.maKH = rs.getString("maKhachHang");
+//	                raws.add(r);
+//	            }
+//	        }
+//
+//	        // --- CÁC THAY ĐỔI BẮT ĐẦU TỪ ĐÂY ---
+//
+//	        // 1. Khởi tạo LoaiVe_DAO
+//	        LoaiVe_DAO loaiVeDAO = new LoaiVe_DAO();
+//	        KhachHang_DAO khDao = new KhachHang_DAO();
+//	        GaTau_DAO gaDao = new GaTau_DAO();
+//	        ChuyenTau_DAO ctDao = new ChuyenTau_DAO();
+//	        GheNgoi_DAO gnDao = new GheNgoi_DAO();
+//	        Thue_DAO thueDao = new Thue_DAO();
+//
+//	        // 2. Thêm cache cho LoaiVe
+//	        Map<String, LoaiVe> cacheLoaiVe = new HashMap<>();
+//	        Map<String, ChuyenTau> cacheCT = new HashMap<>();
+//	        Map<String, GheNgoi> cacheGN = new HashMap<>();
+//	        Map<String, GaTau> cacheGa = new HashMap<>();
+//	        Map<String, KhachHang> cacheKH = new HashMap<>();
+//	        Map<String, Thue> cacheThue = new HashMap<>();
+//
+//	     // Bên trong phương thức getalltbVe()
+//
+//	        for (VeRaw r : raws) {
+//	            // Gọi các phương thức DAO đã được sửa (không cần truyền 'con')
+//	            // Mỗi lời gọi được đặt trong try-catch để xử lý SQLException nếu có
+//	            
+//	            ChuyenTau ct = (r.maCT != null) ? cacheCT.computeIfAbsent(r.maCT, k -> {
+//	                try { return ctDao.getChuyenTauTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            GheNgoi ghe = (r.maGheNgoi != null) ? cacheGN.computeIfAbsent(r.maGheNgoi, k -> {
+//	                try { return gnDao.getGheNgoiTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            GaTau gaDi = (r.maGaDi != null) ? cacheGa.computeIfAbsent(r.maGaDi, k -> {
+//	                try { return gaDao.getGaTauTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            GaTau gaDen = (r.maGaDen != null) ? cacheGa.computeIfAbsent(r.maGaDen, k -> {
+//	                try { return gaDao.getGaTauTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            Thue thue = (r.maThue != null) ? cacheThue.computeIfAbsent(r.maThue, k -> {
+//	                try { return thueDao.getThueTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            KhachHang kh = (r.maKH != null) ? cacheKH.computeIfAbsent(r.maKH, k -> {
+//	                try { return khDao.getKhachHangTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//
+//	            LoaiVe loaiVe = (r.maLoaiVe != null) ? cacheLoaiVe.computeIfAbsent(r.maLoaiVe, k -> {
+//	                try { return loaiVeDAO.getLoaiVeTheoMa(k); } 
+//	                catch (SQLException e) { e.printStackTrace(); return null; }
+//	            }) : null;
+//	            
+//	            // Phần constructor của Ve không thay đổi
+//	            Ve ve = new Ve(r.maVe, r.tenVe, null, ct, ghe, gaDi, gaDen,
+//	                           r.ngayInVe, r.trangThaiVe, 
+//	                           parseLoaiHanhTrinh(r.maLoaiHanhTrinh),
+//	                           loaiVe,
+//	                           r.coPhongChoVip, thue, kh);
+//	            dsVe.add(ve);
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return dsVe;
+//	}
 
-	    Map<String, ChuyenTau> cacheCT  = new HashMap<>();
-	    Map<String, GheNgoi>   cacheGN  = new HashMap<>();
-	    Map<String, GaTau>     cacheGa  = new HashMap<>();
-	    Map<String, KhachHang> cacheKH  = new HashMap<>();
-	    Map<String, Thue>      cacheThue= new HashMap<>();
+	// 5. Phương thức parseLoaiVe() giờ không còn cần thiết và có thể được xóa đi.
 
-	    for (VeRaw r : raws) {
-	        ChuyenTau ct = null;
-	        if (r.maCT != null) {
-	            ct = cacheCT.computeIfAbsent(r.maCT, k -> {
-	                try { return ctDao.getTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	            if (ct == null) System.out.println("Chuyến tàu mã " + r.maCT + " không tồn tại trong CSDL");
-	        }
+	/**
+	 * Phương thức phụ để chuyển đổi mã loại hành trình (String) từ DB sang enum LoaiHanhTrinh.
+	 * Phương thức này giữ nguyên vì LoaiHanhTrinh vẫn là enum.
+	 */
 
-	        GheNgoi ghe = null;
-	        if (r.maGheNgoi != null) {
-	            ghe = cacheGN.computeIfAbsent(r.maGheNgoi, k -> {
-	                try { return gnDao.getGheNgoiTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	            if (ghe == null) System.out.println("Ghế ngồi mã " + r.maGheNgoi + " không tồn tại trong CSDL");
-	        }
-
-	        GaTau gaDi = null;
-	        if (r.maGaDi != null) {
-	            gaDi = cacheGa.computeIfAbsent(r.maGaDi, k -> {
-	                try { return gaDao.getGaTauTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	            if (gaDi == null) System.out.println("Ga đi mã " + r.maGaDi + " không tồn tại trong CSDL");
-	        }
-
-	        GaTau gaDen = null;
-	        if (r.maGaDen != null) {
-	            gaDen = cacheGa.computeIfAbsent(r.maGaDen, k -> {
-	                try { return gaDao.getGaTauTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	            if (gaDen == null) System.out.println("Ga đến mã " + r.maGaDen + " không tồn tại trong CSDL");
-	        }
-
-	        Thue thue = null;
-	        if (r.maThue != null) {
-	            thue = cacheThue.computeIfAbsent(r.maThue, k -> {
-	                try { return thueDao.getThueTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	        }
-
-	        KhachHang kh = null;
-	        if (r.maKH != null) {
-	            kh = cacheKH.computeIfAbsent(r.maKH, k -> {
-	                try { return khDao.getKhachHangTheoMa(k, con); } catch (SQLException e) { e.printStackTrace(); return null; }
-	            });
-	            if (kh == null) System.out.println("Khách hàng mã " + r.maKH + " không tồn tại trong CSDL");
-	        }
-
-	        Ve ve = new Ve(r.maVe, r.tenVe, ct, ghe, gaDi, gaDen,
-	                       r.ngayInVe, parseLoaiHanhTrinh(r.maLoaiHanhTrinh),
-	                       parseLoaiVe(r.maLoaiVe), r.trangThaiVe,
-	                       r.coPhongChoVip, thue, kh);
-	        dsVe.add(ve);
-	    }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return dsVe;
-	    
-	    
-	}
 	
 	private LoaiHanhTrinh parseLoaiHanhTrinh(String code) {
 	    if (code == null) return null;
@@ -226,17 +238,6 @@ public class Ve_DAO {
 	    }
 	}
 	
-	private LoaiVe parseLoaiVe(String code) {
-	    if (code == null) return null;
-	    switch (code.trim()) {
-	        case "ToanVe":        return LoaiVe.ToanVe;
-	        case "TreEm":         return LoaiVe.TreEm;
-	        case "SinhVien":      return LoaiVe.SinhVien;
-	        case "MeVNAH":        return LoaiVe.MeVNAH;
-	        case "NguoiNuocNgoai":return LoaiVe.NguoiNuocNgoai;
-	        default:              throw new IllegalArgumentException("Unknown maLoaiVe: " + code);
-	    }
-	}
 
 //	public Ve timVeTheoMaVe(String maVe) {
 //		final String sql =

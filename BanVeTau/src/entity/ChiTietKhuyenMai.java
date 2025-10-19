@@ -12,6 +12,12 @@ public class ChiTietKhuyenMai {
 	public ChiTietKhuyenMai() {
 	}
 	
+	public ChiTietKhuyenMai(KhuyenMai khuyenMai, LocalDateTime ngayApDung) {
+		super();
+		this.khuyenMai = khuyenMai;
+		this.ngayApDung = ngayApDung;
+	}
+
 	public ChiTietKhuyenMai(KhuyenMai khuyenMai, Ve ve, double soTienDuocGiam, LocalDateTime ngayApDung) {
 		this.khuyenMai = khuyenMai;
 		this.ve = ve;

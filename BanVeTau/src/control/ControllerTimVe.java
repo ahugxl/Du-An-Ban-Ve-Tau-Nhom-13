@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
-import dao.Ve_DAO;
+import dao.Ve_DAO_mthanh;
 import entity.Ve;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,7 +87,7 @@ public class ControllerTimVe {
 
     @FXML
     private TableView<Ve> tblTimVe;
-	private Ve_DAO ve_dao;
+	private Ve_DAO_mthanh ve_dao;
 	@FXML
     private void initialize() {
         // 1) Cấu hình cellValueFactory KHÔNG dùng lambda — bám theo getter dẫn xuất trong Ve
@@ -113,7 +113,7 @@ public class ControllerTimVe {
             e.printStackTrace();
         }
 
-        ve_dao = new Ve_DAO();
+        ve_dao = new Ve_DAO_mthanh();
         hienTatCaVe();
     }
 

@@ -43,29 +43,44 @@ public class TuyenDuong_DAO {
 //    }
 
     // Lấy 1 tuyến đường theo mã
-    public TuyenDuong getTuyenDuongTheoMa(String maTuyen, Connection con) throws SQLException {
-        String sql = "SELECT maTuyenDuong, tenTuyenDuong, gaKhoiHanh, gaKetThuc, thoiGianUocTinh " +
-                     "FROM TuyenDuong WHERE maTuyenDuong = ?";
+	/**
+	 * Tìm một tuyến đường theo mã.
+	 * Phương thức này tự quản lý việc kết nối CSDL và gọi các DAO phụ thuộc.
+	 * @param maTuyen Mã của tuyến đường cần tìm.
+	 * @return Đối tượng TuyenDuong nếu tìm thấy, ngược lại trả về null.
+	 * @throws SQLException
+	 */
+	public TuyenDuong getTuyenDuongTheoMa(String maTuyen) throws SQLException {
+	    TuyenDuong tuyenDuong = null;
+	    Connection con = ConnectDB.getConnection(); // Tự lấy kết nối ở đầu phương thức
+	    GaTau_DAO gaTauDAO = new GaTau_DAO();       // Khởi tạo DAO cần thiết
 
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+	    String sql = "SELECT maTuyenDuong, tenTuyenDuong, gaKhoiHanh, gaKetThuc, thoiGianUocTinh " +
+	                 "FROM TuyenDuong WHERE maTuyenDuong = ?";
 
-            ps.setString(1, maTuyen);
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, maTuyen);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String ma   = rs.getString("maTuyenDuong");
-                    String ten  = rs.getNString("tenTuyenDuong");
-                    String maKH = rs.getString("gaKhoiHanh");
-                    String maKT = rs.getString("gaKetThuc");
-                    String tg   = rs.getString("thoiGianUocTinh");
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                String ma   = rs.getString("maTuyenDuong");
+	                String ten  = rs.getNString("tenTuyenDuong");
+	                String maKH = rs.getString("gaKhoiHanh");
+	                String maKT = rs.getString("gaKetThuc");
+	                String tg   = rs.getString("thoiGianUocTinh");
 
-                    GaTau gaKH = gaTauDAO.getGaTauTheoMa(maKH, con);
-                    GaTau gaKT = gaTauDAO.getGaTauTheoMa(maKT, con);
+	                // Gọi đến các phương thức DAO đã được sửa (không cần truyền `con`)
+	                GaTau gaKH = gaTauDAO.getGaTauTheoMa(maKH);
+	                GaTau gaKT = gaTauDAO.getGaTauTheoMa(maKT);
 
-                    return new TuyenDuong(ma, ten, gaKH, gaKT, tg);
-                }
-            }
-        }
-        return null; // không tìm thấy
-    }
+	                // Giả sử TuyenDuong có constructor phù hợp
+	                tuyenDuong = new TuyenDuong(ma, ten, gaKH, gaKT, tg);
+	            }
+	        }
+	    }
+	    // Khối try-with-resources sẽ tự động đóng PreparedStatement và ResultSet.
+	    // Connection sẽ được quản lý bởi lớp ConnectDB.
+
+	    return tuyenDuong;
+	}
 }

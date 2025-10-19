@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.KhachHang;
 
-public class KhachHang_DAO {
+public class KhachHang_DAO_mthanh {
 
-	public KhachHang_DAO() {
+	public KhachHang_DAO_mthanh() {
 	}
 
 	public ArrayList<KhachHang> getAllKhachHang() {
@@ -80,4 +80,30 @@ public class KhachHang_DAO {
 		}
 		return ds;
 	}
+	
+	public KhachHang getKhachHangTheoSDT(String sdt) throws SQLException {
+        KhachHang kh = null;
+        Connection con = ConnectDB.getConnection();
+        String sql = "SELECT * FROM KhachHang WHERE soDienThoai = ?";
+        
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, sdt); // Gán tham số một cách an toàn
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                kh = new KhachHang();
+                kh.setMaKhachHang(rs.getString("maKhachHang"));
+                kh.setHoTenKhachHang(rs.getNString("hoTenKhachHang"));
+                kh.setSoGiayTo(rs.getString("soGiayTo"));
+                kh.setNgaySinh(rs.getDate("ngaySinh").toLocalDate());
+                kh.setSoDienThoai(rs.getString("soDienThoai"));
+                kh.setGioiTinh(rs.getBoolean("gioiTinh"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return kh; // Sẽ là null nếu không có dòng nào trong ResultSet
+    }
 }

@@ -8,21 +8,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <HBox fx:id="rootHBox" prefHeight="768.0" prefWidth="1366.0" stylesheets="@GiaoDienChonVe.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerChonVe">
 
-    <VBox HBox.hgrow="ALWAYS">
+    <VBox fx:id="leftContentPanel" HBox.hgrow="ALWAYS">
         <children>
             <VBox alignment="CENTER_LEFT" spacing="10" styleClass="header-panel">
                 <padding>
@@ -71,64 +69,66 @@
                 </VBox>
             </VBox>
 
-             <VBox styleClass="footer-container">
-                <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="services-panel">
-                    <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                    </padding>
-                    <CheckBox fx:id="cbVipLounge" />
-                    <VBox>
-                        <Label styleClass="service-title" text="Phòng chờ VIP ga Sài Gòn" />
-                        <Label styleClass="service-description" text="Sử dụng phòng chờ VIP ở ga Sài Gòn trước 02h tàu xuất phát hoặc sau 02h tàu đến ga - giá dịch vụ là 20,000 VNĐ" wrapText="true" />
-                    </VBox>
-                </HBox>
-                <HBox alignment="CENTER" spacing="20.0" styleClass="footer-panel">
-                    <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                    </padding>
-                    <Button onAction="#xacNhanChonVe" styleClass="confirm-button" text="Xác nhận chọn vé" />
-                    <Button onAction="#huyChonVe" styleClass="cancel-button" text="Hủy / Chọn lại" />
-                </HBox>
-            </VBox>
+			<VBox styleClass="footer-container">
+			    <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="services-panel">
+			        <padding>
+			            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+			        </padding>
+			        <VBox>
+			            <Label styleClass="service-title" text="Tư vấn cho khách hàng về dịch vụ đi kèm: Phòng chờ VIP ga Sài Gòn" />
+			            <Label styleClass="service-description" text="Sử dụng phòng chờ VIP ở ga Sài Gòn trước 02h tàu xuất phát hoặc sau 02h tàu đến ga - giá dịch vụ là 20,000 VNĐ" wrapText="true" />
+			        </VBox>
+			    </HBox>
+			</VBox>
         </children>
     </VBox>
 
 
-    <VBox fx:id="rightSidebar" prefHeight="754.0" prefWidth="519.0" spacing="15.0" styleClass="right-sidebar">
+    <VBox fx:id="rightSidebar" spacing="15.0" styleClass="right-sidebar  ">
         <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </padding>
 
-        <VBox styleClass="sidebar-section">
-            <Label styleClass="sidebar-title" text="Giỏ vé" />
-            <TabPane styleClass="ticket-cart-tabs" VBox.vgrow="ALWAYS">
-                <tabs>
-                    <Tab closable="false" text="Chưa có vé">
-                        <content>
-                            <Label text="Chưa có vé nào trong giỏ." />
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
-        </VBox>
+		<VBox styleClass="sidebar-section" VBox.vgrow="ALWAYS">
+		    <Label styleClass="sidebar-title" text="Giỏ vé" />
+		    <ScrollPane fitToWidth="true" styleClass="cart-scroll-pane">
+		        <content>
+		            <VBox fx:id="boxGioVe" spacing="5.0" />
+		        </content>
+		    </ScrollPane>
+		    
+		    <HBox styleClass="cart-total-box">
+		        <Label styleClass="total-label" text="Tổng tiền vé ước tính:" />
+		        <Region HBox.hgrow="ALWAYS" />
+		        <Label fx:id="lblTongGioVe" styleClass="total-price-label" text="0 VNĐ" />
+		    </HBox>
+		</VBox>
 
-        <VBox styleClass="sidebar-section">
-            <Label styleClass="sidebar-title" text="Thông tin hành trình" />
-            <GridPane hgap="10.0" vgap="10.0">
-                <Label text="Ga đi" GridPane.rowIndex="0" />
-                <ComboBox fx:id="cmbGaDi" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label text="Ga đến" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cmbGaDen" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <HBox alignment="CENTER_LEFT" spacing="15.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                    <RadioButton fx:id="rbMotChieu" selected="true" text="Một chiều">
-                        <toggleGroup><ToggleGroup fx:id="radioChieuDi" /></toggleGroup>
-                    </RadioButton>
-                    <RadioButton fx:id="rbKhuHoi" text="Khứ hồi" toggleGroup="$radioChieuDi" />
-                </HBox>
-                <Label text="Ngày đi" GridPane.rowIndex="3" />
-                <DatePicker fx:id="dpNgayDi" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <Label text="Ngày về" GridPane.rowIndex="4" />
-                <DatePicker fx:id="dpNgayVe" disable="true" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <VBox styleClass="sidebar-section" alignment="CENTER">
+		    <Label styleClass="sidebar-title" text="Thông tin hành trình" />
+		    
+		    <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="booking-type-selector">
+		        <RadioButton fx:id="rbMotChieu" selected="true" text="Một chiều">
+		            <toggleGroup>
+		                <ToggleGroup fx:id="radioBookingType" />
+		            </toggleGroup>
+		        </RadioButton>
+		        <RadioButton fx:id="rbKhuHoi" text="Khứ hồi" toggleGroup="$radioBookingType" />
+		        <RadioButton fx:id="rbTapThe" text="Tập thể" toggleGroup="$radioBookingType" />
+		    </HBox>
+		
+		    <GridPane hgap="10.0" vgap="10.0">
+		        <Label text="Ga đi" GridPane.rowIndex="0" />
+		        <ComboBox fx:id="cmbGaDi" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+		        
+		        <Label text="Ga đến" GridPane.rowIndex="1" />
+		        <ComboBox fx:id="cmbGaDen" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		
+		        <Label text="Ngày đi" GridPane.rowIndex="2" />
+		        <DatePicker fx:id="dpNgayDi" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		        
+		        <Label fx:id="lblNgayVe" text="Ngày về" GridPane.rowIndex="3" />
+		        <DatePicker fx:id="dpNgayVe" prefWidth="250" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <columnConstraints>
                <ColumnConstraints />
                <ColumnConstraints />
@@ -138,20 +138,22 @@
                <RowConstraints />
                <RowConstraints />
                <RowConstraints />
-               <RowConstraints />
             </rowConstraints>
-            </GridPane>
-            <Button fx:id="btnTimKiem" alignment="CENTER" contentDisplay="CENTER" onAction="#timKiemChuyenTau" styleClass="search-button" text="Tìm kiếm" />
-        </VBox>
-
-        <VBox alignment="CENTER" styleClass="sidebar-section">
-            <Label styleClass="sidebar-title" text="Kết nối với chúng tôi" />
-            <HBox alignment="CENTER" spacing="10.0">
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../image/zalo.png" /></image></ImageView>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../image/facebook.png" /></image></ImageView>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../image/youtube.png" /></image></ImageView>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true"><image><Image url="@../image/member.png" /></image></ImageView>
-            </HBox>
-        </VBox>
+		    </GridPane>
+		
+		    <HBox fx:id="groupBookingBox" alignment="CENTER_LEFT" spacing="10.0" styleClass="group-booking-box">
+		        <Label text="Số lượng vé:" />
+		        <Spinner fx:id="spinnerSoLuongVe" initialValue="10" max="100" min="2" prefWidth="80" />
+		    </HBox>
+		
+		    <Button fx:id="btnTimKiem" alignment="CENTER" onAction="#timKiemChuyenTau" styleClass="search-button" text="Tìm kiếm" />
+		</VBox>
+        <HBox alignment="CENTER" spacing="20.0" styleClass="footer-panel">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <Button onAction="#xacNhanChonVe" styleClass="confirm-button" text="Xác nhận chọn vé" />
+            <Button onAction="#huyChonVe" styleClass="cancel-button" text="Hủy / Chọn lại" />
+        </HBox>
     </VBox>
 </HBox>

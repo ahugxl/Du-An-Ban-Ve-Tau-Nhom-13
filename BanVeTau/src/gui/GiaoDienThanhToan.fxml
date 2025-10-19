@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="control.ControllerThanhToan"
+            styleClass="payment-container-detailed"
+            stylesheets="@GiaoDienThanhToan.css">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" styleClass="header-panel">
+            <Label styleClass="main-title" text="Chi tiết Đơn hàng &amp; Thanh toán" />
+        </HBox>
+    </top>
+    
+    <left>
+        <VBox styleClass="ticket-list-sidebar">
+            <Label styleClass="section-title" text="Danh sách vé" />
+            <ListView fx:id="listViewVe" />
+        </VBox>
+    </left>
+
+    <center>
+        <VBox fx:id="ticketDetailPanel" spacing="20.0" styleClass="content-vbox">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+            
+            <Label fx:id="lblDetailTitle" styleClass="detail-title" text="Vui lòng chọn một vé để xem chi tiết" />
+
+            <VBox styleClass="section-container-alt">
+                <Label styleClass="section-title" text="Thông tin hành khách" />
+                <GridPane hgap="10" vgap="8">
+                    <Label text="Họ tên:" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtHoTen" promptText="Nguyễn Văn A" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="Số giấy tờ:" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtSoGiayTo" promptText="CCCD/Hộ chiếu..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                </GridPane>
+            </VBox>
+
+            <GridPane hgap="20" vgap="15">
+                <VBox styleClass="section-container-alt" GridPane.columnIndex="0">
+                    <Label styleClass="section-title" text="Loại vé" />
+                    <ComboBox fx:id="cmbLoaiVe" prefWidth="250" />
+                </VBox>
+                <VBox styleClass="section-container-alt" GridPane.columnIndex="1">
+                    <Label styleClass="section-title" text="Khuyến mãi" />
+                    <ComboBox fx:id="cmbKhuyenMai" prefWidth="250" />
+                </VBox>
+            </GridPane>
+
+            <VBox styleClass="section-container-alt">
+                <Label styleClass="section-title" text="Áp dụng cho tất cả" />
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button onAction="#handleApplyLoaiVeToAll" text="Áp dụng Loại vé này" />
+                    <Button onAction="#handleApplyKhuyenMaiToAll" text="Áp dụng Khuyến mãi này" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <right>
+        <VBox styleClass="summary-sidebar">
+            <padding>
+                <Insets top="20.0" right="30.0" bottom="20.0" />
+            </padding>
+            <VBox styleClass="section-container" VBox.vgrow="ALWAYS">
+                <Label styleClass="section-title" text="Tổng kết" />
+                <VBox spacing="8" styleClass="summary-box">
+                    <HBox><Label text="Tổng tiền vé:" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTongTienVe" styleClass="price-label" /></HBox>
+                    <HBox><Label text="Giảm giá:" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblGiamGia" styleClass="price-label-discount" /></HBox>
+                    <HBox><Label text="Tiền thuế (VAT):" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTienThue" styleClass="price-label" /></HBox>
+                    <HBox styleClass="total-row"><Label styleClass="total-label" text="TỔNG CỘNG:" /><Region HBox.hgrow="ALWAYS" /><Label fx:id="lblTongCong" styleClass="total-price-label" /></HBox>
+                </VBox>
+                
+                <VBox spacing="10.0" styleClass="payment-method-box">
+                    <Label styleClass="section-title" text="Phương thức thanh toán" />
+                     <HBox spacing="20.0"><RadioButton fx:id="rbTienMat" selected="true" text="Tiền mặt"><toggleGroup><ToggleGroup fx:id="groupThanhToan" /></toggleGroup></RadioButton><RadioButton fx:id="rbChuyenKhoan" text="Chuyển khoản QR" toggleGroup="$groupThanhToan" /></HBox>
+                    <GridPane fx:id="cashPaymentBox" hgap="10" vgap="8" styleClass="cash-payment-grid">
+                        <Label text="Tiền khách đưa:" GridPane.rowIndex="0" /><TextField fx:id="txtTienKhachDua" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Tiền trả lại:" GridPane.rowIndex="1" /><Label fx:id="lblTienTraLai" styleClass="change-label" text="0 VNĐ" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </GridPane>
+                </VBox>
+
+                 <HBox alignment="CENTER" spacing="10.0" styleClass="final-buttons-box">
+                    <Button fx:id="btnThanhToan" onAction="#handleThanhToan" styleClass="confirm-button" text="Thanh toán" />
+                    <Button fx:id="btnQuayLai" onAction="#handleQuayLai" styleClass="cancel-button" text="Quay lại" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </right>
+</BorderPane>

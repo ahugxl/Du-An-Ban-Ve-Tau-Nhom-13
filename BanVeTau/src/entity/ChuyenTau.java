@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ChuyenTau {
@@ -10,8 +11,10 @@ public class ChuyenTau {
 	private LocalDateTime ngayGioKhoiHanh;
 	private LocalDateTime ngayGioDen;
 	private double donGiaCoBan;
+	private ArrayList<ChangTau> danhSachChang;
 	
 	public ChuyenTau() {
+		this.danhSachChang = new ArrayList<>();
 	}
 	
 	public ChuyenTau(String maChuyenTau) {
@@ -76,7 +79,14 @@ public class ChuyenTau {
 	public void setDonGiaCoBan(double donGiaCoBan) {
 		this.donGiaCoBan = donGiaCoBan;
 	}
+	
+	public ArrayList<ChangTau> getDanhSachChang() {
+        return danhSachChang;
+    }
 
+    public void setDanhSachChang(ArrayList<ChangTau> danhSachChang) {
+        this.danhSachChang = danhSachChang;
+    }
 	@Override
 	public int hashCode() {
 		return Objects.hash(maChuyenTau);

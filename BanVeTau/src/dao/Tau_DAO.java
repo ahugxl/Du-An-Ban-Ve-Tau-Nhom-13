@@ -45,33 +45,43 @@ public class Tau_DAO {
 		}
         return list;
     }
-    public Tau getTauTheoMa(String maTau, Connection con) {
-		String sql = "SELECT maTau, tenTau, maLoaiTau, soLanSuaChua FROM Tau WHERE maTau = ?";
-		try (PreparedStatement ps = con.prepareStatement(sql)) {
-				ps.setString(1, maTau);
-				try (ResultSet rs = ps.executeQuery()) {
-					if (rs.next()) {
-						String maTauDB = rs.getString("maTau");
-						String tenTau = rs.getNString("tenTau");
-						LoaiTau loaiTauEnum;
-						String maLoaiTau = rs.getString("maLoaiTau");
-						if(maLoaiTau.equals("SE")) {
-							loaiTauEnum = LoaiTau.SE;
-						}else if(maLoaiTau.equals("SNT")) {
-							loaiTauEnum = LoaiTau.SNT;
-						}else {
-							loaiTauEnum = LoaiTau.SPT;
-						}
-						int soLanSuaChua = rs.getInt("soLanSuaChua");
-						Tau tau = new Tau(maTauDB, tenTau, loaiTauEnum, soLanSuaChua);
-						return tau;
-					}
-				}
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-		
+    /**
+     * Tìm một đoàn tàu theo mã.
+     * Phương thức này tự quản lý việc kết nối đến CSDL.
+     * @param maTau Mã của đoàn tàu cần tìm.
+     * @return Đối tượng Tau nếu tìm thấy, ngược lại trả về null.
+     * @throws SQLException
+     */
+    public Tau getTauTheoMa(String maTau) throws SQLException {
+        Tau tau = null;
+        Connection con = ConnectDB.getConnection(); // Tự lấy kết nối
+        String sql = "SELECT maTau, tenTau, maLoaiTau, soLanSuaChua FROM Tau WHERE maTau = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, maTau);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String maTauDB = rs.getString("maTau");
+                    String tenTau = rs.getNString("tenTau");
+                    String maLoaiTau = rs.getString("maLoaiTau");
+                    int soLanSuaChua = rs.getInt("soLanSuaChua");
+                    
+                    LoaiTau loaiTauEnum = null;
+                    // Tối ưu: Dùng LoaiTau.valueOf() để chuyển đổi String sang enum
+                    // Cách này yêu cầu tên hằng số trong enum phải khớp với dữ liệu trong DB
+                    if (maLoaiTau != null) {
+                        try {
+                            loaiTauEnum = LoaiTau.valueOf(maLoaiTau.trim());
+                        } catch (IllegalArgumentException e) {
+                            System.err.println("Không tìm thấy enum cho mã loại tàu: " + maLoaiTau);
+                            // Gán giá trị mặc định hoặc xử lý lỗi nếu cần
+                        }
+                    }
+                    
+                    tau = new Tau(maTauDB, tenTau, loaiTauEnum, soLanSuaChua);
+                }
+            }
+        }
+        return tau;
     }
 }
