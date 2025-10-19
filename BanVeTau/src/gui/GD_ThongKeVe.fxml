@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane stylesheets="@ThongKeVe.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.Controller_ThongKeVe">
+   <top>
+      <VBox styleClass="header-pane" alignment="CENTER_LEFT" prefHeight="80.0" spacing="10.0">
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+         <children>
+            <Label styleClass="title-label" text="PHÂN TÍCH VÉ" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label styleClass="header-label" text="Thống kê theo năm:" />
+                  <ComboBox fx:id="cmbNam" prefWidth="120.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <TabPane tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Theo Tuyến Đường">
+               <content>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <padding>
+                        <Insets top="20.0" bottom="20.0" left="20.0" right="20.0" />
+                     </padding>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label text="Hiển thị theo:" />
+                              <ComboBox fx:id="cmbTuyenDuongFilter" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <BarChart fx:id="chartTuyenDuong" title="Phân Tích Theo Tuyến Đường" VBox.vgrow="ALWAYS">
+                          <xAxis>
+                            <CategoryAxis fx:id="xAxisTuyenDuong" label="Tuyến đường" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis fx:id="yAxisTuyenDuong" label="Giá trị" side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+          <Tab text="Theo Loại Toa">
+               <content>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <PieChart fx:id="chartLoaiToa" title="Tỷ Lệ Bán Vé Theo Loại Toa" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+          <Tab text="Tỷ Lệ Lấp Đầy">
+               <content>
+                  <VBox alignment="TOP_CENTER" spacing="10.0">
+                     <padding>
+                        <Insets top="20.0" bottom="20.0" left="20.0" right="20.0" />
+                     </padding>
+                     <children>
+                        <Label styleClass="chart-title" text="Tỷ Lệ Lấp Đầy Các Chuyến Tàu" />
+                        <TableView fx:id="tblTyLeLapDay" VBox.vgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="colMaChuyenTau" prefWidth="150.0" text="Mã Chuyến Tàu" />
+                            <TableColumn fx:id="colTenChuyenTau" prefWidth="250.0" text="Tên Chuyến Tàu" />
+                            <TableColumn fx:id="colSoVeBan" prefWidth="120.0" text="Số Vé Bán" />
+                            <TableColumn fx:id="colTongSoGhe" prefWidth="120.0" text="Tổng Số Ghế" />
+                            <TableColumn fx:id="colTyLe" prefWidth="200.0" text="Tỷ Lệ Lấp Đầy" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>

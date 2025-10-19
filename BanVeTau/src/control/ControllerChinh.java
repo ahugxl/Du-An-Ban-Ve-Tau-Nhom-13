@@ -282,4 +282,30 @@ public class ControllerChinh {
     private void hoanTac() {
 		 mainBorderPane.setCenter(centerBanDau);
 	}
+	public void chuyenSangGDCapNhatThue(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_CapNhatThue.fxml"));
+	        Parent capNhatThueUI = loader.load();
+
+	        Controller_QuanLyThue capNhatThueController = loader.getController();
+	        capNhatThueController.setMainController(this);
+
+	        mainBorderPane.setCenter(capNhatThueUI);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	public void chuyenSangGDThongKeVe(ActionEvent event) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/GD_ThongKeVe.fxml"));
+	        Parent thongKeVeUI = loader.load();
+
+	        Controller_ThongKeVe thongKeVeController = loader.getController();
+	        thongKeVeController.setMainController(this);
+
+	        mainBorderPane.setCenter(thongKeVeUI);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
