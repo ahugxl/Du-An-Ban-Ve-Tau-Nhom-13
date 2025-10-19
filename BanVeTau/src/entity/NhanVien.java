@@ -11,9 +11,8 @@ public class NhanVien {
     private boolean trangThaiLamViec;
     private ChucVu cv; 
     private TaiKhoan taiKhoan;
-    private boolean trangThaiXoa;
 	public NhanVien(String maNhanVien, String tenNV, LocalDate ngaySinh, boolean gioiTinh, String sdt,
-			boolean trangThaiLamViec, ChucVu cv, TaiKhoan taiKhoan, boolean trangThaiXoa) {
+			boolean trangThaiLamViec, ChucVu cv, TaiKhoan taiKhoan) {
 		super();
 		this.maNhanVien = maNhanVien;
 		this.tenNV = tenNV;
@@ -23,7 +22,7 @@ public class NhanVien {
 		this.trangThaiLamViec = trangThaiLamViec;
 		this.cv = cv;
 		this.taiKhoan = taiKhoan;
-		this.trangThaiXoa = trangThaiXoa;
+		
 	}
 	
 	public NhanVien() {
@@ -78,11 +77,6 @@ public class NhanVien {
 	public void setTaiKhoan(TaiKhoan taiKhoan) {
 		this.taiKhoan = taiKhoan;
 	}
-	public boolean isTrangThaiXoa() {
-		return trangThaiXoa;
-	}
-	public void setTrangThaiXoa(boolean trangThaiXoa) {
-		this.trangThaiXoa = trangThaiXoa;
-	}
+	
     
 }

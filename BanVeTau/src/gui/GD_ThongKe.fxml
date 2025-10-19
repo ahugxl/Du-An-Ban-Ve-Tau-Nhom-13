@@ -3,31 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="control.ControllerThongKe"
-      alignment="TOP_CENTER" spacing="20" prefWidth="400" prefHeight="300"
-      style="-fx-background-color: #f9f9f9;">
-    
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
-
-    <!-- Tiêu đề -->
-    <Label text="Thống kê theo doanh số bán vé">
-        <font>
-            <Font size="18"/>
-        </font>
-    </Label>
-
-    <!-- Các nút chọn loại thống kê -->
-    <Button text="Theo ngày" prefWidth="200" onAction="#thongKeNgay"/>
-    <Button text="Theo tháng" prefWidth="200" onAction="#thongKeThang"/>
-    <Button text="Theo năm" prefWidth="200" onAction="#thongKeNam"/>
-
-    <!-- Nút thoát -->
-    <Button text="Thoát" prefWidth="200" onAction="#thoat"/>
-
-</VBox>
+<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerThongKe">
+   <top>
+      <VBox styleClass="header-pane" alignment="CENTER" spacing="15.0" style="-fx-background-color: #0000FF; ">
+         <children>
+            <Label text="THỐNG KÊ DOANH SỐ" styleClass="title-label">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="btnNgay" onAction="#thongKeNgay" prefWidth="120.0" text="Theo ngày" style="-fx-background-color: #FDD835; "/>
+                  <Button fx:id="btnThang" onAction="#thongKeThang" prefWidth="120.0" text="Theo tháng" style="-fx-background-color: #FDD835; "/>
+                  <Button fx:id="btnNam" onAction="#thongKeNam" prefWidth="120.0" text="Theo năm" style="-fx-background-color: #FDD835; "/>
+               </children>
+            </HBox>
+            </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+   </top>
+   <center>
+      <Label text="Vui lòng chọn một chế độ thống kê để xem dữ liệu" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </center>
+</BorderPane>

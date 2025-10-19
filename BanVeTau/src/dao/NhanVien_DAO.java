@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import connectDB.ConnectDB;
 import entity.ChucVu;
@@ -21,19 +23,32 @@ public class NhanVien_DAO {
 
 	public ArrayList<NhanVien> getalltbNhanVien() {
 		ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+		class NhanVienRaw{
+			String maNV;
+			String tenNV;
+			LocalDate ngaySinh;
+			boolean phai;
+			String sdt;
+			boolean trangThaiLamViec;
+			ChucVu chucVu;
+			String tenTaiKhoan;
+		}
+		ArrayList<NhanVienRaw> dsnvRaw = new ArrayList<NhanVienRaw>();
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection();
 			String sql = "Select * from NhanVien";
-			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery(sql);
+			try (
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()){
 			while (rs.next()) {
-				String maNV = rs.getString(1);
-				String tenNV = rs.getString(2);
-				LocalDate ngaySinh = rs.getDate(3).toLocalDate();
-				boolean phai = rs.getBoolean(4);
-				String sdt = rs.getString(5);
-				boolean trangThaiLamViec = rs.getBoolean(6);
+				NhanVienRaw nvr = new NhanVienRaw();
+				nvr.maNV = rs.getString(1);
+				nvr.tenNV = rs.getString(2);
+				nvr.ngaySinh  = rs.getDate(3).toLocalDate();
+				nvr.phai= rs.getBoolean(4);
+				nvr.sdt  = rs.getString(5);
+				nvr.trangThaiLamViec = rs.getBoolean(6);
 				String chucVu = rs.getString(7);
 				ChucVu cv = null;
 				if (chucVu.equals("NhanVienBanVe")) {
@@ -41,15 +56,36 @@ public class NhanVien_DAO {
 				} else {
 					cv = ChucVu.NhanVienQuanLy;
 				}
-				TaiKhoan tk = new TaiKhoan(rs.getString(8));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
-				dsnv.add(nv);
+				nvr.chucVu = cv;
+				nvr.tenTaiKhoan = rs.getString(8);
+				dsnvRaw.add(nvr);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		return dsnv;
+			TaiKhoan_DAO tk_dao = new TaiKhoan_DAO();
+			Map<String, TaiKhoan> mapTenTK_TK = new HashMap<>();
+			for(NhanVienRaw nvr : dsnvRaw) {
+				TaiKhoan tk =null;
+				if(nvr.tenTaiKhoan!=null) {
+					tk = mapTenTK_TK.computeIfAbsent(nvr.tenTaiKhoan, k -> {
+						try {
+							return tk_dao.getTaiKhoanTheoTenTaiKhoan(k,con);
+						} catch (SQLException e) {
+							e.printStackTrace();
+							return null;
+						}
+					});
+					if(tk==null) 
+						System.out.println("Lỗi: Không tìm thấy tài khoản với tên: " + nvr.tenTaiKhoan + " cho nhân viên: " + nvr.maNV);
+					
+					NhanVien nv = new NhanVien(nvr.maNV, nvr.tenNV, nvr.ngaySinh, nvr.phai, nvr.sdt, nvr.trangThaiLamViec, nvr.chucVu, tk);
+					dsnv.add(nv);
+				}
+			}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			return dsnv;
+		
 	}
 
 	public ArrayList<NhanVien> getNhanVienTheoMaNV(String id) throws SQLException {
@@ -78,8 +114,8 @@ public class NhanVien_DAO {
 					cv = ChucVu.NhanVienQuanLy;
 				}
 				TaiKhoan tk = new TaiKhoan(rs.getString(9));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
+				
+				NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk);
 				dsnv.add(nv);
 			}
 		} catch (SQLException e) {
@@ -120,8 +156,8 @@ public class NhanVien_DAO {
 					cv = ChucVu.NhanVienQuanLy;
 				}
 				TaiKhoan tk = new TaiKhoan(rs.getString(9));
-				boolean trangThaiXoa = rs.getBoolean(9);
-				nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk, trangThaiXoa);
+				
+				nv = new NhanVien(maNV, tenNV, ngaySinh, phai, sdt, trangThaiLamViec, cv, tk);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +186,7 @@ public class NhanVien_DAO {
 			stmt.setString(6, nv.isTrangThaiLamViec() ? "Đang làm việc" : "Đã nghỉ");
 			stmt.setString(7, nv.getCv().name());
 			stmt.setString(8, nv.getTaiKhoan().getTenTaiKhoan());
-			stmt.setBoolean(9, nv.isTrangThaiXoa());
+			stmt.setBoolean(9, false); // trangThaiXoa mặc định là false
 
 			return stmt.executeUpdate() > 0;
 
@@ -206,7 +242,7 @@ public class NhanVien_DAO {
 				TaiKhoan tk = new TaiKhoan(rs.getString("tenTaiKhoan"));
 				NhanVien nv = new NhanVien(rs.getString("maNhanVien"), rs.getString("tenNhanVien"),
 						rs.getDate("ngaySinh").toLocalDate(), rs.getBoolean("gioiTinh"), rs.getString("soDienThoai"),
-						rs.getBoolean("trangThaiLamViec"), cv, tk, rs.getBoolean("trangThaiXoa"));
+						rs.getBoolean("trangThaiLamViec"), cv, tk);
 				ds.add(nv);
 			}
 		} catch (SQLException e) {

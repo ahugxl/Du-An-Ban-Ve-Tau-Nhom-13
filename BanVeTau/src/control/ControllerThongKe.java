@@ -1,58 +1,75 @@
 package control;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
-public class ControllerThongKe {
+public class ControllerThongKe implements Initializable {
 
-    // Tham chiếu đến ControllerChinh
+    // Tham chiếu đến BorderPane chính từ file FXML
+    @FXML
+    private BorderPane mainBorderPane;
     private ControllerChinh mainController;
 
-    // Dùng để nhận tham chiếu từ ControllerChinh
-    public void setMainController(ControllerChinh sceneChinh) {
-        this.mainController = sceneChinh;
+    // Các @FXML và các biến khác của bạn ở đây...
+    // @FXML
+    // private BorderPane mainBorderPane;
+    
+    // 2. ĐÂY LÀ PHƯƠNG THỨC BẠN ĐANG THIẾU
+    // Phương thức này nhận ControllerChinh từ bên ngoài và lưu lại
+    public void setMainController(ControllerChinh mainController) {
+        this.mainController = mainController;
+    }
+    /**
+     * Phương thức này được tự động gọi sau khi file FXML đã được tải.
+     * Dùng để thiết lập trạng thái ban đầu cho giao diện.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Ví dụ: Tải giao diện "Theo tháng" làm mặc định khi mở lên
+        loadView("/gui/ThongKeNgay.fxml"); // Thay đổi đường dẫn cho đúng với dự án của bạn
     }
 
-    // Xử lý sự kiện khi bấm nút "Thống kê theo ngày"
     @FXML
     void thongKeNgay(ActionEvent event) {
-        if (mainController != null) {
-            System.out.println("Thực hiện thống kê theo ngày...");
-            // Ở đây bạn có thể gọi phương thức trong ControllerChinh
-            // mainController.hienThiThongKeNgay();
-        } else {
-            System.err.println("Lỗi: Không có tham chiếu đến Main Controller.");
-        }
+        System.out.println("Nút 'Theo ngày' được bấm.");
+        loadView("/gui/ThongKeNgay.fxml"); // Thay đổi đường dẫn cho đúng
     }
 
-    // Xử lý sự kiện khi bấm nút "Thống kê theo tháng"
     @FXML
     void thongKeThang(ActionEvent event) {
-        if (mainController != null) {
-            System.out.println("Thực hiện thống kê theo tháng...");
-            // mainController.hienThiThongKeThang();
-        }
+        System.out.println("Nút 'Theo tháng' được bấm.");
+        loadView("/gui/ThongKeThang.fxml"); // Thay đổi đường dẫn cho đúng
     }
 
-    // Xử lý sự kiện khi bấm nút "Thống kê theo năm"
     @FXML
     void thongKeNam(ActionEvent event) {
-        if (mainController != null) {
-            System.out.println("Thực hiện thống kê theo năm...");
-            // mainController.hienThiThongKeNam();
+        System.out.println("Nút 'Theo năm' được bấm.");
+        loadView("/gui/ThongKeNam.fxml"); // Thay đổi đường dẫn cho đúng
+    }
+
+    /**
+     * Hàm tiện ích để tải một file FXML và đặt nó vào vùng center của BorderPane.
+     * @param fxmlPath Đường dẫn tới file FXML cần tải (ví dụ: "/view/ThangView.fxml")
+     */
+    private void loadView(String fxmlPath) {
+        try {
+            // Tải file FXML
+            Pane view = FXMLLoader.load(getClass().getResource(fxmlPath));
+            
+            // Đặt giao diện vừa tải vào vùng center
+            mainBorderPane.setCenter(view);
+
+        } catch (IOException e) {
+            System.err.println("Không thể tải file FXML: " + fxmlPath);
+            e.printStackTrace();
         }
-    }
-
-    // Thoát cửa sổ thống kê (nếu cần đóng riêng)
-    @FXML
-    void thoat(ActionEvent event) {
-        dongCuaSo(event);
-    }
-
-    private void dongCuaSo(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
     }
 }

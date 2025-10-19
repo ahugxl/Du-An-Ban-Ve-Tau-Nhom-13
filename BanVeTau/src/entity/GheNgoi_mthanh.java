@@ -6,23 +6,35 @@ public class GheNgoi_mthanh {
 	private String maGheNgoi;
 	private int viTriGhe;
 	private ToaTau toaTau;
+
+	/**
+	 * Constructor không tham số.
+	 */
 	public GheNgoi_mthanh() {
 	}
 	
+	/**
+	 * Constructor với mã ghế.
+	 * @param maGheNgoi
+	 */
 	public GheNgoi_mthanh(String maGheNgoi) {
-		super();
 		this.maGheNgoi = maGheNgoi;
 	}
 
-	
-
+	/**
+	 * Constructor đầy đủ các thuộc tính.
+	 * @param maGheNgoi
+	 * @param viTriGhe
+	 * @param toaTau
+	 */
 	public GheNgoi_mthanh(String maGheNgoi, int viTriGhe, ToaTau toaTau) {
-		super();
 		this.maGheNgoi = maGheNgoi;
 		this.viTriGhe = viTriGhe;
 		this.toaTau = toaTau;
 	}
 
+	// --- Getters and Setters ---
+	
 	public String getMaGheNgoi() {
 		return maGheNgoi;
 	}
@@ -47,6 +59,8 @@ public class GheNgoi_mthanh {
 		this.toaTau = toaTau;
 	}
 
+	// --- hashCode, equals, và toString ---
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(maGheNgoi);
@@ -60,13 +74,13 @@ public class GheNgoi_mthanh {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
+		// Ép kiểu về đúng tên lớp đã thống nhất
 		GheNgoi_mthanh other = (GheNgoi_mthanh) obj;
 		return Objects.equals(maGheNgoi, other.maGheNgoi);
 	}
 
 	@Override
 	public String toString() {
-		return "GheNgoi [maGheNgoi=" + maGheNgoi + ", viTriGhe=" + viTriGhe + ", toaTau=" + toaTau + "]";
+		return "GheNgoi [maGheNgoi=" + maGheNgoi + ", viTriGhe=" + viTriGhe + ", toaTau=" + (toaTau != null ? toaTau.getMaToaTau() : "null") + "]";
 	}
-
 }

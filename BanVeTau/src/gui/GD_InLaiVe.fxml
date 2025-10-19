@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="main" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerTimVe">
+<HBox fx:id="main" minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.ControllerInLaiVe">
    <children>
       <VBox fx:id="left" minWidth="400.0" spacing="40.0">
          <children>
@@ -46,14 +45,12 @@
             </VBox>
             <VBox alignment="CENTER" minWidth="300.0" spacing="10.0">
                <children>
-                  <Label fx:id="lblTimTheoNgay" text="Tìm theo ngày xuất vé" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="300.0">
+                  <Label fx:id="lblChucNang" text="Chức năng" />
+                  <HBox alignment="CENTER">
                      <children>
-                        <Label fx:id="lblNgay" minWidth="150.0" text="Ngày" />
-                        <DatePicker fx:id="dateNgayBanVe" minWidth="150.0" />
+                        <Button fx:id="btnInLaiVe" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#inLaiVe" text="In lại vé" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnTimTheoNgay" minHeight="20.0" minWidth="101.0" mnemonicParsing="false" onAction="#timVeTheoNgay" text="Tìm" />
                </children>
             </VBox>
          </children>
