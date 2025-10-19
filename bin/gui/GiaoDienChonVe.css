@@ -1,0 +1,395 @@
+/* General Styling */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: rgb(25, 35, 80);
+}
+
+/* Header Panel */
+.header-panel {
+    -fx-padding: 10px 20px;
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* Chữ trắng */
+}
+
+/* ScrollPane trong header */
+.transparent-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+.transparent-scrollpane .viewport {
+    -fx-background-color: transparent;
+}
+.transparent-scrollpane .scroll-bar:horizontal .track,
+.transparent-scrollpane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #cccccc; /* Màu thanh cuộn */
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+
+
+/* Train Card Styling */
+/* Train Card Styling - PHIÊN BẢN MỚI */
+
+/* 1. Style chung cho card tàu */
+.train-card {
+    -fx-cursor: hand;
+    -fx-background-color: transparent; /* Nền trong suốt, không còn màu trắng */
+    -fx-border-color: transparent; /* Viền trong suốt mặc định */
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    
+    /* Cấu hình cho ảnh nền */
+    -fx-background-repeat: no-repeat;  /* Không lặp lại ảnh nền */
+    -fx-background-position: center bottom; /* Căn ảnh nền ở giữa và ở dưới */
+    -fx-background-size: 85% 100%;     /* Co giãn ảnh vừa khít bên trong, không bị méo */
+    
+    -fx-pref-width: 220px; /* Kích thước card */
+    -fx-pref-height: 240px;
+}
+
+/* 2. Style cho card màu xám (trạng thái bình thường) */
+.train-card-gray {
+    -fx-background-image: url("../image/tau.png");
+}
+
+/* 3. Style cho card màu xanh (trạng thái được chọn) */
+.train-card-blue {
+    -fx-background-image: url("../image/tauchon.png");
+}
+/* Style cho card khi di chuột qua (hover) */
+.train-card:hover {
+    -fx-background-image: url("../image/tauhover.png"); /* <-- Đặt ảnh cho trạng thái hover ở đây */
+}
+/* 4. Thêm viền vàng khi card được chọn */
+.train-card-selected {
+    -fx-border-color: #ffc000;
+}
+
+/* Các style cho chữ bên trong card vẫn giữ nguyên */
+.card-train-code {
+    -fx-font-size: 15px; /* Giảm kích thước font để vừa hơn */
+    -fx-font-weight: bold;
+    -fx-text-fill: black; /* Hoặc màu đen để nổi bật trên nền trắng */
+    
+    /* Vị trí tương đối cho tên tàu trong vùng trắng */
+    -fx-translate-y: -12px; /* Di chuyển lên trên nhiều hơn */
+    -fx-alignment: center;   /* Căn giữa chữ */
+}
+.card-train-time {
+    -fx-font-size: 12px; /* Giảm kích thước font */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-translate-y: -15px;
+    /* Có thể thêm translate-y nếu cần dịch chuyển cả khối chữ xuống */
+}
+.card-train-seats-booked, .card-train-seats-available {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-translate-y: -15px;
+}
+
+/* Toa Icon Styling */
+.toa-icon-container {
+    -fx-alignment: center;
+    -fx-cursor: hand;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: transparent; /* Mặc định trong suốt */
+}
+.toa-icon-container:hover {
+    -fx-background-color: #e0e0e0; /* Màu nền xám nhạt khi hover */
+}
+.toa-icon-selected {
+    -fx-background-color: #add8e6; /* Màu xanh da trời nhạt khi chọn */
+    -fx-border-color: #0078D7;
+    -fx-border-width: 1px;
+}
+.toa-icon-container Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/* Center Panel */
+.center-panel {
+    -fx-background-color: #f4f4f4;
+}
+
+.seat-map-container {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 3);
+}
+
+.panel-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(25, 35, 80);
+    -fx-padding-bottom: 10px;
+}
+
+/* Seat Grid Styling */
+.grid-header {
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-alignment: center;
+    -fx-text-fill: #555;
+    -fx-min-width: 40px; /* Đảm bảo đủ rộng cho header */
+}
+
+.seat-available {
+    -fx-background-color: white;
+    -fx-border-color: #0078D7;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.seat-available:hover {
+    -fx-background-color: #e7f3fe;
+}
+
+.seat-selected {
+    -fx-background-color: #ffc000; /* Màu vàng cam */
+    -fx-border-color: #e0ac00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.seat-unavailable {
+    -fx-background-color: #a0a0a0; /* Màu xám */
+    -fx-border-color: #808080;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-opacity: 0.6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+/* Navigation Buttons (cho sơ đồ ghế) */
+.nav-button {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-background-radius: 50%; /* Nút tròn */
+    -fx-border-radius: 50%;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-cursor: hand;
+}
+.nav-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+
+/* Footer Panel */
+.footer-panel {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 15px;
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+}
+
+/* Bottom Buttons */
+.confirm-button {
+    -fx-background-color: #5cb85c; /* Xanh lá */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #4cae4c;
+}
+
+.cancel-button {
+    -fx-background-color: #d9534f; /* Đỏ */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 8px 20px;
+    -fx-background-radius: 5px;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c9302c;
+}
+/* Sidebar bên phải */
+.right-sidebar {
+    -fx-pref-width: 280px;
+    -fx-background-color: #f0f2f5;
+    -fx-padding: 10px;
+}
+
+.sidebar-section {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-spacing: 10px;
+}
+
+.sidebar-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #005A9E;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 2px;
+    -fx-padding-bottom: 5px;
+    -fx-alignment: center;
+    -fx-pref-width: 250px;
+}
+
+/* Tab giỏ vé */
+.ticket-cart-tabs .tab-header-background {
+    -fx-background-color: #f0f2f5;
+}
+.ticket-cart-tabs .tab {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+}
+.ticket-cart-tabs .tab:selected {
+    -fx-background-color: #ffc000;
+}
+
+/* Form tìm kiếm */
+.search-button {
+    -fx-background-color: rgb(25, 35, 80);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-pref-width: 250px;
+    -fx-padding: 8px;
+    -fx-margin-top: 10px;
+}
+.search-button:hover {
+    -fx-background-color: #005A9E;
+}
+
+/* Phần dịch vụ */
+.footer-container {
+    -fx-background-color: white;
+}
+.services-panel {
+    -fx-padding: 15px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 1px;
+}
+.service-title {
+    -fx-font-weight: bold;
+}
+.service-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: #555;
+}
+/* --- CSS CHO GIỎ VÉ --- */
+
+/* Vùng cuộn chứa các vé */
+.cart-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Định dạng cho mỗi mục (HBox) vé trong giỏ */
+.cart-item {
+    -fx-padding: 8px 5px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent; /* Đường kẻ ngang phân cách */
+    -fx-border-width: 1px;
+}
+
+/* Định dạng cho phần text (tên tàu, giờ đi...) */
+.cart-item-details Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+/* Định dạng cho giá vé */
+.cart-item-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 0 10px; /* Khoảng cách trái/phải */
+}
+
+/* Định dạng cho icon xóa */
+.delete-icon {
+    -fx-cursor: hand; /* Biến con trỏ thành hình bàn tay */
+    -fx-opacity: 1.0; /* Độ trong suốt mặc định */
+}
+
+/* Hiệu ứng khi di chuột qua icon xóa */
+.delete-icon:hover {
+    -fx-opacity: 0.7; /* Hơi mờ đi khi di chuột qua để tạo hiệu ứng */
+}
+/* Điều chỉnh HBox.setHgrow cho spacer trong Java Controller */
+.cart-item {
+    -fx-padding: 8px 5px;
+    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-width: 1px;
+    -fx-alignment: CENTER_LEFT; /* Đảm bảo các thành phần căn trái */
+}
+
+/* Đảm bảo Label không bị ép quá mức */
+.cart-item-details {
+    -fx-max-width: infinity; /* Cho phép VBox này mở rộng hết mức có thể */
+}
+
+.cart-item-details Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+    -fx-wrap-text: false; /* Ngăn không cho text xuống dòng không cần thiết nếu đủ chỗ */
+}
+
+.cart-item-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+    -fx-padding: 0 10px;
+}
+/* CheckBox trong giỏ vé */
+.vip-checkbox {
+    -fx-font-size: 11px;
+    -fx-text-fill: #007aff; /* Màu xanh dương */
+    -fx-padding: 5px 0 0 0;
+}
+
+/* Hộp chứa tổng tiền */
+.cart-total-box {
+    -fx-padding: 10px 8px;
+    -fx-border-color: #e0e0e0 transparent transparent transparent;
+    -fx-border-width: 1px;
+    -fx-font-weight: bold;
+}

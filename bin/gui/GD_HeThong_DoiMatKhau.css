@@ -1,0 +1,210 @@
+/* ===== ROOT CONTAINER ===== */
+.root-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+}
+
+/* ===== HEADER ===== */
+.header-section {
+    -fx-padding: 10 0 10 0;
+}
+
+.main-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976D2;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666;
+}
+
+/* ===== SECTIONS ===== */
+.info-section {
+    -fx-background-color: #F5F5F5;
+    -fx-padding: 15;
+    -fx-background-radius: 5;
+}
+
+.form-section {
+    -fx-padding: 10 0 0 0;
+}
+
+.requirements-section {
+    -fx-background-color: #E3F2FD;
+    -fx-padding: 12;
+    -fx-background-radius: 5;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* ===== LABELS ===== */
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.info-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+}
+
+.info-value {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1976D2;
+    -fx-font-weight: bold;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333;
+}
+
+.requirements-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1976D2;
+}
+
+.requirement-item {
+    -fx-font-size: 11px;
+    -fx-text-fill: #555;
+    -fx-padding: 2 0 2 10;
+}
+
+/* ===== PASSWORD FIELDS ===== */
+.password-field {
+    -fx-pref-height: 38;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+}
+
+.password-field:focused {
+    -fx-border-color: #2196F3;
+    -fx-border-width: 2;
+    -fx-background-color: #F0F8FF;
+}
+
+/* ===== SHOW PASSWORD BUTTON ===== */
+.show-button {
+    -fx-background-color: #E0E0E0;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.show-button:hover {
+    -fx-background-color: #BDBDBD;
+}
+
+.show-button:pressed {
+    -fx-background-color: #9E9E9E;
+}
+
+/* ===== PASSWORD STRENGTH INDICATOR ===== */
+.password-strength {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 0 0 5;
+}
+
+.password-weak {
+    -fx-text-fill: #F44336;
+}
+
+.password-medium {
+    -fx-text-fill: #FF9800;
+}
+
+.password-strong {
+    -fx-text-fill: #4CAF50;
+}
+
+/* ===== PASSWORD MATCH INDICATOR ===== */
+.password-match {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 0 0 5;
+}
+
+.match-success {
+    -fx-text-fill: #4CAF50;
+}
+
+.match-error {
+    -fx-text-fill: #F44336;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.save-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.save-button:hover {
+    -fx-background-color: #66BB6A;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.save-button:pressed {
+    -fx-background-color: #388E3C;
+}
+
+.cancel-button {
+    -fx-background-color: #9E9E9E;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #BDBDBD;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.cancel-button:pressed {
+    -fx-background-color: #757575;
+}
+
+/* ===== MESSAGE LABEL ===== */
+.message-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 12;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.message-success {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2E7D32;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 1;
+}
+
+.message-error {
+    -fx-background-color: #FFEBEE;
+    -fx-text-fill: #C62828;
+    -fx-border-color: #F44336;
+    -fx-border-width: 1;
+}
+
+/* ===== SEPARATOR ===== */
+.separator {
+    -fx-background-color: #E0E0E0;
+}

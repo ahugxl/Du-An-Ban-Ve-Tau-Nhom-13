@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox xmlns="http://javafx.com/javafx/25" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="control.Controller_HeThong_DoiMatKhau"
+      stylesheets="@GD_HeThong_DoiMatKhau.css"
+      styleClass="root-container"
+      spacing="20"
+      alignment="CENTER"
+      prefWidth="450.0">
+    
+    <padding>
+        <Insets top="30.0" right="40.0" bottom="30.0" left="40.0"/>
+    </padding>
+    
+    <!-- Header -->
+    <VBox alignment="CENTER" spacing="10" styleClass="header-section">
+        <Label styleClass="main-title" text="ĐỔI MẬT KHẨU"/>
+        <Label styleClass="subtitle" text="Vui lòng nhập thông tin bên dưới để thay đổi mật khẩu"/>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- User Info -->
+    <VBox spacing="8" styleClass="info-section">
+        <Label styleClass="section-title" text="Thông tin tài khoản"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label styleClass="info-label" text="Tên đăng nhập:" minWidth="120"/>
+            <Label fx:id="lblTenTaiKhoan" styleClass="info-value" text="admin01"/>
+        </HBox>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label styleClass="info-label" text="Email:" minWidth="120"/>
+            <Label fx:id="lblEmail" styleClass="info-value" text="admin01@railway.com"/>
+        </HBox>
+    </VBox>
+    
+    <Separator/>
+    
+    <!-- Password Change Form -->
+    <VBox spacing="15" styleClass="form-section">
+        <Label styleClass="section-title" text="Thay đổi mật khẩu"/>
+        
+        <!-- Old Password -->
+        <VBox spacing="5">
+            <Label styleClass="field-label" text="Mật khẩu hiện tại: *"/>
+            <HBox spacing="5">
+                <PasswordField fx:id="oldPasswordField" 
+                              promptText="Nhập mật khẩu hiện tại" 
+                              styleClass="password-field"
+                              HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="oldPasswordVisible" 
+                          promptText="Nhập mật khẩu hiện tại"
+                          styleClass="password-field"
+                          visible="false"
+                          managed="false"
+                          HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnShowOld" 
+                       styleClass="show-button"
+                       text="👁"
+                       onAction="#toggleOldPasswordVisibility">
+                    <padding>
+                        <Insets top="8.0" right="12.0" bottom="8.0" left="12.0"/>
+                    </padding>
+                </Button>
+            </HBox>
+        </VBox>
+        
+        <!-- New Password -->
+        <VBox spacing="5">
+            <Label styleClass="field-label" text="Mật khẩu mới: *"/>
+            <HBox spacing="5">
+                <PasswordField fx:id="newPasswordField" 
+                              promptText="Nhập mật khẩu mới (tối thiểu 6 ký tự)" 
+                              styleClass="password-field"
+                              HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="newPasswordVisible" 
+                          promptText="Nhập mật khẩu mới (tối thiểu 6 ký tự)"
+                          styleClass="password-field"
+                          visible="false"
+                          managed="false"
+                          HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnShowNew" 
+                       styleClass="show-button"
+                       text="👁"
+                       onAction="#toggleNewPasswordVisibility">
+                    <padding>
+                        <Insets top="8.0" right="12.0" bottom="8.0" left="12.0"/>
+                    </padding>
+                </Button>
+            </HBox>
+            <Label fx:id="lblPasswordStrength" 
+                   styleClass="password-strength" 
+                   text=""/>
+        </VBox>
+        
+        <!-- Confirm New Password -->
+        <VBox spacing="5">
+            <Label styleClass="field-label" text="Xác nhận mật khẩu mới: *"/>
+            <HBox spacing="5">
+                <PasswordField fx:id="confirmPasswordField" 
+                              promptText="Nhập lại mật khẩu mới" 
+                              styleClass="password-field"
+                              HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="confirmPasswordVisible" 
+                          promptText="Nhập lại mật khẩu mới"
+                          styleClass="password-field"
+                          visible="false"
+                          managed="false"
+                          HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnShowConfirm" 
+                       styleClass="show-button"
+                       text="👁"
+                       onAction="#toggleConfirmPasswordVisibility">
+                    <padding>
+                        <Insets top="8.0" right="12.0" bottom="8.0" left="12.0"/>
+                    </padding>
+                </Button>
+            </HBox>
+            <Label fx:id="lblPasswordMatch" 
+                   styleClass="password-match" 
+                   text=""/>
+        </VBox>
+    </VBox>
+    
+    <!-- Password Requirements -->
+    <VBox spacing="5" styleClass="requirements-section">
+        <Label styleClass="requirements-title" text="Yêu cầu mật khẩu:"/>
+        <Label styleClass="requirement-item" text="✓ Tối thiểu 6 ký tự"/>
+        <Label styleClass="requirement-item" text="✓ Nên có chữ hoa và chữ thường"/>
+        <Label styleClass="requirement-item" text="✓ Nên có ít nhất một chữ số"/>
+        <Label styleClass="requirement-item" text="✓ Nên có ký tự đặc biệt (@#$%...)"/>
+    </VBox>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER">
+        <VBox.margin>
+            <Insets top="10.0"/>
+        </VBox.margin>
+        
+        <Button styleClass="save-button" 
+               text="Đổi mật khẩu"
+               onAction="#handleChangePassword"
+               prefWidth="150">
+            <padding>
+                <Insets top="12.0" right="20.0" bottom="12.0" left="20.0"/>
+            </padding>
+        </Button>
+        
+        <Button styleClass="cancel-button" 
+               text="Hủy"
+               onAction="#handleCancel"
+               prefWidth="150">
+            <padding>
+                <Insets top="12.0" right="20.0" bottom="12.0" left="20.0"/>
+            </padding>
+        </Button>
+    </HBox>
+    
+    <!-- Success/Error Message -->
+    <Label fx:id="lblMessage" 
+           styleClass="message-label" 
+           text=""
+           wrapText="true"
+           visible="false"
+           managed="false"/>
+    
+</VBox>

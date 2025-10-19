@@ -1,0 +1,26 @@
+/* --- Giao diện Thanh toán Chi tiết --- */
+.payment-container-detailed { -fx-background-color: #f0f2f5; -fx-font-family: "Segoe UI", sans-serif; }
+.header-panel { -fx-background-color: #005A9E; -fx-padding: 15px 30px; }
+.main-title { -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white; }
+.content-vbox { -fx-background-color: #f9fafb; }
+.section-container, .section-container-alt { -fx-background-color: white; -fx-padding: 20px; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-spacing: 15px; -fx-border-color: #e0e0e0; -fx-border-width: 1px; }
+.section-title { -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333; }
+.detail-title { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #005A9E; }
+
+/* Cột trái - Danh sách vé */
+.ticket-list-sidebar { -fx-background-color: white; -fx-border-width: 0 1px 0 0; -fx-border-color: #e0e0e0; -fx-padding: 20px; -fx-min-width: 250px; }
+.list-view .list-cell { -fx-padding: 10px; -fx-font-size: 14px; }
+.list-view .list-cell:filled:selected, .list-view .list-cell:filled:selected:focused { -fx-background-color: #e7f3fe; -fx-text-fill: #005A9E; -fx-font-weight: bold; }
+
+/* Cột phải - Tổng kết */
+.summary-sidebar { -fx-background-color: #f9fafb; -fx-border-width: 0 0 0 1px; -fx-border-color: #e0e0e0; }
+.summary-box { -fx-padding-top: 15px; }
+.payment-method-box { -fx-padding-top: 20px; -fx-border-color: #e0e0e0 transparent transparent transparent; -fx-border-width: 1px; -fx-margin-top: 20px; }
+.price-label { -fx-font-size: 14px; }
+.price-label-discount { -fx-font-size: 14px; -fx-text-fill: #5cb85c; }
+.total-row { -fx-padding: 10px 0 0 0; -fx-border-color: #d1d8e0 transparent transparent transparent; -fx-border-width: 1px; -fx-margin: 10px 0 0 0; }
+.total-label { -fx-font-size: 16px; -fx-font-weight: bold; }
+.total-price-label { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #d9534f; }
+.final-buttons-box { -fx-padding-top: 20px; }
+.confirm-button { -fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-padding: 10px 25px; -fx-background-radius: 5px; }
+.cancel-button { -fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px 25px; -fx-background-radius: 5px; }

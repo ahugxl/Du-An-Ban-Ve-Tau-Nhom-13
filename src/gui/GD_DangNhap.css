@@ -1,0 +1,76 @@
+/* === CÀI ĐẶT CHUNG === */
+.root {
+    /* Dùng gradient để tạo chiều sâu, chuyển từ xanh đậm sang xanh tím than */
+    -fx-background-color: linear-gradient(to bottom right, rgb(10, 20, 50), rgb(25, 35, 80));
+    -fx-font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* === LOGO === */
+#myLogo {
+    /* Giải pháp tạm thời: Tạo một tấm nền trắng bo góc cho logo.
+     Nếu bạn đã có file logo nền trong suốt, hãy xóa phần này đi.
+    */
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 4);
+}
+
+
+/* === KIỂU CHỮ (LABEL) === */
+.label {
+    -fx-text-fill: rgb(230, 230, 240); /* Dùng màu trắng ngà cho dễ chịu */
+}
+
+#lblDangNhap {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 255, 255);
+}
+
+/* === Ô NHẬP LIỆU (TEXTFIELD & PASSWORDFIELD) === */
+.text-field, .password-field {
+    /* Nền sáng để tăng độ tương phản và dễ đọc */
+    -fx-background-color: rgb(240, 240, 245);
+    -fx-background-radius: 8px;
+    -fx-border-width: 0px; /* Bỏ viền mặc định */
+    -fx-font-size: 16px;
+    -fx-text-fill: rgb(10, 20, 50); /* Chữ nhập vào màu tối */
+    -fx-prompt-text-fill: rgb(150, 150, 160); /* Chữ gợi ý màu xám */
+}
+
+/* Hiệu ứng khi click vào ô nhập liệu */
+.text-field:focused, .password-field:focused {
+    /* Viền phát sáng màu cam tạo điểm nhấn */
+    -fx-border-color: rgb(255, 128, 64);
+    -fx-border-width: 2px;
+    -fx-background-color: rgb(255, 255, 255);
+}
+
+/* === NÚT BẤM (BUTTON) === */
+
+/* Nút chính "Đăng nhập" */
+#btnDangNhap {
+    /* Nền màu cam-san hô */
+    -fx-background-color: rgb(255, 128, 64);
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-font-size: 22px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 3);
+}
+
+#btnDangNhap:hover {
+    -fx-background-color: rgb(255, 148, 94); /* Sáng hơn khi di chuột qua */
+}
+
+/* Các nút phụ "Quên mật khẩu" và "Thoát" */
+#btnQuenMatKhau, #btnThoat {
+    -fx-background-color: transparent;
+    -fx-text-fill: rgb(150, 170, 220); /* Chữ màu xanh nhạt */
+    -fx-cursor: hand;
+}
+
+#btnQuenMatKhau:hover, #btnThoat:hover {
+    -fx-underline: true; /* Hiệu ứng gạch chân như link web */
+}
